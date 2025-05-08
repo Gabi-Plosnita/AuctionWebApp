@@ -12,7 +12,7 @@ builder.Services.AddTransient<CookieHandler>();
 builder.Services
 .AddHttpClient<IAuthHttpClient, AuthHttpClient>(client =>
 {
-	client.BaseAddress = new Uri("https://localhost:5001/");
+	client.BaseAddress = new Uri("https://localhost:7149/");
 })
 .AddHttpMessageHandler<CookieHandler>();
 
