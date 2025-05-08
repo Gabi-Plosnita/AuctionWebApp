@@ -83,7 +83,13 @@ public abstract class BaseHttpClient
 
 	private static async Task<List<string>> ExtractErrorsAsync(HttpResponseMessage response)
 	{
-		// treat 401 and 403 errors. They don t appear in the erros of the result
+		if (response.StatusCode == HttpStatusCode.Unauthorized)
+			return new List<string> { "User is not authenticated." };
+		if (response.StatusCode == HttpStatusCode.Forbidden)
+			return new List<string> { "User is not authorized to perform this action." };
+		int status = (int)response.StatusCode;
+		if (status >= 500 && status < 600)
+			return new List<string> { "A server error occurred. Please try again later." };
 		var content = await response.Content.ReadAsStringAsync();
 		try
 		{
@@ -91,8 +97,7 @@ public abstract class BaseHttpClient
 			if (apiErrors?.Count > 0)
 				return apiErrors;
 		}
-		catch{}
-
+		catch { }
 		return new List<string>
 		{
 			content?.Trim('"') ?? response.ReasonPhrase ?? "Unknown error"
