@@ -83,6 +83,7 @@ public abstract class BaseHttpClient
 
 	private static async Task<List<string>> ExtractErrorsAsync(HttpResponseMessage response)
 	{
+		// treat 401 and 403 errors. They don t appear in the erros of the result
 		var content = await response.Content.ReadAsStringAsync();
 		try
 		{
