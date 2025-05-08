@@ -27,8 +27,7 @@ public abstract class BaseHttpClient
 		if (!response.IsSuccessStatusCode)
 			return new Result<T> { Errors = await ExtractErrorsAsync(response) };
 
-		if (response.StatusCode == HttpStatusCode.NoContent
-		 || response.Content.Headers.ContentLength == 0)
+		if (response.StatusCode == HttpStatusCode.NoContent || response.Content.Headers.ContentLength == 0)
 		{
 			return new Result<T>();
 		}
