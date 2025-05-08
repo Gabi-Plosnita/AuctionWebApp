@@ -13,6 +13,7 @@
     <input type="password" @bind="adminPassword" placeholder="••••••••" />
 </div>
 <button @onclick="LoginAdmin">Login as Admin</button>
+<button @onclick="Logout">Logout</button>
 
 @if (!string.IsNullOrEmpty(adminError))
 {
@@ -89,4 +90,14 @@ else if (!string.IsNullOrEmpty(driverSuccess))
         else
             driverSuccess = "✅ Driver registered successfully";
     }
+
+	private async Task Logout()
+	{
+		adminError = adminSuccess = null;
+		var result = await AuthClient.LogoutAsync();
+		if (result.HasErrors)
+			adminError = string.Join("; ", result.Errors);
+		else
+			adminSuccess = "✅ Admin logged out successfully";
+	}
 }
