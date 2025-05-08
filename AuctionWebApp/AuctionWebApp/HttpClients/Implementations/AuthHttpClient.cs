@@ -10,20 +10,20 @@ public class AuthHttpClient : BaseHttpClient, IAuthHttpClient
 	public Task<Result<AdminResponse>> RegisterAdminAsync(RegisterAdminRequest request)
 		=> SendWithResponseAsync<AdminResponse>("api/auth/register/admins", HttpMethod.Post, request);
 
-	public Task<Result<string>> LoginAdminAsync(LoginRequest request)
-		=> SendWithResponseAsync<string>("api/auth/login/admins", HttpMethod.Post, request);
+	public Task<Result> LoginAdminAsync(LoginRequest request)
+		=> SendNoResponseAsync("api/auth/login/admins", HttpMethod.Post, request);
 
 	public Task<Result<DriverResponse>> RegisterDriverAsync(RegisterDriverRequest request)
 		=> SendWithResponseAsync<DriverResponse>("api/auth/register/drivers", HttpMethod.Post, request);
 
-	public Task<Result<string>> LoginDriverAsync(LoginRequest request)
-		=> SendWithResponseAsync<string>("api/auth/login/drivers", HttpMethod.Post, request);
+	public Task<Result> LoginDriverAsync(LoginRequest request)
+		=> SendNoResponseAsync("api/auth/login/drivers", HttpMethod.Post, request);
 
 	public Task<Result<UserResponse>> RegisterUserAsync(RegisterUserRequest request)
 		=> SendWithResponseAsync<UserResponse>("api/auth/register/users", HttpMethod.Post, request);
 
-	public Task<Result<string>> LoginUserAsync(LoginRequest request)
-		=> SendWithResponseAsync<string>("api/auth/login/users", HttpMethod.Post, request);
+	public Task<Result> LoginUserAsync(LoginRequest request)
+		=> SendNoResponseAsync("api/auth/login/users", HttpMethod.Post, request);
 
 	public Task<Result> LogoutAsync()
 		=> SendNoResponseAsync("api/auth/logout", HttpMethod.Post, null);

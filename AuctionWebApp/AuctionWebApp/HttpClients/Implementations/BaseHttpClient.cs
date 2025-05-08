@@ -22,27 +22,38 @@ public abstract class BaseHttpClient
 		if (body is not null)
 			request.Content = JsonContent.Create(body, options: _jsonOptions);
 
-		using var response = await _http.SendAsync(request);
-
-		if (!response.IsSuccessStatusCode)
-			return new Result<T> { Errors = await ExtractErrorsAsync(response) };
-
-		if (response.StatusCode == HttpStatusCode.NoContent || response.Content.Headers.ContentLength == 0)
+		HttpResponseMessage response;
+		try
 		{
-			return new Result<T>();
+			response = await _http.SendAsync(request);
+		}
+		catch (Exception ex)
+		{
+			return new Result<T> { Errors = new List<string> { ex.Message } };
 		}
 
-		var data = await response.Content.ReadFromJsonAsync<T>(_jsonOptions);
-		if (data is null)
+		using (response)
 		{
-			return new Result<T>
+			if (!response.IsSuccessStatusCode)
+				return new Result<T> { Errors = await ExtractErrorsAsync(response) };
+
+			if (response.StatusCode == HttpStatusCode.NoContent || response.Content.Headers.ContentLength == 0)
+				return new Result<T>();
+
+			try
 			{
-				Errors = new List<string> { "Empty or invalid response body." }
-			};
+				var data = await response.Content.ReadFromJsonAsync<T>(_jsonOptions);
+				if (data is null)
+					return new Result<T> { Errors = new List<string> { "Empty or invalid response body." } };
+				return new Result<T> { Data = data };
+			}
+			catch (Exception ex)
+			{
+				return new Result<T> { Errors = new List<string> { ex.Message } };
+			}
 		}
-
-		return new Result<T> { Data = data };
 	}
+
 
 	protected async Task<Result> SendNoResponseAsync(string url, HttpMethod method, object? body = null)
 	{
@@ -50,13 +61,25 @@ public abstract class BaseHttpClient
 		if (body is not null)
 			request.Content = JsonContent.Create(body, options: _jsonOptions);
 
-		using var response = await _http.SendAsync(request);
+		HttpResponseMessage response;
+		try
+		{
+			response = await _http.SendAsync(request);
+		}
+		catch (Exception ex)
+		{
+			return new Result { Errors = new List<string> { ex.Message } };
+		}
 
-		if (response.IsSuccessStatusCode)
-			return new Result();
+		using (response)
+		{
+			if (response.IsSuccessStatusCode)
+				return new Result();
 
-		return new Result { Errors = await ExtractErrorsAsync(response) };
+			return new Result { Errors = await ExtractErrorsAsync(response) };
+		}
 	}
+
 
 	private static async Task<List<string>> ExtractErrorsAsync(HttpResponseMessage response)
 	{
