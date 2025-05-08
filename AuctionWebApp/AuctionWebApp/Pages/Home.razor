@@ -44,10 +44,12 @@ else if (!string.IsNullOrEmpty(adminSuccess))
 else if (!string.IsNullOrEmpty(driverSuccess))
 {
     <p class="text-success">@driverSuccess</p>
+    <p>@driverResponse.Id</p>
+    <p>@driverResponse.Email</p>
+    <p>@driverResponse.Role</p>
 }
 
 @code {
-    // form state
     private string adminEmail = "";
     private string adminPassword = "";
     private string? adminError;
@@ -58,9 +60,10 @@ else if (!string.IsNullOrEmpty(driverSuccess))
     private string? driverError;
     private string? driverSuccess;
 
+	private DriverResponse? driverResponse;
+
     private async Task LoginAdmin()
     {
-        // clear messages
         adminError = adminSuccess = null;
 
         var result = await AuthClient.LoginAdminAsync(new LoginRequest
@@ -88,7 +91,10 @@ else if (!string.IsNullOrEmpty(driverSuccess))
         if (result.HasErrors)
             driverError = string.Join("; ", result.Errors);
         else
+        {
             driverSuccess = "✅ Driver registered successfully";
+			driverResponse = result.Data;
+        }
     }
 
 	private async Task Logout()
