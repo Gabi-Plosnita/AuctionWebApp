@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
@@ -13,7 +13,6 @@
 
   <ItemGroup>
     <Folder Include="Models\" />
-    <Folder Include="HttpClients\" />
     <Folder Include="Shared\" />
     <Folder Include="Services\" />
   </ItemGroup>
