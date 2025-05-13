@@ -31,5 +31,12 @@ builder.Services
 })
 .AddHttpMessageHandler<CookieHandler>();
 
+builder.Services
+.AddHttpClient<IDriversHttpClient, DriversHttpClient>(client =>
+{
+	client.BaseAddress = baseAddress;
+})
+.AddHttpMessageHandler<CookieHandler>();
+
 
 await builder.Build().RunAsync();
