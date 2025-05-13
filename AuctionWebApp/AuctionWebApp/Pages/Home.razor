@@ -2,6 +2,7 @@
 @using AuctionWebApp.Models
 @using AuctionWebApp.HttpClients
 @inject IAuthHttpClient AuthClient
+@inject ICategoriesHttpClient CategoriesClient
 
 <h2>Admin Login</h2>
 <div>
@@ -49,6 +50,14 @@ else if (!string.IsNullOrEmpty(driverSuccess))
     <p>@driverResponse.Role</p>
 }
 
+@foreach (var category in categories)
+{
+    <div>
+        <h3>@category.Name</h3>
+        <p>Id: @category.Id</p>
+    </div>
+})
+
 @code {
     private string adminEmail = "";
     private string adminPassword = "";
@@ -60,7 +69,24 @@ else if (!string.IsNullOrEmpty(driverSuccess))
     private string? driverError;
     private string? driverSuccess;
 
-	private DriverResponse? driverResponse;
+    private DriverResponse? driverResponse;
+
+    private List<CategoryResponse> categories = new List<CategoryResponse>();
+
+    protected override async Task OnInitializedAsync()
+    {
+		var result = await CategoriesClient.GetAllAsync();
+        if (result.HasErrors)
+		{
+			// Handle error
+			Console.WriteLine("Error fetching categories: " + string.Join(", ", result.Errors));
+		}
+		else
+		{
+			categories = result.Data;
+		}
+
+    }
 
     private async Task LoginAdmin()
     {
