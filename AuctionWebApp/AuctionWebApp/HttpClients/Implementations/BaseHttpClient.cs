@@ -16,7 +16,7 @@ public abstract class BaseHttpClient
 
 	protected BaseHttpClient(HttpClient http) => _http = http;
 
-	protected async Task<Result<T>> SendWithResponseAsync<T>(string url, HttpMethod method, object? body = null)
+	protected async Task<Result<T>> SendRequestAsync<T>(string url, HttpMethod method, object? body = null)
 	{
 		using var request = new HttpRequestMessage(method, url);
 		if (body is not null)
@@ -55,7 +55,7 @@ public abstract class BaseHttpClient
 	}
 
 
-	protected async Task<Result> SendNoResponseAsync(string url, HttpMethod method, object? body = null)
+	protected async Task<Result> SendRequestAsync(string url, HttpMethod method, object? body = null)
 	{
 		using var request = new HttpRequestMessage(method, url);
 		if (body is not null)
@@ -79,7 +79,6 @@ public abstract class BaseHttpClient
 			return new Result { Errors = await ExtractErrorsAsync(response) };
 		}
 	}
-
 
 	private static async Task<List<string>> ExtractErrorsAsync(HttpResponseMessage response)
 	{
