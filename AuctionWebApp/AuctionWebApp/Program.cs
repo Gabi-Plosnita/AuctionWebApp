@@ -8,11 +8,19 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddTransient<CookieHandler>();
+var baseAddress = new Uri("https://localhost:7149/");
 
 builder.Services
 .AddHttpClient<IAuthHttpClient, AuthHttpClient>(client =>
 {
-	client.BaseAddress = new Uri("https://localhost:7149/");
+	client.BaseAddress = baseAddress;
+})
+.AddHttpMessageHandler<CookieHandler>();
+
+builder.Services
+.AddHttpClient<ICategoriesHttpClient, CategoriesHttpClient>(client =>
+{
+	client.BaseAddress = baseAddress;
 })
 .AddHttpMessageHandler<CookieHandler>();
 
