@@ -9,9 +9,9 @@ public interface IUsersHttpClient
 
 	Task<Result> UpdateAsync(int id, UpdateUserRequest updateUserRequest);
 
-	Task<Result> CreateConnectedAccountAsync(CreateConnectedStripeAccountRequest createConnectedAccountRequest);
+	Task<Result<string>> CreateConnectedAccountAsync(CreateConnectedStripeAccountRequest createConnectedAccountRequest);
 
 	Task<Result<string>> GetAccountLinkAsync(CreateAccountLinkRequest createLinkRequest);
 
-	Task<Result> CreateCustomerAccountAsync(CreateStripeCustomerAccountRequest createStripeCustomerAccountRequest);
+	Task<Result<string>> CreateCustomerAccountAsync(CreateStripeCustomerAccountRequest createStripeCustomerAccountRequest);
 }
