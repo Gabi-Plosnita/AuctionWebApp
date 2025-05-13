@@ -45,5 +45,12 @@ builder.Services
 })
 .AddHttpMessageHandler<CookieHandler>();
 
+builder.Services
+.AddHttpClient<IAuctionsHttpClient, AuctionsHttpClient>(client =>
+{
+	client.BaseAddress = baseAddress;
+})
+.AddHttpMessageHandler<CookieHandler>();
+
 
 await builder.Build().RunAsync();
