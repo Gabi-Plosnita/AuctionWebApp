@@ -24,5 +24,12 @@ builder.Services
 })
 .AddHttpMessageHandler<CookieHandler>();
 
+builder.Services
+.AddHttpClient<IAdminsHttpClient, AdminsHttpClient>(client =>
+{
+	client.BaseAddress = baseAddress;
+})
+.AddHttpMessageHandler<CookieHandler>();
+
 
 await builder.Build().RunAsync();
