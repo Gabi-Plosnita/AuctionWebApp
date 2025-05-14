@@ -8,7 +8,7 @@ public class AuctionsHttpClient : BaseHttpClient, IAuctionsHttpClient
 	public AuctionsHttpClient(HttpClient http) : base(http) { }
 
 	public async Task<Result<PagedResult<PreviewAuctionResponse>>> GetByFilterAsync(AuctionFilterRequest filter)
-		=> await SendRequestAsync<PagedResult<PreviewAuctionResponse>>("api/auctions", HttpMethod.Get, filter); // send the filter in querry
+		=> await SendRequestWithQueryAsync<PagedResult<PreviewAuctionResponse>>("api/auctions", HttpMethod.Get, filter); 
 
 	public async Task<Result<PreviewAuctionResponse>> GetPreviewByIdAsync(int id)
 		=> await SendRequestAsync<PreviewAuctionResponse>($"api/auctions/{id}/preview", HttpMethod.Get);

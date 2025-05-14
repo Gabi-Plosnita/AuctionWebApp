@@ -1,6 +1,8 @@
 ﻿using AuctionWebApp.Helpers;
-using System.Net.Http.Json;
+using Microsoft.AspNetCore.WebUtilities;
 using System.Net;
+using System.Net.Http.Json;
+using System.Reflection;
 using System.Text.Json;
 
 namespace AuctionWebApp.HttpClients;
@@ -78,6 +80,30 @@ public abstract class BaseHttpClient
 
 			return new Result { Errors = await ExtractErrorsAsync(response) };
 		}
+	}
+
+	protected async Task<Result<T>> SendRequestWithQueryAsync<T>(string url, HttpMethod method, object? filter = null)
+	{
+		if (filter is not null)
+		{
+			var queryParams = filter
+				.GetType()
+				.GetProperties(BindingFlags.Public | BindingFlags.Instance)
+				.Select(prop => new
+				{
+					Name = prop.Name,
+					Value = prop.GetValue(filter, null)
+				})
+				.Where(x => x.Value is not null)
+				.ToDictionary(
+					x => x.Name,
+					x => x.Value!.ToString()!,
+					StringComparer.OrdinalIgnoreCase);
+
+			url = QueryHelpers.AddQueryString(url, queryParams);
+		}
+
+		return await SendRequestAsync<T>(url, method);
 	}
 
 	private static async Task<List<string>> ExtractErrorsAsync(HttpResponseMessage response)
