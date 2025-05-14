@@ -3,6 +3,7 @@
 @using AuctionWebApp.HttpClients
 @inject IAuthHttpClient AuthClient
 @inject ICategoriesHttpClient CategoriesClient
+@inject IAuctionsHttpClient AuctionsHttpClient
 
 <h2>Admin Login</h2>
 <div>
@@ -58,6 +59,53 @@ else if (!string.IsNullOrEmpty(driverSuccess))
     </div>
 })
 
+<EditForm Model="filter" OnValidSubmit="HandleFilter">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="mb-2">
+        <label>Category ID</label><br />
+        <InputNumber @bind-Value="filter.CategoryId" class="form-control" />
+    </div>
+
+    <div class="mb-2">
+        <label>Seller ID</label><br />
+        <InputNumber @bind-Value="filter.SellerId" class="form-control" />
+    </div>
+
+    <div class="mb-2">
+        <label>Bidder ID</label><br />
+        <InputNumber @bind-Value="filter.BidderId" class="form-control" />
+    </div>
+
+    <div class="mb-2">
+        <label>Text Search</label><br />
+        <InputText @bind-Value="filter.TextSearch" class="form-control" />
+    </div>
+
+    <div class="mb-2">
+        <label>Status</label><br />
+        <InputSelect @bind-Value="filter.Status" class="form-control">
+            @foreach (var s in Enum.GetValues<AuctionStatus>())
+            {
+                <option value="@s">@s</option>
+            }
+        </InputSelect>
+    </div>
+
+    <div class="mb-2">
+        <label>Page</label><br />
+        <InputNumber @bind-Value="filter.Page" class="form-control" />
+    </div>
+
+    <div class="mb-2">
+        <label>Page Size</label><br />
+        <InputNumber @bind-Value="filter.PageSize" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</EditForm>
+
 @code {
     private string adminEmail = "";
     private string adminPassword = "";
@@ -70,21 +118,21 @@ else if (!string.IsNullOrEmpty(driverSuccess))
     private string? driverSuccess;
 
     private DriverResponse? driverResponse;
+    private AuctionFilterRequest filter = new();
 
     private List<CategoryResponse> categories = new List<CategoryResponse>();
 
     protected override async Task OnInitializedAsync()
     {
-		var result = await CategoriesClient.GetAllAsync();
+        var result = await CategoriesClient.GetAllAsync();
         if (result.HasErrors)
-		{
-			// Handle error
-			Console.WriteLine("Error fetching categories: " + string.Join(", ", result.Errors));
-		}
-		else
-		{
-			categories = result.Data;
-		}
+        {
+            Console.WriteLine("Error fetching categories: " + string.Join(", ", result.Errors));
+        }
+        else
+        {
+            categories = result.Data;
+        }
 
     }
 
@@ -119,17 +167,22 @@ else if (!string.IsNullOrEmpty(driverSuccess))
         else
         {
             driverSuccess = "✅ Driver registered successfully";
-			driverResponse = result.Data;
+            driverResponse = result.Data;
         }
     }
 
-	private async Task Logout()
-	{
-		adminError = adminSuccess = null;
-		var result = await AuthClient.LogoutAsync();
-		if (result.HasErrors)
-			adminError = string.Join("; ", result.Errors);
-		else
-			adminSuccess = "✅ Admin logged out successfully";
-	}
+    private async Task Logout()
+    {
+        adminError = adminSuccess = null;
+        var result = await AuthClient.LogoutAsync();
+        if (result.HasErrors)
+            adminError = string.Join("; ", result.Errors);
+        else
+            adminSuccess = "✅ Admin logged out successfully";
+    }
+
+    private async Task HandleFilter()
+    {
+        var result = await AuctionsHttpClient.GetByFilterAsync(filter);
+    }
 }
