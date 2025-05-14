@@ -1,4 +1,6 @@
-﻿namespace AuctionWebApp.Models;
+﻿using AuctionWebApp.Enums;
+
+namespace AuctionWebApp.Models;
 
 public record PreviewAuctionResponse
 {

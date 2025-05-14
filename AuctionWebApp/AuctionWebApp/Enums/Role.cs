@@ -1,4 +1,4 @@
-﻿namespace AuctionWebApp.Models;
+﻿namespace AuctionWebApp.Enums;
 
 public enum Role
 {
