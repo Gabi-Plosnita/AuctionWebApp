@@ -1,6 +1,6 @@
-﻿namespace AuctionWebApp.Models;
+﻿namespace AuctionWebApp.ViewModels;
 
-public class PagedResult<T>
+public class PagedResultViewModel<T>
 {
 	public IReadOnlyList<T> Items { get; set; }
 	public int TotalCount { get; set; }
@@ -10,7 +10,7 @@ public class PagedResult<T>
 	public int TotalPages
 		=> (int)Math.Ceiling(TotalCount / (double)PageSize);
 
-	public PagedResult(
+	public PagedResultViewModel(
 		IReadOnlyList<T> items,
 		int totalCount,
 		int page,
