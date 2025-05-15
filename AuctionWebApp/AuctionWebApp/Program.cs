@@ -52,5 +52,6 @@ builder.Services
 })
 .AddHttpMessageHandler<CookieHandler>();
 
+builder.Services.AddAutoMapper(typeof(Program));
 
 await builder.Build().RunAsync();
