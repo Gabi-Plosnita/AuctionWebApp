@@ -4,12 +4,16 @@ namespace AuctionWebApp.Helpers;
 
 public class FutureDateAttribute : ValidationAttribute
 {
-	public override bool IsValid(object value)
+	public FutureDateAttribute()
+		: base("{0} must be in the future.") { }
+
+	public override bool IsValid(object? value)
 	{
+		if (value is null) return true;
+
 		if (value is DateTime dt)
-		{
-			return dt > DateTime.UtcNow;
-		}
-		return true;
+			return dt.ToUniversalTime() > DateTime.UtcNow;
+
+		return false;
 	}
 }
