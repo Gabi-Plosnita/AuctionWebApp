@@ -18,9 +18,9 @@ public class AuctionFilterRequestViewModel
 	public string? TextSearch { get; set; }
 
 	[EnumDataType(typeof(AuctionStatus), ErrorMessage = "Invalid status")]
-	public AuctionStatus? Status { get; set; } = AuctionStatus.InProgress;
+	public AuctionStatus? Status { get; set; }
 
-	[Range(1, int.MaxValue, ErrorMessage = "Page must be at least 1")]
+	[Range(1, 10, ErrorMessage = "Page must be at least 1")]
 	public int Page { get; set; } = 1;
 
 	[Range(1, 100, ErrorMessage = "PageSize must be between 1 and 100")]
