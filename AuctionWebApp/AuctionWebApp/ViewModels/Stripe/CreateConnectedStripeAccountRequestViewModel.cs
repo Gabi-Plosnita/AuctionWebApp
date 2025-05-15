@@ -11,13 +11,14 @@ public class CreateConnectedStripeAccountRequestViewModel
 
 	[Required(ErrorMessage = "Email is required")]
 	[EmailAddress(ErrorMessage = "Invalid email address format")]
-	public required string Email { get; set; }
+	[DataType(DataType.EmailAddress)]
+	public string Email { get; set; } = string.Empty;
 
 	[Required(ErrorMessage = "Country is required")]
 	[RegularExpression(@"^[A-Z]{2}$", ErrorMessage = "Country must be a valid ISO 3166-1 alpha-2 code")]
-	public required string Country { get; set; }
+	public string Country { get; set; } = string.Empty;
 
 	[Required(ErrorMessage = "Currency is required")]
 	[RegularExpression(@"^[A-Z]{3}$", ErrorMessage = "Currency must be a valid ISO 4217 code")]
-	public required string Currency { get; set; }
+	public string Currency { get; set; } = string.Empty;
 }

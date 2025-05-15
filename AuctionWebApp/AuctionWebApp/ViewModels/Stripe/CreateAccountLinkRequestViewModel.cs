@@ -7,15 +7,17 @@ public class CreateAccountLinkRequestViewModel
 {
 	[Required(ErrorMessage = "ConnectedAccountId is required")]
 	[RegularExpression(@"^acct_[A-Za-z0-9]+$", ErrorMessage = "Invalid Stripe account ID format")]
-	public required string ConnectedAccountId { get; set; }
+	public string ConnectedAccountId { get; set; } = string.Empty;
 
 	[Required(ErrorMessage = "RefreshUrl is required")]
 	[Url(ErrorMessage = "Invalid URL format")]
-	public required string RefreshUrl { get; set; }
+	[RegularExpression(@"^https:\/\/.*", ErrorMessage = "Refresh URL must start with https://")]
+	public string RefreshUrl { get; set; } = string.Empty;
 
 	[Required(ErrorMessage = "ReturnUrl is required")]
 	[Url(ErrorMessage = "Invalid URL format")]
-	public required string ReturnUrl { get; set; }
+	[RegularExpression(@"^https:\/\/.*", ErrorMessage = "Return URL must start with https://")]
+	public string ReturnUrl { get; set; } = string.Empty;
 
 	[EnumDataType(typeof(StripeLinkType), ErrorMessage = "Invalid link type")]
 	public StripeLinkType LinkType { get; set; } = StripeLinkType.AccountOnboarding;
