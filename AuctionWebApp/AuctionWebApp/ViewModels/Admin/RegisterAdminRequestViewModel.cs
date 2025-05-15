@@ -11,6 +11,7 @@ public class RegisterAdminRequestViewModel
 
 	[Required(ErrorMessage = "Password is required")]
 	[StringLength(100, MinimumLength = 4, ErrorMessage = "Password must be between 4 and 100 characters")]
+	[RegularExpression(@".*\S+.*", ErrorMessage = "Password cannot be blank or whitespace only")]
 	[DataType(DataType.Password)]
 	public string Password { get; set; } = string.Empty;
 }

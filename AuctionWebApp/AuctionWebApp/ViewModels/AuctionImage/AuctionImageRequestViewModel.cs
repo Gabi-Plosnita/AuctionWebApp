@@ -10,5 +10,5 @@ public class AuctionImageRequestViewModel
 
 	[Required(ErrorMessage = "Image content type is required")]
 	[RegularExpression(@"^[A-Za-z0-9\-\+\.]+\/[A-Za-z0-9\-\+\.]+$", ErrorMessage = "Invalid image content type format")]
-	public required string ImageContentType { get; set; }
+	public string ImageContentType { get; set; } = string.Empty;
 }

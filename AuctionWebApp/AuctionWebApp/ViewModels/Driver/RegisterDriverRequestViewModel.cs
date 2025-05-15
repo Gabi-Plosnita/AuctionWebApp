@@ -6,9 +6,12 @@ public class RegisterDriverRequestViewModel
 {
 	[Required(ErrorMessage = "Email is required")]
 	[EmailAddress(ErrorMessage = "Invalid email address format")]
-	public required string Email { get; set; }
+	[DataType(DataType.EmailAddress)]
+	public string Email { get; set; } = string.Empty;
 
 	[Required(ErrorMessage = "Password is required")]
 	[StringLength(100, MinimumLength = 4, ErrorMessage = "Password must be between 4 and 100 characters")]
-	public required string Password { get; set; }
+	[RegularExpression(@".*\S+.*", ErrorMessage = "Password cannot be blank or whitespace only")]
+	[DataType(DataType.Password)]
+	public string Password { get; set; } = string.Empty;
 }

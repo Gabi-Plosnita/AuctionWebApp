@@ -5,6 +5,7 @@ namespace AuctionWebApp.ViewModels;
 public class UpdateCategoryRequestViewModel
 {
 	[Required(ErrorMessage = "Name is required")]
-	[StringLength(100, MinimumLength = 1, ErrorMessage = "Name must be between 1 and 100 characters")]
-	public required string Name { get; set; }
+	[StringLength(100, ErrorMessage = "Name must be between 1 and 100 characters")]
+	[RegularExpression(@".*\S+.*", ErrorMessage = "Name cannot be blank or whitespace only")]
+	public string Name { get; set; } = string.Empty;
 }
