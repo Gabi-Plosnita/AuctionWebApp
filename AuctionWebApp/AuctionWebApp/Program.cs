@@ -1,5 +1,6 @@
 using AuctionWebApp;
 using AuctionWebApp.HttpClients;
+using AuctionWebApp.Services;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
@@ -7,7 +8,10 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
+// Register cookie handler //
 builder.Services.AddTransient<CookieHandler>();
+
+// Register HttpClients //
 var baseAddress = new Uri("https://localhost:7149/");
 
 builder.Services
@@ -52,6 +56,15 @@ builder.Services
 })
 .AddHttpMessageHandler<CookieHandler>();
 
+// Register Mappers //
 builder.Services.AddAutoMapper(typeof(Program));
+
+// Register Services //
+builder.Services.AddScoped<IAdminService, AdminService>();
+builder.Services.AddScoped<IAuctionService, AuctionService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IDriverService, DriverService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 await builder.Build().RunAsync();
