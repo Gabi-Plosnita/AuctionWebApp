@@ -8,7 +8,7 @@ public class BidProfile : Profile
 {
 	public BidProfile()
 	{
-		CreateMap<BidResponse, BidResponseViewModel>();
-		CreateMap<CreateBidRequestViewModel, CreateBidRequest>();
+		CreateMap<BidResponse, BidViewModel>();
+		CreateMap<CreateBidViewModel, CreateBidRequest>();
 	}
 }

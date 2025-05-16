@@ -8,6 +8,6 @@ public class AuthenticationProfile : Profile
 {
 	public AuthenticationProfile()
 	{
-		CreateMap<LoginRequestViewModel, LoginRequest>();
+		CreateMap<LoginViewModel, LoginRequest>();
 	}
 }

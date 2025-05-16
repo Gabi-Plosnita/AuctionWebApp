@@ -2,7 +2,7 @@
 
 namespace AuctionWebApp.ViewModels;
 
-public class UpdateUserRequestViewModel
+public class UpdateUserViewModel
 {
 	[Required(ErrorMessage = "First name is required")]
 	[StringLength(50, ErrorMessage = "First name must be between 1 and 50 characters")]

@@ -2,7 +2,7 @@
 
 namespace AuctionWebApp.ViewModels;
 
-public class DriverResponseViewModel
+public class DriverViewModel
 {
 	public int Id { get; set; }
 

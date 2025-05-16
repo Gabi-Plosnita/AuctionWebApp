@@ -5,9 +5,9 @@ namespace AuctionWebApp.Services;
 
 public interface IDriverService
 {
-	Task<Result<List<DriverResponseViewModel>>> GetAllAsync();
+	Task<Result<List<DriverViewModel>>> GetAllAsync();
 
-	Task<Result<DriverResponseViewModel>> GetByIdAsync(int id);
+	Task<Result<DriverViewModel>> GetByIdAsync(int id);
 
 	Task<Result> DeleteByIdAsync(int id);
 }

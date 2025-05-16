@@ -2,13 +2,13 @@
 
 namespace AuctionWebApp.ViewModels;
 
-public class PreviewAuctionResponseViewModel
+public class PreviewAuctionViewModel
 {
 	public int Id { get; set; }
 
 	public string Title { get; set; } = string.Empty;
 
-	public List<AuctionImageRequestViewModel> Images { get; set; } = new List<AuctionImageRequestViewModel>();
+	public List<AuctionImageViewModel> Images { get; set; } = new List<AuctionImageViewModel>();
 	
 	public decimal CurrentPrice { get; set; }
 

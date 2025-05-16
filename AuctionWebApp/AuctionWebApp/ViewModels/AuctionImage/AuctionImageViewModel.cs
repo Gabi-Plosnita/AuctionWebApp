@@ -2,7 +2,7 @@
 
 namespace AuctionWebApp.ViewModels;
 
-public class AuctionImageRequestViewModel
+public class AuctionImageViewModel
 {
 	[Required(ErrorMessage = "Image data is required")]
 	[MinLength(1, ErrorMessage = "Image data cannot be empty")]

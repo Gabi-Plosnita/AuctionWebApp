@@ -5,17 +5,17 @@ namespace AuctionWebApp.Services;
 
 public interface IAuthService
 {
-	Task<Result<AdminResponseViewModel>> RegisterAdminAsync(RegisterAdminRequestViewModel request);
+	Task<Result<AdminViewModel>> RegisterAdminAsync(RegisterAdminViewModel registerAdminViewModel);
 	
-	Task<Result> LoginAdminAsync(LoginRequestViewModel request);
+	Task<Result> LoginAdminAsync(LoginViewModel loginViewModel);
 
-	Task<Result<DriverResponseViewModel>> RegisterDriverAsync(RegisterDriverRequestViewModel request);
+	Task<Result<DriverViewModel>> RegisterDriverAsync(RegisterDriverViewModel registerDriverViewModel);
 	
-	Task<Result> LoginDriverAsync(LoginRequestViewModel request);
+	Task<Result> LoginDriverAsync(LoginViewModel loginViewModel);
 
-	Task<Result<UserResponseViewModel>> RegisterUserAsync(RegisterUserRequestViewModel request);
+	Task<Result<UserViewModel>> RegisterUserAsync(RegisterUserViewModel registerUserViewModel);
 	
-	Task<Result> LoginUserAsync(LoginRequestViewModel request);
+	Task<Result> LoginUserAsync(LoginViewModel loginViewModel);
 
 	Task<Result> LogoutAsync();
 }

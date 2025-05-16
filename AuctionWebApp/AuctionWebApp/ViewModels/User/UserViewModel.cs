@@ -2,7 +2,7 @@
 
 namespace AuctionWebApp.ViewModels;
 
-public class UserResponseViewModel
+public class UserViewModel
 {
 	public int Id { get; set; }
 

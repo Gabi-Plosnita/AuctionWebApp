@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AuctionWebApp.ViewModels;
 
-public class CreateAccountLinkRequestViewModel
+public class CreateAccountLinkViewModel
 {
 	[Required(ErrorMessage = "ConnectedAccountId is required")]
 	[RegularExpression(@"^acct_[A-Za-z0-9]+$", ErrorMessage = "Invalid Stripe account ID format")]

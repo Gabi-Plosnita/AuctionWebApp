@@ -8,8 +8,8 @@ public class StripeProfile : Profile
 {
 	public StripeProfile()
 	{
-		CreateMap<CreateAccountLinkRequestViewModel, CreateAccountLinkRequest>();
-		CreateMap<CreateConnectedStripeAccountRequestViewModel, CreateConnectedStripeAccountRequest>();
-		CreateMap<CreateStripeCustomerAccountRequestViewModel, CreateStripeCustomerAccountRequest>();
+		CreateMap<CreateAccountLinkViewModel, CreateAccountLinkRequest>();
+		CreateMap<CreateConnectedStripeAccountViewModel, CreateConnectedStripeAccountRequest>();
+		CreateMap<CreateStripeCustomerAccountViewModel, CreateStripeCustomerAccountRequest>();
 	}
 }

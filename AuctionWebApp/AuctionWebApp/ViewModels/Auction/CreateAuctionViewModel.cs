@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AuctionWebApp.ViewModels;
 
-public class CreateAuctionRequestViewModel
+public class CreateAuctionViewModel
 {
 	[Required(ErrorMessage = "Title is required")]
 	[StringLength(200, MinimumLength = 5, ErrorMessage = "Title must be between 5 and 200 characters")]
@@ -16,7 +16,7 @@ public class CreateAuctionRequestViewModel
 	[DataType(DataType.MultilineText)]
 	public string Description { get; set; } = string.Empty;
 
-	public List<AuctionImageRequestViewModel> Images { get; set; } = new();
+	public List<AuctionImageViewModel> Images { get; set; } = new();
 
 	[Range(1, double.MaxValue, ErrorMessage = "StartingPrice must be at least 1")]
 	[DataType(DataType.Currency)]

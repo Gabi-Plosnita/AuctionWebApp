@@ -8,7 +8,7 @@ public class DriverProfile : Profile
 {
 	public DriverProfile()
 	{
-		CreateMap<DriverResponse, DriverResponseViewModel>();
-		CreateMap<RegisterDriverRequestViewModel, RegisterDriverRequest>();
+		CreateMap<DriverResponse, DriverViewModel>();
+		CreateMap<RegisterDriverViewModel, RegisterDriverRequest>();
 	}
 }

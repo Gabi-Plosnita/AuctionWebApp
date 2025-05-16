@@ -2,7 +2,7 @@
 
 namespace AuctionWebApp.ViewModels;
 
-public class UpdateAuctionRequestViewModel
+public class UpdateAuctionViewModel
 {
 	[Required(ErrorMessage = "Title is required")]
 	[StringLength(200, MinimumLength = 5, ErrorMessage = "Title must be between 5 and 200 characters")]
@@ -15,5 +15,5 @@ public class UpdateAuctionRequestViewModel
 	[DataType(DataType.MultilineText)]
 	public string Description { get; set; } = string.Empty;
 
-	public List<AuctionImageRequestViewModel> Images { get; set; } = new();
+	public List<AuctionImageViewModel> Images { get; set; } = new();
 }

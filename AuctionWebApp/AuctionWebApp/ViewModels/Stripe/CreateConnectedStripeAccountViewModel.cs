@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AuctionWebApp.ViewModels;
 
-public class CreateConnectedStripeAccountRequestViewModel
+public class CreateConnectedStripeAccountViewModel
 {
 	[Required(ErrorMessage = "AccountType is required")]
 	[EnumDataType(typeof(StripeAccountType), ErrorMessage = "Invalid account type")]

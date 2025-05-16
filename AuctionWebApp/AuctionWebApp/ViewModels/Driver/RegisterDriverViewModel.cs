@@ -2,7 +2,7 @@
 
 namespace AuctionWebApp.ViewModels;
 
-public class RegisterDriverRequestViewModel
+public class RegisterDriverViewModel
 {
 	[Required(ErrorMessage = "Email is required")]
 	[EmailAddress(ErrorMessage = "Invalid email address format")]

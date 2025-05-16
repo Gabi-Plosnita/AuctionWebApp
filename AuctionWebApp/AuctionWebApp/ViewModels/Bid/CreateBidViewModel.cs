@@ -2,7 +2,7 @@
 
 namespace AuctionWebApp.ViewModels;
 
-public class CreateBidRequestViewModel
+public class CreateBidViewModel
 {
 	[Range(1, int.MaxValue, ErrorMessage = "AuctionId must be a positive integer")]
 	public int AuctionId { get; set; }

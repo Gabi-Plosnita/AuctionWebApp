@@ -5,17 +5,17 @@ namespace AuctionWebApp.Services;
 
 public interface IAuctionService
 {
-	Task<Result<PagedResultViewModel<PreviewAuctionResponseViewModel>>> GetByFilterAsync(AuctionFilterRequestViewModel filter);
+	Task<Result<PagedResultViewModel<PreviewAuctionViewModel>>> GetByFilterAsync(AuctionFilterViewModel filterViewModel);
 
-	Task<Result<PreviewAuctionResponseViewModel>> GetPreviewByIdAsync(int id);
+	Task<Result<PreviewAuctionViewModel>> GetPreviewByIdAsync(int id);
 
-	Task<Result<DetailedAuctionResponseViewModel>> GetDetailedByIdAsync(int id);
+	Task<Result<DetailedAuctionViewModel>> GetDetailedByIdAsync(int id);
 
-	Task<Result<BidResponseViewModel>> CreateBidAsync(CreateBidRequestViewModel createBidRequest);
+	Task<Result<BidViewModel>> CreateBidAsync(CreateBidViewModel createBidViewModel);
 
-	Task<Result<PreviewAuctionResponseViewModel>> CreateAsync(CreateAuctionRequestViewModel createAuctionRequest);
+	Task<Result<PreviewAuctionViewModel>> CreateAsync(CreateAuctionViewModel createAuctionViewModel);
 
-	Task<Result> UpdateAsync(int id, UpdateAuctionRequestViewModel updateAuctionRequest);
+	Task<Result> UpdateAsync(int id, UpdateAuctionViewModel updateAuctionViewModel);
 
 	Task<Result> CompleteAuctionAsync(int id);
 }

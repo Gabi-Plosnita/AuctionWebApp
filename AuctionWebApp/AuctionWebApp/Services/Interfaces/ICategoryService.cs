@@ -5,9 +5,9 @@ namespace AuctionWebApp.Services;
 
 public interface ICategoryService
 {
-	Task<Result<List<CategoryResponseViewModel>>> GetAllAsync();
+	Task<Result<List<CategoryViewModel>>> GetAllAsync();
 
-	Task<Result<CategoryResponseViewModel>> CreateAsync(CreateCategoryRequestViewModel request);
+	Task<Result<CategoryViewModel>> CreateAsync(CreateCategoryViewModel createCategoryViewModel);
 
-	Task<Result> UpdateAsync(int id, UpdateCategoryRequestViewModel request);
+	Task<Result> UpdateAsync(int id, UpdateCategoryViewModel updateCategoryViewModel);
 }

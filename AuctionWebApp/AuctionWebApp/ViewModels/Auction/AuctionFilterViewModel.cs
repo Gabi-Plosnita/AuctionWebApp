@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AuctionWebApp.ViewModels;
 
-public class AuctionFilterRequestViewModel
+public class AuctionFilterViewModel
 {
 	[Range(1, int.MaxValue, ErrorMessage = "CategoryId must be a positive integer")]
 	public int? CategoryId { get; set; }

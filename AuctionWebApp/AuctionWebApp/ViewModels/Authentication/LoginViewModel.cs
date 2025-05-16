@@ -2,7 +2,7 @@
 
 namespace AuctionWebApp.ViewModels;
 
-public class LoginRequestViewModel
+public class LoginViewModel
 {
 	[Required(ErrorMessage = "Email is required")]
 	[EmailAddress(ErrorMessage = "Invalid email address format")]

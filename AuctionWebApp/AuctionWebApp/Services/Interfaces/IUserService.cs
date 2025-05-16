@@ -5,13 +5,13 @@ namespace AuctionWebApp.Services;
 
 public interface IUserService
 {
-	Task<Result<UserResponseViewModel>> GetByIdAsync(int id);
+	Task<Result<UserViewModel>> GetByIdAsync(int id);
 
-	Task<Result> UpdateAsync(int id, UpdateUserRequestViewModel updateUserRequest);
+	Task<Result> UpdateAsync(int id, UpdateUserViewModel updateUserViewModel);
 
-	Task<Result<string>> CreateConnectedAccountAsync(CreateConnectedStripeAccountRequestViewModel createConnectedAccountRequest);
+	Task<Result<string>> CreateConnectedAccountAsync(CreateConnectedStripeAccountViewModel createConnectedAccountViewModel);
 
-	Task<Result<string>> GetAccountLinkAsync(CreateAccountLinkRequestViewModel createLinkRequest);
+	Task<Result<string>> GetAccountLinkAsync(CreateAccountLinkViewModel createLinkViewModel);
 
-	Task<Result<string>> CreateCustomerAccountAsync(CreateStripeCustomerAccountRequestViewModel createStripeCustomerAccountRequest);
+	Task<Result<string>> CreateCustomerAccountAsync(CreateStripeCustomerAccountViewModel createCustomerAccountViewModel);
 }

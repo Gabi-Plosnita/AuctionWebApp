@@ -8,7 +8,7 @@ public class AdminProfile : Profile
 {
 	public AdminProfile()
 	{
-		CreateMap<AdminResponse, AdminResponseViewModel>();
-		CreateMap<RegisterAdminRequestViewModel, RegisterAdminRequest>();
+		CreateMap<AdminResponse, AdminViewModel>();
+		CreateMap<RegisterAdminViewModel, RegisterAdminRequest>();
 	}
 }

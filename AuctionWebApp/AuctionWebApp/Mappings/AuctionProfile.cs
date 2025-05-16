@@ -8,10 +8,10 @@ public class AuctionProfile : Profile
 {
 	public AuctionProfile()
 	{
-		CreateMap<AuctionFilterRequestViewModel, AuctionFilterRequest>();
-		CreateMap<CreateAuctionRequestViewModel, CreateAuctionRequest>();
-		CreateMap<DetailedAuctionResponse, DetailedAuctionResponseViewModel>();
-		CreateMap<PreviewAuctionResponse, PreviewAuctionResponseViewModel>();
-		CreateMap<UpdateAuctionRequestViewModel, UpdateAuctionRequest>();
+		CreateMap<AuctionFilterViewModel, AuctionFilterRequest>();
+		CreateMap<CreateAuctionViewModel, CreateAuctionRequest>();
+		CreateMap<DetailedAuctionResponse, DetailedAuctionViewModel>();
+		CreateMap<PreviewAuctionResponse, PreviewAuctionViewModel>();
+		CreateMap<UpdateAuctionViewModel, UpdateAuctionRequest>();
 	}
 }
