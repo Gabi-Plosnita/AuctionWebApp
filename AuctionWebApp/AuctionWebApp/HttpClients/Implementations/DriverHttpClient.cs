@@ -3,9 +3,9 @@ using AuctionWebApp.Models;
 
 namespace AuctionWebApp.HttpClients;
 
-public class DriversHttpClient : BaseHttpClient, IDriversHttpClient
+public class DriverHttpClient : BaseHttpClient, IDriverHttpClient
 {
-	public DriversHttpClient(HttpClient http) : base(http) { }
+	public DriverHttpClient(HttpClient http) : base(http) { }
 
 	public async Task<Result<List<DriverResponse>>> GetAllAsync()
 		=> await SendRequestAsync<List<DriverResponse>>("api/drivers", HttpMethod.Get);

@@ -3,7 +3,7 @@ using AuctionWebApp.Models;
 
 namespace AuctionWebApp.HttpClients;
 
-public interface IAuctionsHttpClient
+public interface IAuctionHttpClient
 {
 	Task<Result<PagedResult<PreviewAuctionResponse>>> GetByFilterAsync(AuctionFilterRequest filter);
 

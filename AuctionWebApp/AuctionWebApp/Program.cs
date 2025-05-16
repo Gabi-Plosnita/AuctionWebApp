@@ -18,35 +18,35 @@ builder.Services
 .AddHttpMessageHandler<CookieHandler>();
 
 builder.Services
-.AddHttpClient<ICategoriesHttpClient, CategoriesHttpClient>(client =>
+.AddHttpClient<ICategoryHttpClient, CategoryHttpClient>(client =>
 {
 	client.BaseAddress = baseAddress;
 })
 .AddHttpMessageHandler<CookieHandler>();
 
 builder.Services
-.AddHttpClient<IAdminsHttpClient, AdminsHttpClient>(client =>
+.AddHttpClient<IAdminHttpClient, AdminHttpClient>(client =>
 {
 	client.BaseAddress = baseAddress;
 })
 .AddHttpMessageHandler<CookieHandler>();
 
 builder.Services
-.AddHttpClient<IDriversHttpClient, DriversHttpClient>(client =>
+.AddHttpClient<IDriverHttpClient, DriverHttpClient>(client =>
 {
 	client.BaseAddress = baseAddress;
 })
 .AddHttpMessageHandler<CookieHandler>();
 
 builder.Services
-.AddHttpClient<IUsersHttpClient, UsersHttpClient>(client =>
+.AddHttpClient<IUserHttpClient, UserHttpClient>(client =>
 {
 	client.BaseAddress = baseAddress;
 })
 .AddHttpMessageHandler<CookieHandler>();
 
 builder.Services
-.AddHttpClient<IAuctionsHttpClient, AuctionsHttpClient>(client =>
+.AddHttpClient<IAuctionHttpClient, AuctionHttpClient>(client =>
 {
 	client.BaseAddress = baseAddress;
 })

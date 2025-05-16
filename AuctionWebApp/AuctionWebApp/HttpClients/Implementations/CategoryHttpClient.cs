@@ -3,9 +3,9 @@ using AuctionWebApp.Models;
 
 namespace AuctionWebApp.HttpClients;
 
-public class CategoriesHttpClient : BaseHttpClient, ICategoriesHttpClient
+public class CategoryHttpClient : BaseHttpClient, ICategoryHttpClient
 {
-	public CategoriesHttpClient(HttpClient http) : base(http) { }
+	public CategoryHttpClient(HttpClient http) : base(http) { }
 
 	public async Task<Result<List<CategoryResponse>>> GetAllAsync()
 		=> await SendRequestAsync<List<CategoryResponse>>("api/categories", HttpMethod.Get);

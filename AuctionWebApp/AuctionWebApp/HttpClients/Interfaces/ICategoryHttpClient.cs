@@ -3,7 +3,7 @@ using AuctionWebApp.Models;
 
 namespace AuctionWebApp.HttpClients;
 
-public interface ICategoriesHttpClient
+public interface ICategoryHttpClient
 {
 	Task<Result<List<CategoryResponse>>> GetAllAsync();
 

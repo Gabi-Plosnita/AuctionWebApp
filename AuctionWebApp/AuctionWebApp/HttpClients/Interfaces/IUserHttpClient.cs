@@ -3,7 +3,7 @@ using AuctionWebApp.Models;
 
 namespace AuctionWebApp.HttpClients;
 
-public interface IUsersHttpClient
+public interface IUserHttpClient
 {
 	Task<Result<UserResponse>> GetByIdAsync(int id);
 

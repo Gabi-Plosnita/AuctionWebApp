@@ -3,7 +3,7 @@ using AuctionWebApp.Models;
 
 namespace AuctionWebApp.HttpClients;
 
-public interface IDriversHttpClient
+public interface IDriverHttpClient
 {
 	Task<Result<List<DriverResponse>>> GetAllAsync();
 

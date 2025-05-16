@@ -3,9 +3,9 @@ using AuctionWebApp.Models;
 
 namespace AuctionWebApp.HttpClients;
 
-public class UsersHttpClient : BaseHttpClient, IUsersHttpClient
+public class UserHttpClient : BaseHttpClient, IUserHttpClient
 {
-	public UsersHttpClient(HttpClient http) : base(http) { }
+	public UserHttpClient(HttpClient http) : base(http) { }
 
 	public async Task<Result<UserResponse>> GetByIdAsync(int id)
 		=> await SendRequestAsync<UserResponse>($"api/users/{id}", HttpMethod.Get);

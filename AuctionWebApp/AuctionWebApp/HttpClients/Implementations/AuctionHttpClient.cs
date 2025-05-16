@@ -3,9 +3,9 @@ using AuctionWebApp.Models;
 
 namespace AuctionWebApp.HttpClients;
 
-public class AuctionsHttpClient : BaseHttpClient, IAuctionsHttpClient
+public class AuctionHttpClient : BaseHttpClient, IAuctionHttpClient
 {
-	public AuctionsHttpClient(HttpClient http) : base(http) { }
+	public AuctionHttpClient(HttpClient http) : base(http) { }
 
 	public async Task<Result<PagedResult<PreviewAuctionResponse>>> GetByFilterAsync(AuctionFilterRequest filter)
 		=> await SendRequestWithQueryAsync<PagedResult<PreviewAuctionResponse>>("api/auctions", HttpMethod.Get, filter); 
