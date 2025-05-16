@@ -19,6 +19,6 @@ public class UserHttpClient : BaseHttpClient, IUserHttpClient
 	public async Task<Result<string>> GetAccountLinkAsync(CreateAccountLinkRequest createLinkRequest)
 		=> await SendRequestAsync<string>("api/users/generate-account-link", HttpMethod.Post, createLinkRequest);
 
-	public async Task<Result<string>> CreateCustomerAccountAsync(CreateStripeCustomerAccountRequest createStripeCustomerAccountRequest)
-		=> await SendRequestAsync<string>("api/users/create-customer-account", HttpMethod.Post, createStripeCustomerAccountRequest);
+	public async Task<Result<string>> CreateCustomerAccountAsync(CreateStripeCustomerAccountRequest createCustomerAccountRequest)
+		=> await SendRequestAsync<string>("api/users/create-customer-account", HttpMethod.Post, createCustomerAccountRequest);
 }

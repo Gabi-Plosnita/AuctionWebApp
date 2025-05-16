@@ -5,17 +5,17 @@ namespace AuctionWebApp.HttpClients;
 
 public interface IAuthHttpClient
 {
-	Task<Result<AdminResponse>> RegisterAdminAsync(RegisterAdminRequest request);
+	Task<Result<AdminResponse>> RegisterAdminAsync(RegisterAdminRequest registerAdminRequest);
 	
-	Task<Result> LoginAdminAsync(LoginRequest request);
+	Task<Result> LoginAdminAsync(LoginRequest loginRequest);
 
-	Task<Result<DriverResponse>> RegisterDriverAsync(RegisterDriverRequest request);
+	Task<Result<DriverResponse>> RegisterDriverAsync(RegisterDriverRequest registerDriverRequest);
 	
-	Task<Result> LoginDriverAsync(LoginRequest request);
+	Task<Result> LoginDriverAsync(LoginRequest loginRequest);
 
-	Task<Result<UserResponse>> RegisterUserAsync(RegisterUserRequest request);
+	Task<Result<UserResponse>> RegisterUserAsync(RegisterUserRequest registerUserRequest);
 	
-	Task<Result> LoginUserAsync(LoginRequest request);
+	Task<Result> LoginUserAsync(LoginRequest loginRequest);
 
 	Task<Result> LogoutAsync();
 }

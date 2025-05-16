@@ -13,5 +13,5 @@ public interface IUserHttpClient
 
 	Task<Result<string>> GetAccountLinkAsync(CreateAccountLinkRequest createLinkRequest);
 
-	Task<Result<string>> CreateCustomerAccountAsync(CreateStripeCustomerAccountRequest createStripeCustomerAccountRequest);
+	Task<Result<string>> CreateCustomerAccountAsync(CreateStripeCustomerAccountRequest createCustomerAccountRequest);
 }
