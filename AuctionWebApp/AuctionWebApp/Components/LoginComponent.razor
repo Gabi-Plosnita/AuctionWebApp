@@ -1,0 +1,32 @@
+﻿@using AuctionWebApp.ViewModels
+
+<div class="login-card">
+    <h2 class="login-card__title">Sign In</h2>
+
+    <EditForm Model="Model" OnValidSubmit="HandleValidSubmit" class="login-card__form">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="login-card__group">
+            <label for="emailInput" class="login-card__label">Email</label>
+            <InputText id="emailInput" @bind-Value="Model.Email" class="login-card__input" />
+            <ValidationMessage For="() => Model.Email" class="login-card__validation" />
+        </div>
+
+        <div class="login-card__group">
+            <label for="passwordInput" class="login-card__label">Password</label>
+            <InputText id="passwordInput"
+                       type="@(ShowPassword ? "text" : "password")"
+                       @bind-Value="Model.Password"
+                       class="login-card__input" />
+            <ValidationMessage For="() => Model.Password" class="login-card__validation" />
+        </div>
+
+        <div class="login-card__toggle">
+            <InputCheckbox id="showPasswordCheck" @bind-Value="ShowPassword" class="login-card__checkbox" />
+            <label for="showPasswordCheck" class="login-card__checkbox-label">Show password</label>
+        </div>
+
+        <button type="submit" class="login-card__submit">Login</button>
+    </EditForm>
+</div>
