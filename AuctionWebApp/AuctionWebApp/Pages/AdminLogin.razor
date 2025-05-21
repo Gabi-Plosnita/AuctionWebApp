@@ -2,10 +2,11 @@
 @using AuctionWebApp.Components
 @using AuctionWebApp.ViewModels
 
-<LoginComponent 
-    Title="Login Admin"
-    Model="AdminModel" 
-    OnValidSubmit="HandleAdminLogin" />
+<div class="login-wrapper">
+    <LoginComponent Title="Login Admin"
+                    Model="AdminModel"
+                    OnValidSubmit="HandleAdminLogin" />
+</div>
 
 @if (ShowPopup)
 {
