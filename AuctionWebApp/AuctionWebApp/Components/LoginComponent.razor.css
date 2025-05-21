@@ -1,5 +1,4 @@
-﻿/* Center the card in its parent */
-.login-card {
+﻿.login-card {
     max-width: 360px;
     margin: 2rem auto;
     padding: 2rem;
@@ -16,9 +15,11 @@
     color: #333;
 }
 
-/* Form groups */
 .login-card__group {
+    display: flex;
+    justify-content: center;
     margin-bottom: 1rem;
+    height: 50px;
 }
 
 .login-card__label {
@@ -50,7 +51,6 @@
     font-size: 0.875rem;
 }
 
-/* Show-password toggle */
 .login-card__toggle {
     display: flex;
     align-items: center;
@@ -66,7 +66,6 @@
     color: #555;
 }
 
-/* Submit button */
 .login-card__submit {
     width: 100%;
     padding: 0.6rem;
@@ -79,6 +78,13 @@
     cursor: pointer;
     transition: background-color 0.2s, box-shadow 0.2s;
 }
+
+.login-card__summary {
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #d9534f;
+}
+
 
     .login-card__submit:hover {
         background-color: #006edc;

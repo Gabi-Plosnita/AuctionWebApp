@@ -10,8 +10,7 @@ public class LoginViewModel
 	public string Email { get; set; } = string.Empty;
 
 	[Required(ErrorMessage = "Password is required")]
-	[StringLength(100, MinimumLength = 4, ErrorMessage = "Password must be between 4 and 100 characters")]
-	[RegularExpression(@".*\S+.*", ErrorMessage = "Password cannot be blank or whitespace only")]
+	[RegularExpression(@".*\S+.*", ErrorMessage = "Password is required")]
 	[DataType(DataType.Password)]
 	public string Password { get; set; } = string.Empty;
 }
