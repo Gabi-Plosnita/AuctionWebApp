@@ -7,6 +7,9 @@ namespace AuctionWebApp.Components;
 public partial class LoginComponent : ComponentBase
 {
 	[Parameter]
+	public string Title { get; set; } = "Login";
+
+	[Parameter]
 	public LoginViewModel Model { get; set; } = new LoginViewModel();
 
 	[Parameter]

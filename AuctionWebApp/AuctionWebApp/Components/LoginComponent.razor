@@ -1,6 +1,8 @@
 ﻿@using AuctionWebApp.ViewModels
 
 <div class="login-card">
+	<h1 class="login-card__title">@Title</h1>
+
     <EditForm EditContext="_editContext"
               OnValidSubmit="HandleValidSubmit"
               OnInvalidSubmit="HandleInvalidSubmit"
@@ -13,18 +15,20 @@
         }
 
         <div class="login-card__group">
-            <InputText id="emailInput"
-                       @bind-Value="Model.Email"
-                       class="login-card__input"
-                       placeholder="Email address" />
+            <input id="emailInput"
+                   @bind="Model.Email"
+                   @bind:event="oninput"
+                   class="login-card__input"
+                   placeholder="Email address" />
         </div>
 
         <div class="login-card__group">
-            <InputText id="passwordInput"
-                       type="@(ShowPassword ? "text" : "password")"
-                       @bind-Value="Model.Password"
-                       class="login-card__input"
-                       placeholder="Password" />
+            <input id="passwordInput"
+                   type="@(ShowPassword ? "text" : "password")"
+                   @bind="Model.Password"
+                   @bind:event="oninput"
+                   class="login-card__input"
+                   placeholder="Password" />
         </div>
 
         <div class="login-card__toggle">
