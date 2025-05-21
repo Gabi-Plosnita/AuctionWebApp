@@ -19,7 +19,6 @@
         <div class="login-card__group">
             <input id="emailInput"
                    @bind="Model.Email"
-                   @bind:event="oninput"
                    class="login-card__input"
                    placeholder="Email address" />
         </div>
@@ -28,7 +27,6 @@
             <input id="passwordInput"
                    type="@(ShowPassword ? "text" : "password")"
                    @bind="Model.Password"
-                   @bind:event="oninput"
                    class="login-card__input"
                    placeholder="Password" />
         </div>

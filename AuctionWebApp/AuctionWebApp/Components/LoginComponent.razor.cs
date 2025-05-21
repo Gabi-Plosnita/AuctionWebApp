@@ -22,11 +22,6 @@ public partial class LoginComponent : ComponentBase
 	protected override void OnInitialized()
 	{
 		_editContext = new EditContext(Model);
-		_editContext.OnFieldChanged += (_, __) =>
-		{
-			showSummary = false;
-			StateHasChanged();
-		};
 	}
 
 	protected async Task HandleValidSubmit()
