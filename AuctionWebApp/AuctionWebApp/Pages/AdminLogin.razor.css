@@ -1,35 +1,40 @@
-﻿:global(body) {
-    margin: 0;
-    padding: 0;
-    background-color: #f0f2f5;
-    font-family: 'Segoe UI', Roboto, sans-serif;
-}
-
-/* 2. Title styling */
-.admin-login__title {
-    text-align: center;
-    margin: 3rem 0 1.5rem;
-    font-size: 2.25rem;
-    color: #333;
-    font-weight: 600;
-}
-
-/* 3. Center the inner login card (from LoginComponent) */
-:global(.login-card) {
-    margin: 0 auto 2rem;
-    max-width: 400px;
+﻿.popup-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
 }
 
-/* 4. Responsive tweaks */
-@media (max-width: 576px) {
-    .admin-login__title {
-        font-size: 1.75rem;
-        margin: 2rem 0 1rem;
+.popup {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+    .popup h3 {
+        margin-top: 0;
+        color: #d9534f;
     }
 
-    :global(.login-card) {
-        margin: 0 auto 1rem;
-        padding: 1.5rem 1rem;
+    .popup ul {
+        margin: 1rem 0;
+        padding-left: 1.25rem;
     }
+
+.popup-close {
+    padding: 0.5rem 1rem;
+    background: #2684ff;
+    color: #fff;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
 }
