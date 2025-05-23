@@ -1,4 +1,5 @@
-﻿using AuctionWebApp.ViewModels;
+﻿using AuctionWebApp.Helpers;
+using AuctionWebApp.ViewModels;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 
@@ -13,9 +14,12 @@ public partial class LoginComponent : ComponentBase
 	public LoginViewModel Model { get; set; } = new LoginViewModel();
 
 	[Parameter]
-	public EventCallback<LoginViewModel> OnValidSubmit { get; set; }
+	public Func<LoginViewModel, Task<Result>> OnValidSubmit { get; set; }
+
+	private List<string> ErrorMessages { get; set; } = new List<string>();
 
 	private EditContext _editContext;
+
 	private bool showSummary;
 	protected bool ShowPassword { get; set; }
 
@@ -27,11 +31,21 @@ public partial class LoginComponent : ComponentBase
 	protected async Task HandleValidSubmit()
 	{
 		showSummary = false;
-		await OnValidSubmit.InvokeAsync(Model);
+		ErrorMessages.Clear();
+		if (OnValidSubmit != null)
+		{
+			var result = await OnValidSubmit(Model);
+			if (result.HasErrors)
+			{
+				ErrorMessages = result.Errors;
+				StateHasChanged();
+			}
+		}
 	}
 
 	protected void HandleInvalidSubmit()
 	{
+		ErrorMessages.Clear();
 		showSummary = true;
 	}
 }

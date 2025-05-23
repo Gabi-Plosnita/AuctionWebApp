@@ -16,6 +16,18 @@
             </div>
         }
 
+        @if(ErrorMessages.Count != 0)
+        {
+            <div class="login-card__summary">
+                <ul class="validation-errors">
+                    @foreach (var err in ErrorMessages)
+                    {
+                        <li>@err</li>
+                    }
+                </ul>
+            </div>
+        }
+
         <div class="login-card__group">
             <input id="emailInput"
                    @bind="Model.Email"

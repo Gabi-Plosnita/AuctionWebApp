@@ -1,4 +1,5 @@
-﻿using AuctionWebApp.Services;
+﻿using AuctionWebApp.Helpers;
+using AuctionWebApp.Services;
 using AuctionWebApp.ViewModels;
 using Microsoft.AspNetCore.Components;
 
@@ -13,25 +14,14 @@ public partial class AdminLogin : ComponentBase
 	public NavigationManager Navigation { get; set; } = default!;
 
 	protected LoginViewModel AdminModel { get; set; } = new LoginViewModel();
-	protected bool ShowPopup { get; set; }
-	protected List<string> ErrorMessages { get; set; } = new List<string>();
 
-	protected async Task HandleAdminLogin(LoginViewModel model)
+	protected async Task<Result> HandleAdminLogin(LoginViewModel model)
 	{
 		var result = await _authService.LoginAdminAsync(model);
 		if (!result.HasErrors)
 		{
 			Navigation.NavigateTo("/");
 		}
-		else
-		{
-			ErrorMessages = result.Errors.ToList();
-			ShowPopup = true;
-		}
-	}
-
-	void ClosePopup()
-	{
-		ShowPopup = false;
+		return result;
 	}
 }
