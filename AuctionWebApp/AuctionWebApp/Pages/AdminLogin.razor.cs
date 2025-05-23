@@ -13,9 +13,6 @@ public partial class AdminLogin : ComponentBase
 	[Inject]
 	public NavigationManager Navigation { get; set; } = default!;
 
-	[Inject]
-	private JwtAuthStateProvider AuthStateProvider { get; set; } = default!;
-
 	protected LoginViewModel AdminModel { get; set; } = new LoginViewModel();
 
 	protected async Task<Result> HandleAdminLogin(LoginViewModel model)
@@ -23,7 +20,6 @@ public partial class AdminLogin : ComponentBase
 		var result = await _authService.LoginAdminAsync(model);
 		if (!result.HasErrors)
 		{
-			AuthStateProvider.NotifyAuthChanged();
 			Navigation.NavigateTo("/admin-dashboard");
 		}
 		return result;
