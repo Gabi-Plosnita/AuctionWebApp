@@ -70,6 +70,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 
 // Register authorization service //
 builder.Services.AddScoped<AuthenticationStateProvider, JwtAuthStateProvider>();
+builder.Services.AddScoped<JwtAuthStateProvider>();
 builder.Services.AddAuthorizationCore();
 
 await builder.Build().RunAsync();
