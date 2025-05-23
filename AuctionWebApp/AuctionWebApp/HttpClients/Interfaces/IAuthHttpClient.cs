@@ -18,4 +18,6 @@ public interface IAuthHttpClient
 	Task<Result> LoginUserAsync(LoginRequest loginRequest);
 
 	Task<Result> LogoutAsync();
+
+	Task<Result<AuthenticatedUserResponse>> GetAuthenticatedUserResponseAsync();
 }

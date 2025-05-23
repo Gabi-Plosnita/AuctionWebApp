@@ -1,6 +1,9 @@
-﻿@page "/admin-login"
-@using AuctionWebApp.Components
+﻿@using AuctionWebApp.Components
 @using AuctionWebApp.ViewModels
+@using Microsoft.AspNetCore.Authorization
+
+@page "/admin-login"
+@attribute [AllowAnonymous]
 
 <div class="login-wrapper">
     <LoginComponent Title="Login Admin"

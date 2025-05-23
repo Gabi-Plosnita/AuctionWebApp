@@ -27,4 +27,7 @@ public class AuthHttpClient : BaseHttpClient, IAuthHttpClient
 
 	public async Task<Result> LogoutAsync()
 		=> await SendRequestAsync("api/auth/logout", HttpMethod.Post, null);
+
+	public async Task<Result<AuthenticatedUserResponse>> GetAuthenticatedUserResponseAsync()
+		=> await SendRequestAsync<AuthenticatedUserResponse>("api/auth/me", HttpMethod.Get, null);
 }

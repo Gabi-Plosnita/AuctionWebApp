@@ -1,6 +1,7 @@
 using AuctionWebApp;
 using AuctionWebApp.HttpClients;
 using AuctionWebApp.Services;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
@@ -66,5 +67,9 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IDriverService, DriverService>();
 builder.Services.AddScoped<IUserService, UserService>();
+
+// Register authorization service //
+builder.Services.AddScoped<AuthenticationStateProvider, JwtAuthStateProvider>();
+builder.Services.AddAuthorizationCore();
 
 await builder.Build().RunAsync();

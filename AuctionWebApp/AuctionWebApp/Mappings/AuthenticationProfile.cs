@@ -9,5 +9,6 @@ public class AuthenticationProfile : Profile
 	public AuthenticationProfile()
 	{
 		CreateMap<LoginViewModel, LoginRequest>();
+		CreateMap<AuthenticatedUserResponse, AuthenticatedUserViewModel>();
 	}
 }

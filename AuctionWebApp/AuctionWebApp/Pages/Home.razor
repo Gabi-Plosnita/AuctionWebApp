@@ -1,7 +1,11 @@
-﻿@page "/"
-@using AuctionWebApp.Enums
+﻿@using AuctionWebApp.Enums
 @using AuctionWebApp.Models
 @using AuctionWebApp.HttpClients
+@using Microsoft.AspNetCore.Authorization
+
+@page "/"
+@attribute [AllowAnonymous]
+
 @inject IAuthHttpClient AuthClient
 @inject ICategoryHttpClient CategoriesClient
 @inject IAuctionHttpClient AuctionsHttpClient

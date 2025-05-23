@@ -2,6 +2,6 @@
 
 namespace AuctionWebApp.Pages;
 
-public partial class Admin : ComponentBase
+public partial class AdminDashboard : ComponentBase
 {
 }
