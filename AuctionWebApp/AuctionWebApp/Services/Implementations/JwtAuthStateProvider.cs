@@ -1,11 +1,28 @@
 ﻿using AuctionWebApp.HttpClients;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Components.Routing;
 using System.Security.Claims;
 
 namespace AuctionWebApp.Services;
 
-public class JwtAuthStateProvider(IAuthHttpClient _authClient) : AuthenticationStateProvider
+public class JwtAuthStateProvider : AuthenticationStateProvider, IDisposable
 {
+	private readonly IAuthHttpClient _authClient;
+	private readonly NavigationManager _navManager;
+
+	public JwtAuthStateProvider(IAuthHttpClient authClient, NavigationManager navManager)
+	{
+		_authClient = authClient;
+		_navManager = navManager;
+		_navManager.LocationChanged += HandleLocationChanged;
+	}
+
+	private void HandleLocationChanged(object? sender, LocationChangedEventArgs e)
+	{
+		NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
+	}
+
 	public override async Task<AuthenticationState> GetAuthenticationStateAsync()
 	{
 		var result = await _authClient.GetAuthenticatedUserResponseAsync();
@@ -25,4 +42,9 @@ public class JwtAuthStateProvider(IAuthHttpClient _authClient) : AuthenticationS
 
 	public void NotifyAuthChanged()
 		=> NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
+
+	public void Dispose()
+	{
+		_navManager.LocationChanged -= HandleLocationChanged;
+	}
 }
