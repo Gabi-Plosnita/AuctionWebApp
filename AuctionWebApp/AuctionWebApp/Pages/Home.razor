@@ -1,14 +1,19 @@
 ﻿@using AuctionWebApp.Enums
 @using AuctionWebApp.Models
 @using AuctionWebApp.HttpClients
+@using AuctionWebApp.Services
 @using Microsoft.AspNetCore.Authorization
 
 @page "/"
-@attribute [AllowAnonymous]
 
 @inject IAuthHttpClient AuthClient
 @inject ICategoryHttpClient CategoriesClient
 @inject IAuctionHttpClient AuctionsHttpClient
+
+<a href="/admin-login">Admin Login Page</a>
+<br />
+<a href="/admin-dashboard">Admin Dashboard Page</a>
+
 
 <h2>Admin Login</h2>
 <div>
