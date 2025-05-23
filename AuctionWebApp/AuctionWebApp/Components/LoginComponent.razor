@@ -16,11 +16,11 @@
             </div>
         }
 
-        @if(ErrorMessages.Count != 0)
+        @if(LoginErrorMessages.Count != 0)
         {
             <div class="login-card__summary">
-                <ul class="validation-errors">
-                    @foreach (var err in ErrorMessages)
+                <ul class="login-errors">
+                    @foreach (var err in LoginErrorMessages)
                     {
                         <li>@err</li>
                     }

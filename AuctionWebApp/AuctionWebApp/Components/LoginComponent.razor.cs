@@ -16,7 +16,7 @@ public partial class LoginComponent : ComponentBase
 	[Parameter]
 	public Func<LoginViewModel, Task<Result>> OnValidSubmit { get; set; }
 
-	private List<string> ErrorMessages { get; set; } = new List<string>();
+	private List<string> LoginErrorMessages { get; set; } = new List<string>();
 
 	private EditContext _editContext;
 
@@ -31,13 +31,13 @@ public partial class LoginComponent : ComponentBase
 	protected async Task HandleValidSubmit()
 	{
 		showSummary = false;
-		ErrorMessages.Clear();
+		LoginErrorMessages.Clear();
 		if (OnValidSubmit != null)
 		{
 			var result = await OnValidSubmit(Model);
 			if (result.HasErrors)
 			{
-				ErrorMessages = result.Errors;
+				LoginErrorMessages = result.Errors;
 				StateHasChanged();
 			}
 		}
@@ -45,7 +45,7 @@ public partial class LoginComponent : ComponentBase
 
 	protected void HandleInvalidSubmit()
 	{
-		ErrorMessages.Clear();
+		LoginErrorMessages.Clear();
 		showSummary = true;
 	}
 }

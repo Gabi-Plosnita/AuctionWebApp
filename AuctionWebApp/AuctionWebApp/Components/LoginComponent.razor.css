@@ -88,6 +88,10 @@
     border-left: 4px solid #d9534f;
 }
 
+.login-errors {
+    color : red;
+}
+
     .login-card__submit:hover {
         background-color: #006edc;
     }
