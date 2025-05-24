@@ -116,6 +116,14 @@ else if (!string.IsNullOrEmpty(driverSuccess))
     <button type="submit" class="btn btn-primary">Submit</button>
 </EditForm>
 
+<h3>Auction Image Test</h3>
+
+<img src="https://localhost:7149/uploads/auctions/1/861fe6da-d084-485d-87a5-2bf815955b1f.jpg"
+     alt="Test Auction Image"
+     style="max-width:300px; display:block; margin:1rem 0;" />
+
+<p>When you hit this page, the above image should render from your uploads folder.</p>
+
 @code {
     private string adminEmail = "";
     private string adminPassword = "";
