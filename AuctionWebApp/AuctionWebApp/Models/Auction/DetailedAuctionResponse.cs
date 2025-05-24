@@ -26,6 +26,8 @@ public record DetailedAuctionResponse
 
 	public UserResponse Seller { get; init; } = default!;
 
+	public DriverResponse? Driver { get; init; } = null;
+
 	public CategoryResponse Category { get; init; } = default!;
 
 	public List<BidResponse> Bids { get; init; } = new();

@@ -15,6 +15,7 @@ public class DetailedAuctionViewModel
 	public DateTime EndTime { get; set; }
 	public AuctionStatus Status { get; set; }
 	public required UserViewModel Seller { get; set; }
+	public DriverViewModel? Driver { get; set; } = null;
 	public required CategoryViewModel Category { get; set; }
 	public List<BidViewModel> Bids { get; set; } = new List<BidViewModel>();
 }

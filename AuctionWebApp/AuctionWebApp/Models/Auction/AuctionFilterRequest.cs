@@ -10,6 +10,10 @@ public record AuctionFilterRequest
 
 	public int? BidderId { get; set; }
 
+	public bool IgnoreDriverId { get; init; } = true;
+
+	public int? DriverId { get; init; }
+
 	public string? TextSearch { get; set; }
 
 	public AuctionStatus? Status { get; set; } = AuctionStatus.InProgress;

@@ -13,6 +13,10 @@ public class AuctionFilterViewModel
 
 	[Range(1, int.MaxValue, ErrorMessage = "BidderId must be a positive integer")]
 	public int? BidderId { get; set; }
+	public bool IgnoreDriverId { get; init; } = true;
+
+	[Range(1, int.MaxValue, ErrorMessage = "DriverId must be a positive integer")]
+	public int? DriverId { get; init; }
 
 	[StringLength(200, ErrorMessage = "TextSearch cannot exceed 200 characters")]
 	public string? TextSearch { get; set; }
