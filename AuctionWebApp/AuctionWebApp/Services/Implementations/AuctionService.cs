@@ -77,6 +77,12 @@ public class AuctionService(IAuctionHttpClient _auctionClient, IMapper _mapper) 
 		return clientResult;
 	}
 
+	public async Task<Result> AssignDriverAsync(int auctionId, int driverId)
+	{
+		var assignDriverRequest = new AssignDriverRequest { DriverId = driverId };
+		var clientResult = await _auctionClient.AssignDriverAsync(auctionId, assignDriverRequest);
+		return clientResult;
+	}
 	public async Task<Result> CompleteAuctionAsync(int id)
 	{
 		var clientResult = await _auctionClient.CompleteAuctionAsync(id);

@@ -17,5 +17,7 @@ public interface IAuctionService
 
 	Task<Result> UpdateAsync(int id, UpdateAuctionViewModel updateAuctionViewModel);
 
+	Task<Result> AssignDriverAsync(int auctionId, int driverId);
+
 	Task<Result> CompleteAuctionAsync(int id);
 }

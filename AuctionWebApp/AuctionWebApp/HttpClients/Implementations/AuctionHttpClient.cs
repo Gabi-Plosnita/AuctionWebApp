@@ -25,6 +25,9 @@ public class AuctionHttpClient : BaseHttpClient, IAuctionHttpClient
 	public async Task<Result> UpdateAsync(int id, UpdateAuctionRequest updateAuctionRequest)
 		=> await SendRequestAsync($"api/auctions/{id}", HttpMethod.Put, updateAuctionRequest);
 
+	public async Task<Result> AssignDriverAsync(int id, AssignDriverRequest assignDriverRequest)
+		=> await SendRequestAsync($"api/auctions/{id}/driver", HttpMethod.Put, assignDriverRequest);
+
 	public async Task<Result> CompleteAuctionAsync(int id)
 		=> await SendRequestAsync($"api/auctions/{id}/complete", HttpMethod.Post);
 }

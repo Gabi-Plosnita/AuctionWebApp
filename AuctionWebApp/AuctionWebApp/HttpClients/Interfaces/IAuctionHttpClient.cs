@@ -17,5 +17,7 @@ public interface IAuctionHttpClient
 
 	Task<Result> UpdateAsync(int id, UpdateAuctionRequest updateAuctionRequest);
 
+	Task<Result> AssignDriverAsync(int id, AssignDriverRequest assignDriverRequest);
+
 	Task<Result> CompleteAuctionAsync(int id);
 }
