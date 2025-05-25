@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using System.Net;
 using System.Net.Http.Json;
 using System.Reflection;
+using System.Text;
 using System.Text.Json;
 
 namespace AuctionWebApp.HttpClients;
@@ -104,6 +105,133 @@ public abstract class BaseHttpClient
 		}
 
 		return await SendRequestAsync<T>(url, method);
+	}
+
+	protected async Task<Result<T>> SendFormRequestAsync<T>(string url, HttpMethod method, object formObject)
+	{
+		if (formObject is null) 
+		{
+			return new Result<T> { Errors = new List<string> { "Form object cannot be null." } };
+		}
+
+		using var request = new HttpRequestMessage(method, url);
+		using var multipart = new MultipartFormDataContent();
+		var props = formObject.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+		foreach (var prop in props)
+		{
+			var value = prop.GetValue(formObject);
+			if (value is null) continue;
+
+			HttpContent part;
+			switch (value)
+			{
+				case Stream stream:
+					part = new StreamContent(stream);
+					multipart.Add(part, prop.Name, prop.Name);
+					continue;
+
+				case byte[] bytes:
+					part = new ByteArrayContent(bytes);
+					multipart.Add(part, prop.Name, prop.Name);
+					continue;
+
+				default:
+					part = new StringContent(value.ToString()!, Encoding.UTF8);
+					multipart.Add(part, prop.Name);
+					continue;
+			}
+		}
+
+		request.Content = multipart;
+
+		HttpResponseMessage response;
+		try
+		{
+			response = await _http.SendAsync(request);
+		}
+		catch (Exception ex)
+		{
+			return new Result<T> { Errors = new List<string> { ex.Message } };
+		}
+
+		using (response)
+		{
+			if (!response.IsSuccessStatusCode)
+				return new Result<T> { Errors = await ExtractErrorsAsync(response) };
+
+			if (response.StatusCode == HttpStatusCode.NoContent || response.Content.Headers.ContentLength == 0)
+				return new Result<T>();
+
+			try
+			{
+				var data = await response.Content.ReadFromJsonAsync<T>(_jsonOptions);
+				return data is null
+					? new Result<T> { Errors = new List<string> { "Empty or invalid response body." } }
+					: new Result<T> { Data = data };
+			}
+			catch (Exception ex)
+			{
+				return new Result<T> { Errors = new List<string> { ex.Message } };
+			}
+		}
+	}
+
+	protected async Task<Result> SendFormRequestAsync(string url, HttpMethod method, object formObject)
+	{
+		if (formObject is null)
+		{
+			return new Result { Errors = new List<string> { "Form object cannot be null." } };
+		}
+
+		using var request = new HttpRequestMessage(method, url);
+		using var multipart = new MultipartFormDataContent();
+		var props = formObject.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+		foreach (var prop in props)
+		{
+			var value = prop.GetValue(formObject);
+			if (value is null) continue;
+
+			HttpContent part;
+			switch (value)
+			{
+				case Stream stream:
+					part = new StreamContent(stream);
+					multipart.Add(part, prop.Name, prop.Name);
+					continue;
+
+				case byte[] bytes:
+					part = new ByteArrayContent(bytes);
+					multipart.Add(part, prop.Name, prop.Name);
+					continue;
+
+				default:
+					part = new StringContent(value.ToString()!, Encoding.UTF8);
+					multipart.Add(part, prop.Name);
+					continue;
+			}
+		}
+
+		request.Content = multipart;
+
+		HttpResponseMessage response;
+		try
+		{
+			response = await _http.SendAsync(request);
+		}
+		catch (Exception ex)
+		{
+			return new Result { Errors = new List<string> { ex.Message } };
+		}
+
+		using (response)
+		{
+			if (response.IsSuccessStatusCode)
+				return new Result();
+
+			return new Result { Errors = await ExtractErrorsAsync(response) };
+		}
 	}
 
 	private static async Task<List<string>> ExtractErrorsAsync(HttpResponseMessage response)
