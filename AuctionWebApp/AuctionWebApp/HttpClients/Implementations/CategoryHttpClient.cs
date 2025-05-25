@@ -11,8 +11,8 @@ public class CategoryHttpClient : BaseHttpClient, ICategoryHttpClient
 		=> await SendRequestAsync<List<CategoryResponse>>("api/categories", HttpMethod.Get);
 
 	public async Task<Result<CategoryResponse>> CreateAsync(CreateCategoryRequest createCategoryRequest)
-		=> await SendRequestAsync<CategoryResponse>("api/categories", HttpMethod.Post, createCategoryRequest);
+		=> await SendFormRequestAsync<CategoryResponse>("api/categories", HttpMethod.Post, createCategoryRequest);
 
 	public async Task<Result> UpdateAsync(int id, UpdateCategoryRequest updateCategoryRequest)
-		=> await SendRequestAsync($"api/categories/{id}", HttpMethod.Put, updateCategoryRequest);
+		=> await SendRequestAsync($"api/categories/{id}", HttpMethod.Put, updateCategoryRequest); // update this //
 }
