@@ -212,8 +212,23 @@ public abstract class BaseHttpClient
 			switch (value)
 			{
 				case Stream stream:
+					var ctProp = formObject.GetType().GetProperty(prop.Name + "ContentType");
+					var mime = ctProp?.GetValue(formObject) as string;
+
+					var extension = mime?.Split('/').LastOrDefault();
+					if (extension?.Equals("jpeg", StringComparison.OrdinalIgnoreCase) == true)
+						extension = "jpg";
+
+					var fileName = extension is null
+						? prop.Name
+						: $"{prop.Name}.{extension}";
+
 					part = new StreamContent(stream);
-					multipart.Add(part, prop.Name, prop.Name);
+					if (!string.IsNullOrEmpty(mime))
+						part.Headers.ContentType =
+							new System.Net.Http.Headers.MediaTypeHeaderValue(mime);
+
+					multipart.Add(part, prop.Name, fileName);
 					continue;
 
 				case byte[] bytes:
