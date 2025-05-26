@@ -6,5 +6,7 @@ public record UpdateCategoryRequest
 
 	public Stream? Image { get; set; }
 
+	public string? ImageContentType { get; set; }
+
 	public bool KeepImage { get; set; }
 }

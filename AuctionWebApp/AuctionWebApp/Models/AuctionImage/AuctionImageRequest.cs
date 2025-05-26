@@ -2,7 +2,7 @@
 
 public record AuctionImageRequest
 {
-	public byte[] ImageData { get; init; } = Array.Empty<byte>();
+	public Stream? Image { get; set; }
 
-	public string ImageContentType { get; init; } = string.Empty;
+	public string? ImageContentType { get; set; }
 }
