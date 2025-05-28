@@ -2,17 +2,17 @@
 
 public record CreateAuctionRequest
 {
-	public string Title { get; set; } = string.Empty;
+	public string Title { get; init; } = string.Empty;
 
-	public string Description { get; set; } = string.Empty;
+	public string Description { get; init; } = string.Empty;
 
-	public List<AuctionImageRequest> Images { get; set; } = new();
+	public List<AuctionImageRequest> Images { get; init; } = new();
 
-	public decimal StartingPrice { get; set; }
+	public decimal StartingPrice { get; init; }
 
-	public decimal MinBidIncrement { get; set; }
+	public decimal MinBidIncrement { get; init; }
 
-	public DateTime EndTime { get; set; }
+	public DateTime EndTime { get; init; }
 
-	public int CategoryId { get; set; }
+	public int CategoryId { get; init; }
 }

@@ -8,7 +8,7 @@ public record PreviewAuctionResponse
 
 	public string Title { get; init; } = string.Empty;
 
-	public List<AuctionImageResponse> Images { get; init; } = new List<AuctionImageRequest>();
+	public List<AuctionImageResponse> Images { get; init; } = new();
 	
 	public decimal CurrentPrice { get; init; }
 

@@ -2,5 +2,5 @@
 
 public record CreateStripeCustomerAccountRequest
 {
-	public string PaymentMethodId { get; set; } = string.Empty;
+	public string PaymentMethodId { get; init; } = string.Empty;
 }

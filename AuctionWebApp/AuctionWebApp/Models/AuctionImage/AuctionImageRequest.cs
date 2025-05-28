@@ -2,7 +2,7 @@
 
 public record AuctionImageRequest
 {
-	public Stream? Image { get; set; }
+	public Stream? Image { get; init; }
 
-	public string? ImageContentType { get; set; }
+	public string? ImageContentType { get; init; }
 }
