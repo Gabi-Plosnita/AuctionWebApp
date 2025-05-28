@@ -1,31 +1,33 @@
 ﻿<h1 class="text-center mt-10 mb-20">Categories</h1>
 
 <MudTable Items="categories"
-          Hover="true"
-          Loading="@_loading"
-          Breakpoint="Breakpoint.Sm"
-          LoadingProgressColor="Color.Info">
-    <HeaderContent>
-        <MudTh>Id</MudTh>
-        <MudTh>Name</MudTh>
-        <MudTh>Image</MudTh>
-    </HeaderContent>
-    <RowTemplate>
-        <MudTd DataLabel="Id">@context.Id</MudTd>
-        <MudTd DataLabel="Name">@context.Name</MudTd>
-        <MudTd DataLabel="Image">
-            @if (!string.IsNullOrEmpty(context.ImageUrl))
-            {
-                <MudAvatar Size="Size.Medium"
-                           Image="@context.ImageUrl"
-                           Alt="@context.Name" />
-            }
-            else
-            {
-                <MudAvatar Size="Size.Medium"
-                           Icon="@Icons.Material.Filled.ImageNotSupported" />
-            }
-        </MudTd>
-    </RowTemplate>
+		  Hover="true"
+		  Loading="@_loading"
+		  Breakpoint="Breakpoint.Sm"
+		  LoadingProgressColor="Color.Info">
+	<HeaderContent>
+		<MudTh>Id</MudTh>
+		<MudTh>Name</MudTh>
+		<MudTh>Image</MudTh>
+	</HeaderContent>
+	<RowTemplate>
+		<MudTd DataLabel="Id">@context.Id</MudTd>
+		<MudTd DataLabel="Name">@context.Name</MudTd>
+		<MudTd DataLabel="Image">
+			@if (!string.IsNullOrEmpty(context.ImageUrl))
+			{
+				<img src="@($"{AppSettings.ApiUrl}{context.ImageUrl}")"
+					 class="img-thumbnail"
+					 style="width: 200px; height: auto" />
+			}
+			else
+			{
+				<MudAvatar Size="Size.Medium"
+						   Icon="@Icons.Material.Filled.ImageNotSupported" />
+			}
+		</MudTd>
+	</RowTemplate>
 </MudTable>
+
+
 
