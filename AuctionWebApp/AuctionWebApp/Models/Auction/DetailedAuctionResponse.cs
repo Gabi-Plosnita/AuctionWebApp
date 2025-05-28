@@ -10,7 +10,7 @@ public record DetailedAuctionResponse
 
 	public string Description { get; init; } = "";
 
-	public List<AuctionImageRequest> Images { get; init; } = new();
+	public List<AuctionImageResponse> Images { get; init; } = new();
 
 	public decimal StartingPrice { get; init; }
 
