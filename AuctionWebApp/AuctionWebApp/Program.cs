@@ -14,7 +14,13 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddTransient<CookieHandler>();
 
 // Register HttpClients //
-var baseAddress = new Uri("https://localhost:7149/");
+var apiBase = builder.Configuration["ApiBaseUrl"]!;
+var baseAddress = new Uri(apiBase);
+AppSettings.ApiUrl = apiBase;
+
+builder.Services.AddScoped(sp =>
+  new HttpClient { BaseAddress = new Uri(apiBase) }
+);
 
 builder.Services
 .AddHttpClient<IAuthHttpClient, AuthHttpClient>(client =>
