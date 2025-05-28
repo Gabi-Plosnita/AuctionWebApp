@@ -5,13 +5,14 @@
 @attribute [Authorize(Roles = "Admin")]
 
 
-<MudTabs Centered="true"
-		 Elevation="2"
-		 Rounded="true"
-		 Outlined="true"
-		 Bordered="true"
-		 ApplyEffectsToContainer="true"
-		 PanelClass="pa-6"
+<MudTabs Class="full-screen-tabs"
+		 Style="width:100vw; height:100vh; margin:0; padding:0;"
+		 Centered="true"
+		 Elevation="0"        
+         Rounded="false"     
+         Bordered="false"    
+         ApplyEffectsToContainer="false"
+         PanelClass="pa-6"
 		 Color="Color.Primary">
 	<MudTabPanel Text="Categories">
 		<CategoriesTableComponent></CategoriesTableComponent>
