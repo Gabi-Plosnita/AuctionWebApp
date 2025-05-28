@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components.Forms;
+﻿using AuctionWebApp.Atributes;
+using Microsoft.AspNetCore.Components.Forms;
 using System.ComponentModel.DataAnnotations;
 
 namespace AuctionWebApp.ViewModels;
@@ -18,5 +19,8 @@ public class UpdateAuctionViewModel
 
 	public List<int> ExistingImageIds { get; set; } = new();
 
+	[MaxBrowserFileCount(5, ErrorMessage = "You can upload at most 5 images.")]
+	[MaxBrowserFileSize(2 * 1024 * 1024, ErrorMessage = "Each image must be 2 MB or smaller.")]
+	[AllowedBrowserExtensions(new[] { ".jpg", ".jpeg", ".png" }, ErrorMessage = "Only .jpg/.jpeg/.png files are allowed.")]
 	public List<IBrowserFile> NewImages { get; set; } = new();
 }

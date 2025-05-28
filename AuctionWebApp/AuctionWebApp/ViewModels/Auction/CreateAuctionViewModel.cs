@@ -1,4 +1,5 @@
-﻿using AuctionWebApp.Helpers;
+﻿using AuctionWebApp.Atributes;
+using AuctionWebApp.Helpers;
 using Microsoft.AspNetCore.Components.Forms;
 using System.ComponentModel.DataAnnotations;
 
@@ -17,6 +18,10 @@ public class CreateAuctionViewModel
 	[DataType(DataType.MultilineText)]
 	public string Description { get; set; } = string.Empty;
 
+	[MinLength(1, ErrorMessage = "You must upload at least one image.")]
+	[MaxBrowserFileCount(5, ErrorMessage = "You can upload at most 5 images.")]
+	[MaxBrowserFileSize(2 * 1024 * 1024, ErrorMessage = "Each image must be 2 MB or smaller.")]
+	[AllowedBrowserExtensions(new[] { ".jpg", ".jpeg", ".png" }, ErrorMessage = "Only .jpg/.jpeg/.png files are allowed.")]
 	public List<IBrowserFile> Images { get; set; } = new();
 
 	[Range(1, double.MaxValue, ErrorMessage = "StartingPrice must be at least 1")]
