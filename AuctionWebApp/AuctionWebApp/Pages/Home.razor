@@ -1,4 +1,4 @@
-﻿@using AuctionWebApp.Enums
+﻿@* @using AuctionWebApp.Enums
 @using AuctionWebApp.Models
 @using AuctionWebApp.HttpClients
 @using AuctionWebApp.Services
@@ -206,3 +206,4 @@ else if (!string.IsNullOrEmpty(driverSuccess))
         var result = await AuctionsHttpClient.GetByFilterAsync(filter);
     }
 }
+ *@

@@ -1,4 +1,6 @@
-﻿namespace AuctionWebApp.Models;
+﻿using Microsoft.AspNetCore.Components.Forms;
+
+namespace AuctionWebApp.Models;
 
 public record CreateAuctionRequest
 {
@@ -6,7 +8,7 @@ public record CreateAuctionRequest
 
 	public string Description { get; init; } = string.Empty;
 
-	public List<AuctionImageRequest> Images { get; init; } = new();
+	public List<IBrowserFile> Images { get; init; } = new();
 
 	public decimal StartingPrice { get; init; }
 

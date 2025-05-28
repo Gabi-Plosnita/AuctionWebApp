@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Components.Forms;
+using System.ComponentModel.DataAnnotations;
 
 namespace AuctionWebApp.ViewModels;
 
@@ -15,5 +16,7 @@ public class UpdateAuctionViewModel
 	[DataType(DataType.MultilineText)]
 	public string Description { get; set; } = string.Empty;
 
-	public List<AuctionImageViewModel> Images { get; set; } = new();
+	public List<int> ExistingImageIds { get; set; } = new();
+
+	public List<IBrowserFile> NewImages { get; set; } = new();
 }

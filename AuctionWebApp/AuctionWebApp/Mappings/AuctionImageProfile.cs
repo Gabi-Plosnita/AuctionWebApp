@@ -8,6 +8,6 @@ public class AuctionImageProfile : Profile
 {
 	public AuctionImageProfile()
 	{
-		CreateMap<AuctionImageRequest, AuctionImageViewModel>().ReverseMap();
+		CreateMap<AuctionImageResponse, AuctionImageViewModel>().ReverseMap();
 	}
 }

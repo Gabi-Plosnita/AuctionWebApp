@@ -1,10 +1,10 @@
-﻿namespace AuctionWebApp.Models;
+﻿using Microsoft.AspNetCore.Components.Forms;
+
+namespace AuctionWebApp.Models;
 
 public record CreateCategoryRequest
 {
 	public string Name { get; init; } = string.Empty;
 
-	public Stream? Image { get; init; }
-
-	public string? ImageContentType { get; init; }
+	public IBrowserFile? Image { get; init; }
 }

@@ -1,4 +1,5 @@
 ﻿using AuctionWebApp.Helpers;
+using Microsoft.AspNetCore.Components.Forms;
 using System.ComponentModel.DataAnnotations;
 
 namespace AuctionWebApp.ViewModels;
@@ -16,7 +17,7 @@ public class CreateAuctionViewModel
 	[DataType(DataType.MultilineText)]
 	public string Description { get; set; } = string.Empty;
 
-	public List<AuctionImageViewModel> Images { get; set; } = new();
+	public List<IBrowserFile> Images { get; set; } = new();
 
 	[Range(1, double.MaxValue, ErrorMessage = "StartingPrice must be at least 1")]
 	[DataType(DataType.Currency)]

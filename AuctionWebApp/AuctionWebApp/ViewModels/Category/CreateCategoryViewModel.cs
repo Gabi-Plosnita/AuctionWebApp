@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Components.Forms;
+using System.ComponentModel.DataAnnotations;
 
 namespace AuctionWebApp.ViewModels;
 
@@ -8,4 +9,6 @@ public class CreateCategoryViewModel
 	[StringLength(100, ErrorMessage = "Name must be between 1 and 100 characters")]
 	[RegularExpression(@".*\S+.*", ErrorMessage = "Name cannot be blank or whitespace only")]
 	public string Name { get; set; } = string.Empty;
+
+	public IBrowserFile? Image { get; set; }
 }

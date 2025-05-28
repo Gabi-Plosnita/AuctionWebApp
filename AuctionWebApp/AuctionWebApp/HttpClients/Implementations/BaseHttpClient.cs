@@ -1,6 +1,8 @@
 ﻿using AuctionWebApp.Helpers;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Net;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Reflection;
 using System.Text;
@@ -109,56 +111,11 @@ public abstract class BaseHttpClient
 
 	protected async Task<Result<T>> SendFormRequestAsync<T>(string url, HttpMethod method, object formObject)
 	{
-		if (formObject is null) 
-		{
+		if (formObject is null)
 			return new Result<T> { Errors = new List<string> { "Form object cannot be null." } };
-		}
 
 		using var request = new HttpRequestMessage(method, url);
-		using var multipart = new MultipartFormDataContent();
-		var props = formObject.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
-
-		foreach (var prop in props)
-		{
-			var value = prop.GetValue(formObject);
-			if (value is null) continue;
-
-			HttpContent part;
-			switch (value)
-			{
-				case Stream stream:
-					var ctProp = formObject.GetType().GetProperty(prop.Name + "ContentType");
-					var mime = ctProp?.GetValue(formObject) as string;
-
-					var extension = mime?.Split('/').LastOrDefault();
-					if (extension?.Equals("jpeg", StringComparison.OrdinalIgnoreCase) == true)
-						extension = "jpg";
-
-					var fileName = extension is null
-						? prop.Name
-						: $"{prop.Name}.{extension}";
-
-					part = new StreamContent(stream);
-					if (!string.IsNullOrEmpty(mime))
-						part.Headers.ContentType =
-							new System.Net.Http.Headers.MediaTypeHeaderValue(mime);
-
-					multipart.Add(part, prop.Name, fileName);
-					continue;
-
-				case byte[] bytes:
-					part = new ByteArrayContent(bytes);
-					multipart.Add(part, prop.Name, prop.Name);
-					continue;
-
-				default:
-					part = new StringContent(value.ToString()!, Encoding.UTF8);
-					multipart.Add(part, prop.Name);
-					continue;
-			}
-		}
-
-		request.Content = multipart;
+		request.Content = BuildMultipart(formObject);
 
 		HttpResponseMessage response;
 		try
@@ -175,7 +132,8 @@ public abstract class BaseHttpClient
 			if (!response.IsSuccessStatusCode)
 				return new Result<T> { Errors = await ExtractErrorsAsync(response) };
 
-			if (response.StatusCode == HttpStatusCode.NoContent || response.Content.Headers.ContentLength == 0)
+			if (response.StatusCode == HttpStatusCode.NoContent
+			 || response.Content.Headers.ContentLength == 0)
 				return new Result<T>();
 
 			try
@@ -195,55 +153,10 @@ public abstract class BaseHttpClient
 	protected async Task<Result> SendFormRequestAsync(string url, HttpMethod method, object formObject)
 	{
 		if (formObject is null)
-		{
 			return new Result { Errors = new List<string> { "Form object cannot be null." } };
-		}
 
 		using var request = new HttpRequestMessage(method, url);
-		using var multipart = new MultipartFormDataContent();
-		var props = formObject.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
-
-		foreach (var prop in props)
-		{
-			var value = prop.GetValue(formObject);
-			if (value is null) continue;
-
-			HttpContent part;
-			switch (value)
-			{
-				case Stream stream:
-					var ctProp = formObject.GetType().GetProperty(prop.Name + "ContentType");
-					var mime = ctProp?.GetValue(formObject) as string;
-
-					var extension = mime?.Split('/').LastOrDefault();
-					if (extension?.Equals("jpeg", StringComparison.OrdinalIgnoreCase) == true)
-						extension = "jpg";
-
-					var fileName = extension is null
-						? prop.Name
-						: $"{prop.Name}.{extension}";
-
-					part = new StreamContent(stream);
-					if (!string.IsNullOrEmpty(mime))
-						part.Headers.ContentType =
-							new System.Net.Http.Headers.MediaTypeHeaderValue(mime);
-
-					multipart.Add(part, prop.Name, fileName);
-					continue;
-
-				case byte[] bytes:
-					part = new ByteArrayContent(bytes);
-					multipart.Add(part, prop.Name, prop.Name);
-					continue;
-
-				default:
-					part = new StringContent(value.ToString()!, Encoding.UTF8);
-					multipart.Add(part, prop.Name);
-					continue;
-			}
-		}
-
-		request.Content = multipart;
+		request.Content = BuildMultipart(formObject);
 
 		HttpResponseMessage response;
 		try
@@ -262,6 +175,48 @@ public abstract class BaseHttpClient
 
 			return new Result { Errors = await ExtractErrorsAsync(response) };
 		}
+	}
+
+	private MultipartFormDataContent BuildMultipart(object formObject)
+	{
+		var multipart = new MultipartFormDataContent();
+		var props = formObject.GetType()
+							  .GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+		foreach (var prop in props)
+		{
+			var value = prop.GetValue(formObject);
+			if (value is null) continue;
+
+			if (value is IBrowserFile singleFile)
+			{
+				AddFilePart(multipart, prop.Name, singleFile);
+				continue;
+			}
+
+			if (value is IEnumerable<IBrowserFile> files)
+			{
+				foreach (var file in files)
+					AddFilePart(multipart, prop.Name, file);
+				continue;
+			}
+
+			var str = value.ToString()!;
+			multipart.Add(new StringContent(str, Encoding.UTF8), prop.Name);
+		}
+
+		return multipart;
+	}
+
+	private void AddFilePart(MultipartFormDataContent multipart, string fieldName, IBrowserFile file)
+	{
+		const long maxAllowedSize = 2 * 1024 * 1024; 
+		var stream = file.OpenReadStream(maxAllowedSize);
+		var content = new StreamContent(stream);
+
+		content.Headers.ContentType = new MediaTypeHeaderValue(file.ContentType);	
+
+		multipart.Add(content, fieldName, file.Name);
 	}
 
 	private static async Task<List<string>> ExtractErrorsAsync(HttpResponseMessage response)

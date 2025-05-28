@@ -22,20 +22,11 @@ public partial class CategoryTestPage : ComponentBase
 		Errors = null;
 		IsSubmitting = true;
 
-		Stream? stream = null;
-		string? mimeType = null;
-
-		if (SelectedFile != null)
-		{
-			stream = SelectedFile.OpenReadStream(2 * 1024 * 1024);
-			mimeType = SelectedFile.ContentType;
-		}
 
 		var dto = new CreateCategoryRequest
 		{
 			Name = Name,
-			Image = stream,
-			ImageContentType = mimeType
+			Image = SelectedFile
 		};
 
 		var result = await _categoryClient.CreateAsync(dto);

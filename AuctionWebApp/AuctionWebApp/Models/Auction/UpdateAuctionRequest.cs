@@ -1,4 +1,6 @@
-﻿namespace AuctionWebApp.Models;
+﻿using Microsoft.AspNetCore.Components.Forms;
+
+namespace AuctionWebApp.Models;
 
 public record UpdateAuctionRequest
 {
@@ -8,5 +10,5 @@ public record UpdateAuctionRequest
 
 	public List<int> ExistingImageIds { get; init; } = new();
 
-	public List<AuctionImageRequest> NewImages { get; init; } = new();
+	public List<IBrowserFile> NewImages { get; init; } = new();
 }
