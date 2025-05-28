@@ -4,10 +4,23 @@ using Microsoft.AspNetCore.Components;
 
 namespace AuctionWebApp.Components;
 
-public partial class CategoriesComponent : ComponentBase
+public partial class CategoriesTableComponent
 {
 	[Inject]
-	public ICategoryService CategoryService { get; set; }
+	private ICategoryService CategoryService { get; set; } = default!;
 
-	
+	private List<CategoryViewModel> categories = new();
+
+	protected override async Task OnInitializedAsync()
+	{
+		var result = await CategoryService.GetAllAsync();
+		if (!result.HasErrors)
+		{
+			categories = result.Data;
+		}
+		else
+		{
+			// Handle error, e.g., show a message to the user
+		}
+	}
 }

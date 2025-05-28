@@ -1,4 +1,9 @@
-﻿@namespace AuctionWebApp.Components
-@using AuctionWebApp.ViewModels
+﻿<h3>Categories</h3>
 
-<h1>Categories table</h1>
+@foreach(var category in categories)
+{
+	<div class="category-item">
+		<h4>@category.Name</h4>
+	</div>
+}
+
