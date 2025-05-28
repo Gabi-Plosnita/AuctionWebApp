@@ -17,7 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
+	<Folder Include="Layout\" />
+	<Folder Include="Models\" />
 	<Folder Include="Mappings\" />
 	<Folder Include="Enums\" />
 	<Folder Include="HttpClients\" />
