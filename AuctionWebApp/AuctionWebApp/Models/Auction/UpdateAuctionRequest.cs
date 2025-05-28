@@ -8,5 +8,5 @@ public record UpdateAuctionRequest
 
 	public List<int> ExistingImageIds { get; init; } = new();
 
-	public List<AuctionImageRequest> Images { get; init; } = new();
+	public List<AuctionImageRequest> NewImages { get; init; } = new();
 }
