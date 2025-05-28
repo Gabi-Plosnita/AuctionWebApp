@@ -4,6 +4,7 @@ using AuctionWebApp.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using MudBlazor.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -67,6 +68,9 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IDriverService, DriverService>();
 builder.Services.AddScoped<IUserService, UserService>();
+
+// Register MudBlazor services //
+builder.Services.AddMudServices();
 
 // Register authorization service //
 builder.Services.AddScoped<AuthenticationStateProvider, JwtAuthStateProvider>();
