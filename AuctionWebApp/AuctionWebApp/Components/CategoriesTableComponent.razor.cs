@@ -9,11 +9,14 @@ namespace AuctionWebApp.Components;
 
 public partial class CategoriesTableComponent
 {
-	[Inject] private ICategoryService CategoryService { get; set; } = default!;
+	[Inject] 
+	private ICategoryService CategoryService { get; set; } = default!;
 
-	[Inject] private ISnackbar Snackbar { get; set; } = default!;
+	[Inject] 
+	private ISnackbar Snackbar { get; set; } = default!;
 
-	[Inject] protected NavigationManager NavigationManager { get; set; } = default!;
+	[Inject] 
+	protected NavigationManager NavigationManager { get; set; } = default!;
 
 
 	private List<CategoryViewModel> categories = new();
