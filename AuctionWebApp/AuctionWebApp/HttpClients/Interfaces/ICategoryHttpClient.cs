@@ -7,6 +7,8 @@ public interface ICategoryHttpClient
 {
 	Task<Result<List<CategoryResponse>>> GetAllAsync();
 
+	Task<Result<CategoryResponse>> GetByIdAsync(int id);
+
 	Task<Result<CategoryResponse>> CreateAsync(CreateCategoryRequest createCategoryRequest);
 
 	Task<Result> UpdateAsync(int id, UpdateCategoryRequest updateCategoryRequest);
