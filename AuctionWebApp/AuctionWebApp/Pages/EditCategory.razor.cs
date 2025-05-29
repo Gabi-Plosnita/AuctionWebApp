@@ -82,25 +82,29 @@ public partial class EditCategory : ComponentBase
 
 		if (_form.IsValid)
 		{
+			if(_model.Image != null)
+				_model.KeepImage = false; 
+
 			var result = await CategoryService.UpdateAsync(Id, _model);
 			if (result.HasErrors)
 			{
 				Snackbar.ShowErrors(result.Errors);
+				_model = new UpdateCategoryViewModel() { Name = _category.Name, KeepImage = true };
+				ResetImage();
+				StateHasChanged();
+				return;
 			}
 			else
 			{
-				Snackbar.ShowSuccess("Category created successfully.");
+				Snackbar.ShowSuccess("Category updated successfully.");
+				NavigationManager.NavigateTo("/admin-dashboard");
 			}
-
-			_model = new();
-			_imagePreviewUrl = null;
-			StateHasChanged();
 		}
 	}
 
 	private void ResetImage()
 	{
 		_model.Image = null;
-		_imagePreviewUrl = null;
+		_imagePreviewUrl = _category.ImageUrl;
 	}
 }
