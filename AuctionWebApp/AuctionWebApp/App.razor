@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Components.Authorization
+@using AuctionWebApp.Components
 
 <CascadingAuthenticationState>
 
@@ -14,9 +15,7 @@
                 <NotAuthorized>
                     <PageTitle>Not authorized</PageTitle>
                     <LayoutView Layout="@typeof(MainLayout)">
-                        <p role="alert" class="text-danger">
-                            You’re not allowed to see this page.
-                        </p>
+						<UnauthorizedComponent />
                     </LayoutView>
                 </NotAuthorized>
             </AuthorizeRouteView>
