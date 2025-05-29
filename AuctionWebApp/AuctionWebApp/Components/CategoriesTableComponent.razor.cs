@@ -38,16 +38,11 @@ public partial class CategoriesTableComponent
 
 	private void NavigateToCreateCategoryPage()
 	{
-		NavigationManager.NavigateTo("/categories-create");
+		NavigationManager.NavigateTo("/category-create");
 	}
 
-	private void EditCategory(CategoryViewModel category)
+	private void NavigateToEditCategoryPage(CategoryViewModel category)
 	{
-		// For example: navigate to an edit page or open a dialog
-		//NavigationManager.NavigateTo($"/edit-category/{category.Id}");
-
-		// OR: Open a MudDialog to edit inline (if using MudDialogService)
-		// await DialogService.Show<EditCategoryDialog>("Edit Category", new DialogParameters { ["Category"] = category });
+		NavigationManager.NavigateTo("/category-create");
 	}
-
 }
