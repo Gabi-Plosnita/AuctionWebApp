@@ -1,5 +1,14 @@
 ﻿<h1 class="text-center mt-10 mb-20">Categories</h1>
 
+<MudButton Color="Color.Primary"
+		   Variant="Variant.Filled"
+		   StartIcon="@Icons.Material.Filled.Add"
+		   Class="mb-4"
+		   OnClick="NavigateToCreateCategoryPage">
+	Create New Category
+</MudButton>
+
+
 <MudTable Items="categories"
 		  Style="width: 80%; margin: 0 auto; background-color: #f5f7fa; border: 1px solid #ddd; border-radius: 8px;"
 		  Hover="true"

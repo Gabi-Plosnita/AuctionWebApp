@@ -1,4 +1,5 @@
-﻿using AuctionWebApp.Helpers;
+﻿using AuctionWebApp.Enums;
+using AuctionWebApp.Helpers;
 using AuctionWebApp.Services;
 using AuctionWebApp.ViewModels;
 using Microsoft.AspNetCore.Components;
@@ -11,6 +12,9 @@ public partial class CategoriesTableComponent
 	[Inject] private ICategoryService CategoryService { get; set; } = default!;
 
 	[Inject] private ISnackbar Snackbar { get; set; } = default!;
+
+	[Inject] protected NavigationManager NavigationManager { get; set; } = default!;
+
 
 	private List<CategoryViewModel> categories = new();
 
@@ -27,6 +31,11 @@ public partial class CategoriesTableComponent
 			Snackbar.ShowErrors(result.Errors);
 		}
 		_loading = false;
+	}
+
+	private void NavigateToCreateCategoryPage()
+	{
+		NavigationManager.NavigateTo("/categories-create");
 	}
 
 	private void EditCategory(CategoryViewModel category)
