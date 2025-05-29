@@ -53,6 +53,10 @@ public partial class CreateCategory : ComponentBase
 			{
 				Snackbar.ShowErrors(result.Errors);
 			}
+			else
+			{
+				Snackbar.ShowSuccess("Category created successfully.");
+			}
 
 			_model = new();
 			_imagePreviewUrl = null;

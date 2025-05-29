@@ -11,6 +11,7 @@
             <MudTextField T="string"
                           Label="Category Name"
                           For="@(() => _model.Name)"
+                          @bind-Value="_model.Name"
                           Required="true"
                           Immediate="true"
                           Margin="Margin.Dense"
