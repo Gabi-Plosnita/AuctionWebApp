@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
 using MudBlazor;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace AuctionWebApp.Helpers;
 
@@ -8,6 +7,8 @@ public static class ToastHelper
 {
 	public static void ShowError(this ISnackbar snackbar, string message)
 	{
+		snackbar.Clear();
+
 		snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopCenter;
 		snackbar.Configuration.ShowCloseIcon = true;
 		snackbar.Configuration.RequireInteraction = true;
@@ -16,6 +17,8 @@ public static class ToastHelper
 
 	public static void ShowErrors(this ISnackbar snackbar, List<string> messages)
 	{
+		snackbar.Clear();
+
 		snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopCenter;
 		snackbar.Configuration.ShowCloseIcon = true;
 		snackbar.Configuration.RequireInteraction = true;
@@ -27,8 +30,11 @@ public static class ToastHelper
 
 	public static void ShowSuccess(this ISnackbar snackbar, string message)
 	{
+		snackbar.Clear();
+
 		snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopCenter;
-		snackbar.Configuration.ShowCloseIcon = true;
+		snackbar.Configuration.ShowCloseIcon = false;
+		snackbar.Configuration.VisibleStateDuration = 3000; 
 		snackbar.Add(message, Severity.Success);
 	}
 }
