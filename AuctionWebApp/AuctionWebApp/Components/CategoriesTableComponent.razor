@@ -7,19 +7,19 @@
 		  Breakpoint="Breakpoint.Sm"
 		  LoadingProgressColor="Color.Info">
 	<HeaderContent>
-		<MudTh Style="width: 33%;">Id</MudTh>
-		<MudTh Style="width: 33%;">Name</MudTh>
-		<MudTh Style="width: 33%;">Image</MudTh>
+		<MudTh Style="width: 33%; border: 1px solid grey;">Id</MudTh>
+		<MudTh Style="width: 33%; border: 1px solid grey;">Name</MudTh>
+		<MudTh Style="width: 33%; border: 1px solid grey;">Image</MudTh>
 	</HeaderContent>
 	<RowTemplate>
-		<MudTd DataLabel="Id" Style="width: 33%;">@context.Id</MudTd>
-		<MudTd DataLabel="Name" Style="width: 33%;">@context.Name</MudTd>
-		<MudTd DataLabel="Image" Style="width: 33%;">
+		<MudTd DataLabel="Id" Style="width: 33%; border: 1px solid grey;">@context.Id</MudTd>
+		<MudTd DataLabel="Name" Style="width: 33%; border: 1px solid grey;">@context.Name</MudTd>
+		<MudTd DataLabel="Image" Style="width: 33%; border: 1px solid grey;">
 			@if (!string.IsNullOrEmpty(context.ImageUrl))
 			{
 				<img src="@($"{AppSettings.ApiUrl}{context.ImageUrl}")"
 					 class="img-thumbnail"
-					 style="width: 200px; height: auto;" />
+					 style="width: 100px; height: auto;" />
 			}
 			else
 			{
