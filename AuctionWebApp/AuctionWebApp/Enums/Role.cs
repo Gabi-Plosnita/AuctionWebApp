@@ -5,4 +5,5 @@ public enum Role
 	User,
 	Driver,
 	Admin,
+	SuperAdmin,
 }

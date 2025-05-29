@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Authorization
 
 @page "/category-create"
-@attribute [Authorize(Roles = "Admin")]
+@attribute [Authorize(Roles = "Admin,SuperAdmin")]
 
 <div class="d-flex justify-center mt-12">
 	<MudPaper Class="pa-6" Style="max-width: 500px; width: 100%; background-color: #f9fafc; border-radius: 12px; border: 1px solid #e0e0e0; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);">
