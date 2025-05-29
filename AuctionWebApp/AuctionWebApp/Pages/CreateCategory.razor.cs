@@ -19,7 +19,7 @@ public partial class CreateCategory : ComponentBase
 	[Inject]
 	private ISnackbar Snackbar { get; set; } = default!;
 
-	[Parameter] 
+	[Parameter]
 	public List<CategoryViewModel> Categories { get; set; } = new List<CategoryViewModel>();
 
 	protected MudForm? _form;
@@ -30,13 +30,42 @@ public partial class CreateCategory : ComponentBase
 
 	protected async Task HandleImageChange(InputFileChangeEventArgs e)
 	{
-		var file = e.File;
-		_model.Image = file;
+		try
+		{
+			var file = e.File;
 
-		using var stream = file.OpenReadStream(maxAllowedSize: 2 * 1024 * 1024);
-		var buffer = new byte[file.Size];
-		await stream.ReadAsync(buffer);
-		_imagePreviewUrl = $"data:{file.ContentType};base64,{Convert.ToBase64String(buffer)}";
+			var allowedMimeTypes = new[] { "image/jpeg", "image/png" };
+			if (!allowedMimeTypes.Contains(file.ContentType.ToLower()))
+			{
+				Snackbar.ShowError("Only JPG and PNG images are allowed.");
+				ResetImage();
+				return;
+			}
+
+			if (file.Size > 2 * 1024 * 1024)
+			{
+				Snackbar.ShowError("Image must be 2 MB or smaller.");
+				ResetImage();
+				return;
+			}
+
+			_model.Image = file;
+
+			using var stream = file.OpenReadStream(maxAllowedSize: 2 * 1024 * 1024);
+			var buffer = new byte[file.Size];
+			await stream.ReadAsync(buffer);
+			_imagePreviewUrl = $"data:{file.ContentType};base64,{Convert.ToBase64String(buffer)}";
+		}
+		catch (IOException)
+		{
+			Snackbar.Add("Failed to process the image. Please ensure it's a valid file.", Severity.Error);
+			ResetImage();
+		}
+		catch (Exception ex)
+		{
+			Snackbar.Add($"Unexpected error: {ex.Message}", Severity.Error);
+			ResetImage();
+		}
 	}
 
 	protected async Task SubmitAsync()
@@ -49,7 +78,7 @@ public partial class CreateCategory : ComponentBase
 		if (_form.IsValid)
 		{
 			var result = await CategoryService.CreateAsync(_model);
-			if(result.HasErrors)
+			if (result.HasErrors)
 			{
 				Snackbar.ShowErrors(result.Errors);
 			}
@@ -62,5 +91,11 @@ public partial class CreateCategory : ComponentBase
 			_imagePreviewUrl = null;
 			StateHasChanged();
 		}
+	}
+
+	private void ResetImage()
+	{
+		_model.Image = null;
+		_imagePreviewUrl = null;
 	}
 }
