@@ -1,5 +1,4 @@
-﻿using AuctionWebApp.Enums;
-using AuctionWebApp.Helpers;
+﻿using AuctionWebApp.Helpers;
 using AuctionWebApp.Services;
 using AuctionWebApp.ViewModels;
 using Microsoft.AspNetCore.Components;
