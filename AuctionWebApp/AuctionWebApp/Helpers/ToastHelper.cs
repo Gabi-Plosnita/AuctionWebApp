@@ -24,4 +24,11 @@ public static class ToastHelper
 		var markupMessage = new MarkupString(errorMessage);
 		snackbar.Add(markupMessage, Severity.Error);
 	}
+
+	public static void ShowSuccess(this ISnackbar snackbar, string message)
+	{
+		snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopCenter;
+		snackbar.Configuration.ShowCloseIcon = true;
+		snackbar.Add(message, Severity.Success);
+	}
 }
