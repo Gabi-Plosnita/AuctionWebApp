@@ -13,7 +13,7 @@ public class UpdateCategoryViewModel
 
 	[MaxBrowserFileSize(2 * 1024 * 1024, ErrorMessage = "Each image must be 2 MB or smaller.")]
 	[AllowedBrowserExtensions(new[] { ".jpg", ".jpeg", ".png" }, ErrorMessage = "Only .jpg/.jpeg/.png files are allowed.")]
-	public IBrowserFile? Image { get; init; }
+	public IBrowserFile? Image { get; set; }
 
-	public bool KeepImage { get; init; }
+	public bool KeepImage { get; set; }
 }

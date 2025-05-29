@@ -43,6 +43,6 @@ public partial class CategoriesTableComponent
 
 	private void NavigateToEditCategoryPage(CategoryViewModel category)
 	{
-		NavigationManager.NavigateTo("/category-create");
+		NavigationManager.NavigateTo("/category-edit");
 	}
 }

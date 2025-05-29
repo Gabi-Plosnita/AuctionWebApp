@@ -10,7 +10,6 @@ namespace AuctionWebApp.Pages;
 public partial class CreateCategory : ComponentBase
 {
 	[Inject]
-
 	private ICategoryService CategoryService { get; set; } = default!;
 
 	[Inject]
