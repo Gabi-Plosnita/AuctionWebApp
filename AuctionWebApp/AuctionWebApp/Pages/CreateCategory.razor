@@ -22,7 +22,7 @@
 				Upload Image (JPG, PNG, max 2MB)
 			</MudText>
 
-			<InputFile OnChange="HandleImageChange" />
+			<InputFile OnChange="HandleImageChange" accept=".jpg,.jpeg,.png,image/jpeg,image/png" />
 
 			@if (!string.IsNullOrEmpty(_imagePreviewUrl))
 			{
