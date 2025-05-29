@@ -2,23 +2,27 @@
 @using AuctionWebApp.Components
 
 @page "/admin-dashboard"
-@attribute [Authorize(Roles = "Admin")]
+@attribute [Authorize(Roles = "Admin,SuperAdmin")]
 
 <MudTabs Class="full-screen-tabs"
 		 Style="width:100vw; height:100vh; margin:0; padding:0;"
 		 Centered="true"
-		 Elevation="0"        
-         Rounded="false"     
-         Bordered="false"    
-         ApplyEffectsToContainer="false"
-         PanelClass="pa-6"
+		 Elevation="0"
+		 Rounded="false"
+		 Bordered="false"
+		 ApplyEffectsToContainer="false"
+		 PanelClass="pa-6"
 		 Color="Color.Primary">
 	<MudTabPanel Text="Categories">
 		<CategoriesTableComponent></CategoriesTableComponent>
 	</MudTabPanel>
-	<MudTabPanel Text="Admins">
-		<AdminsTableComponent></AdminsTableComponent>
-	</MudTabPanel>
+	<AuthorizeView Roles="SuperAdmin">
+		<Authorized>
+			<MudTabPanel Text="Admins">
+				<AdminsTableComponent></AdminsTableComponent>
+			</MudTabPanel>
+		</Authorized>
+	</AuthorizeView>
 	<MudTabPanel Text="Drivers">
 		<MudText>Content Three</MudText>
 	</MudTabPanel>
