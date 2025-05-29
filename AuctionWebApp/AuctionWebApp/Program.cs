@@ -74,6 +74,7 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IDriverService, DriverService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<FileHandlerService>();
 
 // Register MudBlazor services //
 builder.Services.AddMudServices();
