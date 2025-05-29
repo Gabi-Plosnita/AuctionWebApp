@@ -17,5 +17,7 @@ public interface IAuthService
 	
 	Task<Result> LoginUserAsync(LoginViewModel loginViewModel);
 
+	Task<Result<AuthenticatedUserViewModel>> GetAuthenticatedUser();
+
 	Task<Result> LogoutAsync();
 }
