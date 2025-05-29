@@ -7,14 +7,15 @@
 		  Breakpoint="Breakpoint.Sm"
 		  LoadingProgressColor="Color.Info">
 	<HeaderContent>
-		<MudTh Style="width: 33%; border: 1px solid grey;">Id</MudTh>
-		<MudTh Style="width: 33%; border: 1px solid grey;">Name</MudTh>
-		<MudTh Style="width: 33%; border: 1px solid grey;">Image</MudTh>
+		<MudTh Style="width: 25%; border: 1px solid grey; text-align: center; vertical-align: middle;">Id</MudTh>
+		<MudTh Style="width: 25%; border: 1px solid grey; text-align: center; vertical-align: middle;;">Name</MudTh>
+		<MudTh Style="width: 40%; border: 1px solid grey; text-align: center; vertical-align: middle;">Image</MudTh>
+		<MudTh Style="width: 5%; border: 1px solid grey;  text-align: center; vertical-align: middle;">Edit</MudTh>
 	</HeaderContent>
 	<RowTemplate>
-		<MudTd DataLabel="Id" Style="width: 33%; border: 1px solid grey;">@context.Id</MudTd>
-		<MudTd DataLabel="Name" Style="width: 33%; border: 1px solid grey;">@context.Name</MudTd>
-		<MudTd DataLabel="Image" Style="width: 33%; border: 1px solid grey;">
+		<MudTd DataLabel="Id" Style="width: 25%; border: 1px solid grey; text-align: center; vertical-align: middle;">@context.Id</MudTd>
+		<MudTd DataLabel="Name" Style="width: 25%; border: 1px solid grey; text-align: center; vertical-align: middle;">@context.Name</MudTd>
+		<MudTd DataLabel="Image" Style="width: 25%; border: 1px solid grey; text-align: center; vertical-align: middle;">
 			@if (!string.IsNullOrEmpty(context.ImageUrl))
 			{
 				<img src="@($"{AppSettings.ApiUrl}{context.ImageUrl}")"
@@ -27,6 +28,14 @@
 						   Icon="@Icons.Material.Filled.ImageNotSupported" />
 			}
 		</MudTd>
+		<MudTd DataLabel="Edit" Style="width: 5%; border: 1px solid grey; text-align: center; vertical-align: middle;">
+			<MudIconButton Icon="@Icons.Material.Filled.Edit"
+						   Color="Color.Primary"
+						   Size="Size.Small"
+						   OnClick="@(() => EditCategory(context))"
+						   AriaLabel="Edit Category" />
+		</MudTd>
+
 	</RowTemplate>
 </MudTable>
 
