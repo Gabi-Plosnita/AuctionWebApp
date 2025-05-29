@@ -1,4 +1,4 @@
-﻿<h1 class="text-center mt-10 mb-20">Categories</h1>
+﻿<h1 class="text-center mt-10 mb-20">Admins</h1>
 
 <div style="width: 80%; margin: 0 auto; margin-top: 40px;">
 	<MudTable Items="admins"
@@ -17,7 +17,7 @@
 			<MudTd DataLabel="Email" Style="border: 1px solid grey; text-align: center; vertical-align: middle;">@context.Email</MudTd>
 			<MudTd DataLabel="Delete" Style="border: 1px solid grey; text-align: center; vertical-align: middle;">
 				<MudIconButton Icon="@Icons.Material.Filled.Delete"
-							   Color="Color.Primary"
+							   Color="Color.Error"
 							   Size="Size.Small"
 							   OnClick="@(() => DeleteAdminAsync(context.Id))"
 							   AriaLabel="Delete Admin" />
