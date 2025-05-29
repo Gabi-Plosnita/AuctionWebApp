@@ -1,52 +1,52 @@
 ﻿<h1 class="text-center mt-10 mb-20">Categories</h1>
 
-<MudButton Color="Color.Primary"
-		   Variant="Variant.Filled"
-		   StartIcon="@Icons.Material.Filled.Add"
-		   Class="mb-4"
-		   OnClick="NavigateToCreateCategoryPage">
-	Create New Category
-</MudButton>
+<div style="width: 80%; margin: 0 auto; margin-top: 40px;">
+	<MudButton Color="Color.Primary"
+			   Variant="Variant.Filled"
+			   StartIcon="@Icons.Material.Filled.Add"
+			   Class="mb-4"
+			   OnClick="NavigateToCreateCategoryPage">
+		Create New Category
+	</MudButton>
 
-
-<MudTable Items="categories"
-		  Style="width: 80%; margin: 0 auto; background-color: #f5f7fa; border: 1px solid #ddd; border-radius: 8px;"
-		  Hover="true"
-		  Loading="@_loading"
-		  Breakpoint="Breakpoint.Sm"
-		  LoadingProgressColor="Color.Info">
-	<HeaderContent>
-		<MudTh Style="width: 25%; border: 1px solid grey; text-align: center; vertical-align: middle;">Id</MudTh>
-		<MudTh Style="width: 25%; border: 1px solid grey; text-align: center; vertical-align: middle;">Name</MudTh>
-		<MudTh Style="width: 40%; border: 1px solid grey; text-align: center; vertical-align: middle;">Image</MudTh>
-		<MudTh Style="width: 5%; border: 1px solid grey;  text-align: center; vertical-align: middle;">Edit</MudTh>
-	</HeaderContent>
-	<RowTemplate>
-		<MudTd DataLabel="Id" Style="border: 1px solid grey; text-align: center; vertical-align: middle;">@context.Id</MudTd>
-		<MudTd DataLabel="Name" Style="border: 1px solid grey; text-align: center; vertical-align: middle;">@context.Name</MudTd>
-		<MudTd DataLabel="Image" Style="border: 1px solid grey; text-align: center; vertical-align: middle;">
-			@if (!string.IsNullOrEmpty(context.ImageUrl))
-			{
-				<img src="@($"{AppSettings.ApiUrl}{context.ImageUrl}")"
-					 class="img-thumbnail"
-					 style="width: 100px; height: auto;" />
-			}
-			else
-			{
-				<MudAvatar Size="Size.Medium"
-						   Icon="@Icons.Material.Filled.ImageNotSupported" />
-			}
-		</MudTd>
-		<MudTd DataLabel="Edit" Style="border: 1px solid grey; text-align: center; vertical-align: middle;">
-			<MudIconButton Icon="@Icons.Material.Filled.Edit"
-						   Color="Color.Primary"
-						   Size="Size.Small"
-						   OnClick="@(() => EditCategory(context))"
-						   AriaLabel="Edit Category" />
-		</MudTd>
-
-	</RowTemplate>
-</MudTable>
+	<MudTable Items="categories"
+			  Style="background-color: #f5f7fa; border: 1px solid #ddd; border-radius: 8px;"
+			  Hover="true"
+			  Loading="@_loading"
+			  Breakpoint="Breakpoint.Sm"
+			  LoadingProgressColor="Color.Info">
+		<HeaderContent>
+			<MudTh Style="width: 25%; border: 1px solid grey; text-align: center; vertical-align: middle;">Id</MudTh>
+			<MudTh Style="width: 25%; border: 1px solid grey; text-align: center; vertical-align: middle;">Name</MudTh>
+			<MudTh Style="width: 40%; border: 1px solid grey; text-align: center; vertical-align: middle;">Image</MudTh>
+			<MudTh Style="width: 5%; border: 1px solid grey; text-align: center; vertical-align: middle;">Edit</MudTh>
+		</HeaderContent>
+		<RowTemplate>
+			<MudTd DataLabel="Id" Style="border: 1px solid grey; text-align: center; vertical-align: middle;">@context.Id</MudTd>
+			<MudTd DataLabel="Name" Style="border: 1px solid grey; text-align: center; vertical-align: middle;">@context.Name</MudTd>
+			<MudTd DataLabel="Image" Style="border: 1px solid grey; text-align: center; vertical-align: middle;">
+				@if (!string.IsNullOrEmpty(context.ImageUrl))
+				{
+					<img src="@($"{AppSettings.ApiUrl}{context.ImageUrl}")"
+						 class="img-thumbnail"
+						 style="width: 100px; height: auto;" />
+				}
+				else
+				{
+					<MudAvatar Size="Size.Medium"
+							   Icon="@Icons.Material.Filled.ImageNotSupported" />
+				}
+			</MudTd>
+			<MudTd DataLabel="Edit" Style="border: 1px solid grey; text-align: center; vertical-align: middle;">
+				<MudIconButton Icon="@Icons.Material.Filled.Edit"
+							   Color="Color.Primary"
+							   Size="Size.Small"
+							   OnClick="@(() => EditCategory(context))"
+							   AriaLabel="Edit Category" />
+			</MudTd>
+		</RowTemplate>
+	</MudTable>
+</div>
 
 
 
