@@ -14,6 +14,9 @@ public partial class CreateCategory : ComponentBase
 	private ICategoryService CategoryService { get; set; } = default!;
 
 	[Inject]
+	private FileHandlerService FileValidator { get; set; } = default!;
+
+	[Inject]
 	private NavigationManager NavigationManager { get; set; } = default!;
 
 	[Inject]
@@ -30,41 +33,24 @@ public partial class CreateCategory : ComponentBase
 
 	protected async Task HandleImageChange(InputFileChangeEventArgs e)
 	{
-		try
+		var result = FileValidator.ValidateFile(e.File, allowedExtensions: new[] { ".jpg", ".jpeg", ".png" }, maxSizeInMB: 2);
+		if(result.HasErrors)
 		{
-			var file = e.File;
-
-			var allowedMimeTypes = new[] { "image/jpeg", "image/png" };
-			if (!allowedMimeTypes.Contains(file.ContentType.ToLower()))
-			{
-				Snackbar.ShowError("Only JPG and PNG images are allowed.");
-				ResetImage();
-				return;
-			}
-
-			if (file.Size > 2 * 1024 * 1024)
-			{
-				Snackbar.ShowError("Image must be 2 MB or smaller.");
-				ResetImage();
-				return;
-			}
-
-			_model.Image = file;
-
-			using var stream = file.OpenReadStream(maxAllowedSize: 2 * 1024 * 1024);
-			var buffer = new byte[file.Size];
-			await stream.ReadAsync(buffer);
-			_imagePreviewUrl = $"data:{file.ContentType};base64,{Convert.ToBase64String(buffer)}";
-		}
-		catch (IOException)
-		{
-			Snackbar.Add("Failed to process the image. Please ensure it's a valid file.", Severity.Error);
+			Snackbar.ShowErrors(result.Errors);
 			ResetImage();
+			return;
 		}
-		catch (Exception ex)
+		var readImageResult = await FileValidator.GetBase64ImagePreviewAsync(e.File, maxSizeInMB: 2);
+		if(readImageResult.HasErrors)
 		{
-			Snackbar.Add($"Unexpected error: {ex.Message}", Severity.Error);
+			Snackbar.ShowErrors(result.Errors);
 			ResetImage();
+			return;
+		}
+		else
+		{
+			_imagePreviewUrl = readImageResult.Data;
+			_model.Image = e.File;
 		}
 	}
 
