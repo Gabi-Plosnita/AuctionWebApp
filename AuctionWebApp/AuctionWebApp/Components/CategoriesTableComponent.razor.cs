@@ -1,6 +1,8 @@
-﻿using AuctionWebApp.Services;
+﻿using AuctionWebApp.Helpers;
+using AuctionWebApp.Services;
 using AuctionWebApp.ViewModels;
 using Microsoft.AspNetCore.Components;
+using MudBlazor;
 
 namespace AuctionWebApp.Components;
 
@@ -8,7 +10,10 @@ public partial class CategoriesTableComponent
 {
 	[Inject] private ICategoryService CategoryService { get; set; } = default!;
 
+	[Inject] private ISnackbar Snackbar { get; set; } = default!;
+
 	private List<CategoryViewModel> categories = new();
+
 	private bool _loading;
 
 	protected override async Task OnInitializedAsync()
@@ -19,7 +24,7 @@ public partial class CategoriesTableComponent
 			categories = result.Data;
 		else
 		{
-			// show an error message, toast, etc.
+			Snackbar.ShowErrors(result.Errors);
 		}
 		_loading = false;
 	}
