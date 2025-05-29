@@ -20,6 +20,15 @@ public class CategoryService(ICategoryHttpClient _categoryClient, IMapper _mappe
 		return serviceResult;
 	}
 
+	public async Task<Result<CategoryViewModel>> GetByIdAsync(int id)
+	{
+		var clientResult = await _categoryClient.GetByIdAsync(id);
+		if (clientResult.HasErrors)
+			return new Result<CategoryViewModel> { Errors = clientResult.Errors };
+		var categoryViewModel = _mapper.Map<CategoryViewModel>(clientResult.Data);
+		return new Result<CategoryViewModel> { Data = categoryViewModel };
+	}
+
 	public async Task<Result<CategoryViewModel>> CreateAsync(CreateCategoryViewModel createCategoryViewModel)
 	{
 		var createCategoryRequest = _mapper.Map<CreateCategoryRequest>(createCategoryViewModel);

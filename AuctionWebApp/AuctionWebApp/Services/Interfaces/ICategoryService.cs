@@ -7,6 +7,8 @@ public interface ICategoryService
 {
 	Task<Result<List<CategoryViewModel>>> GetAllAsync();
 
+	Task<Result<CategoryViewModel>> GetByIdAsync(int id);
+
 	Task<Result<CategoryViewModel>> CreateAsync(CreateCategoryViewModel createCategoryViewModel);
 
 	Task<Result> UpdateAsync(int id, UpdateCategoryViewModel updateCategoryViewModel);
