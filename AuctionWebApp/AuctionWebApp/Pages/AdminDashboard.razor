@@ -15,22 +15,26 @@
 		 PanelClass="pa-6"
 		 Color="Color.Primary">
 	<MudTabPanel Text="Categories">
+		<h1 class="text-center mt-10 mb-20">Categories</h1>
 		<CategoriesTableComponent></CategoriesTableComponent>
 	</MudTabPanel>
 	<AuthorizeView Roles="SuperAdmin">
 		<Authorized>
 			<MudTabPanel Text="Admins">
+				<h1 class="text-center mt-10 mb-20">Admins</h1>
 				<AdminsTableComponent></AdminsTableComponent>
 			</MudTabPanel>
 		</Authorized>
 	</AuthorizeView>
 	<MudTabPanel Text="Drivers">
+		<h1 class="text-center mt-10 mb-20">Drivers</h1>
 		<DriversTableComponent></DriversTableComponent>
 	</MudTabPanel>
 	<MudTabPanel Text="Auctions with driver">
 		<MudText>Content Disabled</MudText>
 	</MudTabPanel>
 	<MudTabPanel Text="Auctions without driver">
+		<h1 class="text-center mt-10 mb-20">Auctions without Driver</h1>
 		<AuctionsTableComponent Filter="auctionsWithNoDriver"></AuctionsTableComponent>
 	</MudTabPanel>
 </MudTabs>
