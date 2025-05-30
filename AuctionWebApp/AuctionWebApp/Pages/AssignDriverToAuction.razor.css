@@ -1,0 +1,17 @@
+﻿.auction-details {
+    max-width: 900px;
+    margin: auto;
+}
+
+.auction-image {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.badge {
+    font-size: 1rem;
+    padding: 0.4em 0.8em;
+}
