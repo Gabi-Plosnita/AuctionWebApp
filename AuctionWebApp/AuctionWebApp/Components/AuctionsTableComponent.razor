@@ -1,10 +1,11 @@
 ﻿@using AuctionWebApp.ViewModels
 
-<h1 class="text-center mt-10 mb-20">Auctions with no driver</h1>
+<h1 class="text-center mt-10 mb-20">Auctions withhout Driver</h1>
 
 <div style="width: 80%; margin: 0 auto; margin-top: 40px;">
 	<MudTable T="PreviewAuctionViewModel"
 			  ServerData="LoadAuctions"
+			  RowsPerPage="5"
 			  Hover="true" Bordered="true"
 			  Style="background-color: #f5f7fa; border: 1px solid #ddd; border-radius: 8px;">
 		<HeaderContent>
@@ -19,16 +20,14 @@
 			<MudTd DataLabel="Id" Style="border: 1px solid grey; text-align: center; vertical-align: middle;">@context.Id</MudTd>
 			<MudTd DataLabel="Title" Style="border: 1px solid grey; text-align: center; vertical-align: middle;">@context.Title</MudTd>
 			<MudTd DataLabel="Image" Style="border: 1px solid grey; text-align: center; vertical-align: middle;">
-				@if (context.Images?.FirstOrDefault() is AuctionImageViewModel img)
+				@if (context.Images.FirstOrDefault() != null)
 				{
-					if(!string.IsNullOrEmpty(img.ImageUrl))
-					{
-						<img src="@($"{AppSettings.ApiUrl}{img.ImageUrl}")" alt="Auction Image" width="100" />
-					}
-					else
-					{
-						<MudAvatar Size="Size.Medium" Icon="@Icons.Material.Filled.ImageNotSupported" />
-					}
+					var img = context.Images.FirstOrDefault();
+					<img src="@($"{AppSettings.ApiUrl}{img.ImageUrl}")" alt="Auction Image" width="100" />
+				}
+				else
+				{
+					<MudAvatar Size="Size.Medium" Icon="@Icons.Material.Filled.ImageNotSupported" />
 				}
 			</MudTd>
 			<MudTd DataLabel="Current Price" Style="border: 1px solid grey; text-align: center; vertical-align: middle;">@context.CurrentPrice</MudTd>
