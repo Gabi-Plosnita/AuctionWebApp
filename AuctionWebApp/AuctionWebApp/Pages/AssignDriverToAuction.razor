@@ -4,7 +4,5 @@
 @page "/auctions/{AuctionId:int}/assign-driver"
 @attribute [Authorize(Roles = "Admin,SuperAdmin")]
 
-<h1 class="text-center mt-10 mb-20">Auction Details</h1>
-
 <AuctionDeliveryDetailsComponent Auction="@auction"></AuctionDeliveryDetailsComponent>
 
