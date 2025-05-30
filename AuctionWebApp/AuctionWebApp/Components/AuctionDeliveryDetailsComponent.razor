@@ -3,13 +3,17 @@
 	<div class="auction-details card shadow p-4 mb-5 bg-white rounded">
 		<h1 class="mb-3 text-primary text-center">@Auction.Title</h1>
 
-		<p class="text-muted">@Auction.Description</p>
+		<div class="d-flex flex-column flex-md-row justify-content-between mb-4 image-description-container">
+			<div class="w-100 w-md-50 d-flex flex-wrap justify-content-center align-items-center">
+				@foreach (var image in Auction.Images)
+				{
+					<img src="@($"{AppSettings.ApiUrl}{image.ImageUrl}")" alt="Auction Image" class="auction-image m-2" />
+				}
+			</div>
 
-		<div class="image-gallery d-flex flex-wrap mb-4">
-			@foreach (var image in Auction.Images)
-			{
-				<img src="@($"{AppSettings.ApiUrl}{image.ImageUrl}")" alt="Auction Image" class="auction-image m-2" />
-			}
+			<div class="w-100 w-md-50 d-flex justify-content-center align-items-center px-4 text-center description-box">
+				<p class="text-muted m-0">@Auction.Description</p>
+			</div>
 		</div>
 
 		<div class="custom-separator"></div>
