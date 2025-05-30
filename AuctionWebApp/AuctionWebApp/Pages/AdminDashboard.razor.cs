@@ -17,4 +17,8 @@ public partial class AdminDashboard : ComponentBase
 		Status = AuctionStatus.InTransit,
 		DriverFilterMode = DriverFilterMode.AnyDriver,
 	};
+
+	private string? navigateUrl = "auctions/{id}/assign-driver";
+
+	private string? navigationButtonName = "View";
 }

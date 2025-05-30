@@ -32,11 +32,11 @@
 	</MudTabPanel>
 	<MudTabPanel Text="Auctions with driver">
 		<h1 class="text-center mt-10 mb-20">Auctions with Driver</h1>
-		<AuctionsTableComponent Filter="auctionsWithDriver"></AuctionsTableComponent>
+		<AuctionsTableComponent Filter="auctionsWithDriver" NavigateUrl="@navigateUrl" NavigationButtonName="@navigationButtonName"></AuctionsTableComponent>
 	</MudTabPanel>
 	<MudTabPanel Text="Auctions without driver">
 		<h1 class="text-center mt-10 mb-20">Auctions without Driver</h1>
-		<AuctionsTableComponent Filter="auctionsWithNoDriver"></AuctionsTableComponent>
+		<AuctionsTableComponent Filter="auctionsWithNoDriver" NavigateUrl="@navigateUrl" NavigationButtonName="@navigationButtonName"></AuctionsTableComponent>
 	</MudTabPanel>
 </MudTabs>
 
