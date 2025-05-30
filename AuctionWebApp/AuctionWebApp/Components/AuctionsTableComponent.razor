@@ -1,28 +1,43 @@
 ﻿@using AuctionWebApp.ViewModels
 
+<h1 class="text-center mt-10 mb-20">Auctions with no driver</h1>
 
-<MudTable T="PreviewAuctionViewModel" ServerData="LoadAuctions" Hover="true" Bordered="true" Striped="true">
-    <HeaderContent>
-        <MudTh>Id</MudTh>
-        <MudTh>Title</MudTh>
-        <MudTh>Image</MudTh>
-        <MudTh>End Time</MudTh>
-        <MudTh>Status</MudTh>
-    </HeaderContent>
-    <RowTemplate>
-        <MudTd DataLabel="Id">@context.Id</MudTd>
-        <MudTd DataLabel="Title">@context.Title</MudTd>
-        <MudTd DataLabel="Image">
-            @if (context.Images?.FirstOrDefault() is AuctionImageViewModel img)
-            {
-                <img src="@($"{AppSettings.ApiUrl}{img.ImageUrl}")" alt="Auction Image" width="100" />
-            }
-        </MudTd>
-        <MudTd DataLabel="End Time">@context.EndTime.ToString("g")</MudTd>
-        <MudTd DataLabel="Status">@context.Status.ToString()</MudTd>
-    </RowTemplate>
-    <PagerContent>
-        <MudTablePager />
-    </PagerContent>
-</MudTable>
+<div style="width: 80%; margin: 0 auto; margin-top: 40px;">
+	<MudTable T="PreviewAuctionViewModel"
+			  ServerData="LoadAuctions"
+			  Hover="true" Bordered="true"
+			  Style="background-color: #f5f7fa; border: 1px solid #ddd; border-radius: 8px;">
+		<HeaderContent>
+			<MudTh Style="border: 1px solid grey; text-align: center; vertical-align: middle;">Id</MudTh>
+			<MudTh Style="border: 1px solid grey; text-align: center; vertical-align: middle;">Title</MudTh>
+			<MudTh Style="border: 1px solid grey; text-align: center; vertical-align: middle;">Image</MudTh>
+			<MudTh Style="border: 1px solid grey; text-align: center; vertical-align: middle;">Current Price</MudTh>
+			<MudTh Style="border: 1px solid grey; text-align: center; vertical-align: middle;">End Time</MudTh>
+			<MudTh Style="border: 1px solid grey; text-align: center; vertical-align: middle;">Status</MudTh>
+		</HeaderContent>
+		<RowTemplate>
+			<MudTd DataLabel="Id" Style="border: 1px solid grey; text-align: center; vertical-align: middle;">@context.Id</MudTd>
+			<MudTd DataLabel="Title" Style="border: 1px solid grey; text-align: center; vertical-align: middle;">@context.Title</MudTd>
+			<MudTd DataLabel="Image" Style="border: 1px solid grey; text-align: center; vertical-align: middle;">
+				@if (context.Images?.FirstOrDefault() is AuctionImageViewModel img)
+				{
+					if(!string.IsNullOrEmpty(img.ImageUrl))
+					{
+						<img src="@($"{AppSettings.ApiUrl}{img.ImageUrl}")" alt="Auction Image" width="100" />
+					}
+					else
+					{
+						<MudAvatar Size="Size.Medium" Icon="@Icons.Material.Filled.ImageNotSupported" />
+					}
+				}
+			</MudTd>
+			<MudTd DataLabel="Current Price" Style="border: 1px solid grey; text-align: center; vertical-align: middle;">@context.CurrentPrice</MudTd>
+			<MudTd DataLabel="End Time" Style="border: 1px solid grey; text-align: center; vertical-align: middle;">@context.EndTime.ToString("g")</MudTd>
+			<MudTd DataLabel="Status" Style="border: 1px solid grey; text-align: center; vertical-align: middle;">@context.Status.ToString()</MudTd>
+		</RowTemplate>
+		<PagerContent>
+			<MudTablePager />
+		</PagerContent>
+	</MudTable>
+</div>
 
