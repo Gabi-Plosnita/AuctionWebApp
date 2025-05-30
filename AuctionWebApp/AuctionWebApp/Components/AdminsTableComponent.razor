@@ -1,4 +1,6 @@
-﻿<h1 class="text-center mt-10 mb-20">Admins</h1>
+﻿@using AuctionWebApp.Enums
+
+<h1 class="text-center mt-10 mb-20">Admins</h1>
 
 <div style="width: 80%; margin: 0 auto; margin-top: 40px;">
 	<MudTable Items="admins"
@@ -8,20 +10,30 @@
 			  Breakpoint="Breakpoint.Sm"
 			  LoadingProgressColor="Color.Info">
 		<HeaderContent>
-			<MudTh Style="width: 45%; border: 1px solid grey; text-align: center; vertical-align: middle;">Id</MudTh>
-			<MudTh Style="width: 45%; border: 1px solid grey; text-align: center; vertical-align: middle;">Email</MudTh>
+			<MudTh Style="width: 34%; border: 1px solid grey; text-align: center; vertical-align: middle;">Id</MudTh>
+			<MudTh Style="width: 34%; border: 1px solid grey; text-align: center; vertical-align: middle;">Email</MudTh>
+			<MudTh Style="width: 34%; border: 1px solid grey; text-align: center; vertical-align: middle;">Role</MudTh>
 			<MudTh Style="width: 10%; border: 1px solid grey; text-align: center; vertical-align: middle;">Delete</MudTh>
 		</HeaderContent>
 		<RowTemplate>
 			<MudTd DataLabel="Id" Style="border: 1px solid grey; text-align: center; vertical-align: middle;">@context.Id</MudTd>
 			<MudTd DataLabel="Email" Style="border: 1px solid grey; text-align: center; vertical-align: middle;">@context.Email</MudTd>
-			<MudTd DataLabel="Delete" Style="border: 1px solid grey; text-align: center; vertical-align: middle;">
-				<MudIconButton Icon="@Icons.Material.Filled.Delete"
-							   Color="Color.Error"
-							   Size="Size.Small"
-							   OnClick="@(() => DeleteAdminAsync(context.Id))"
-							   AriaLabel="Delete Admin" />
-			</MudTd>
+			<MudTd DataLabel="Role" Style="border: 1px solid grey; text-align: center; vertical-align: middle;">@context.Role</MudTd>
+			@if(context.Role == Role.Admin)
+			{
+				<MudTd DataLabel="Delete" Style="border: 1px solid grey; text-align: center; vertical-align: middle;">
+					<MudIconButton Icon="@Icons.Material.Filled.Delete"
+								   Color="Color.Error"
+								   Size="Size.Small"
+								   OnClick="@(() => DeleteAdminAsync(context.Id))"
+								   AriaLabel="Delete Admin" />
+				</MudTd>
+			}	
+			else
+			{
+				<MudTd DataLabel="Delete" Style="border: 1px solid grey; text-align: center; vertical-align: middle;">
+				</MudTd>
+			}
 		</RowTemplate>
 	</MudTable>
 </div>
