@@ -17,6 +17,8 @@ public partial class CategoriesTableComponent
 	[Inject] 
 	protected NavigationManager NavigationManager { get; set; } = default!;
 
+	[Parameter]
+	public int[] RowsPerPageOptions { get; set; } = new[] { 5, 10, 20 };
 
 	private List<CategoryViewModel> categories = new();
 
