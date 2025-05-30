@@ -1,4 +1,7 @@
-﻿<MudTable ServerData="LoadAuctions" Hover="true" Bordered="true" Striped="true">
+﻿@using AuctionWebApp.ViewModels
+
+
+<MudTable T="PreviewAuctionViewModel" ServerData="LoadAuctions" Hover="true" Bordered="true" Striped="true">
     <HeaderContent>
         <MudTh>Id</MudTh>
         <MudTh>Title</MudTh>

@@ -17,7 +17,7 @@ public partial class AuctionsTableComponent : ComponentBase
 	[Parameter]
 	public AuctionFilterViewModel Filter { get; set; } = new AuctionFilterViewModel();
 
-	private async Task<TableData<PreviewAuctionViewModel>> LoadAuctions(TableState state)
+	private async Task<TableData<PreviewAuctionViewModel>> LoadAuctions(TableState state, CancellationToken cancellationToken)
 	{
 		Filter.Page = state.Page + 1;
 		Filter.PageSize = state.PageSize;
@@ -26,13 +26,9 @@ public partial class AuctionsTableComponent : ComponentBase
 
 		if (!result.HasErrors)
 		{
-			var auctions = new List<PreviewAuctionViewModel>();
-			var totalItems = 0;
-			if (result.Data != null)
-			{
-				auctions = result.Data.Items.ToList();
-				totalItems = result.Data.TotalCount;
-			}
+			var auctions = result.Data?.Items?.ToList() ?? new List<PreviewAuctionViewModel>();
+			var totalItems = result.Data?.TotalCount ?? 0;
+
 			return new TableData<PreviewAuctionViewModel>
 			{
 				Items = auctions,
