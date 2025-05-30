@@ -14,11 +14,20 @@ public partial class AuctionsTableComponent : ComponentBase
 	[Inject]
 	private ISnackbar Snackbar { get; set; } = default!;
 
+	[Inject]
+	protected NavigationManager NavigationManager { get; set; } = default!;
+
 	[Parameter]
 	public AuctionFilterViewModel Filter { get; set; } = new AuctionFilterViewModel();
 
 	[Parameter]
-	public int[] RowsPerPageOptions { get; set; } = new[] { 5, 10, 20 }; 
+	public int[] RowsPerPageOptions { get; set; } = new[] { 5, 10, 20 };
+
+	[Parameter]
+	public string? NavigateUrl { get; set; }
+
+	[Parameter]
+	public string? NavigationButtonName { get; set; }
 
 	private async Task<TableData<PreviewAuctionViewModel>> LoadAuctions(TableState state, CancellationToken cancellationToken)
 	{
@@ -46,6 +55,17 @@ public partial class AuctionsTableComponent : ComponentBase
 				Items = new List<PreviewAuctionViewModel>(),
 				TotalItems = 0
 			};
+		}
+	}
+	private void NavigateToUrl(int? id)
+	{
+		if (NavigateUrl != null)
+		{
+			if(NavigateUrl.Contains("{id}") && id != null)
+			{
+				NavigateUrl = NavigateUrl.Replace("{id}", id.Value.ToString());
+			}
+			NavigationManager.NavigateTo(NavigateUrl);
 		}
 	}
 }

@@ -13,6 +13,7 @@
 			<MudTh Style="border: 1px solid grey; text-align: center; vertical-align: middle;">Current Price</MudTh>
 			<MudTh Style="border: 1px solid grey; text-align: center; vertical-align: middle;">End Time</MudTh>
 			<MudTh Style="border: 1px solid grey; text-align: center; vertical-align: middle;">Status</MudTh>
+			<MudTh Style="border: 1px solid grey; text-align: center; vertical-align: middle;"></MudTh>
 		</HeaderContent>
 		<RowTemplate>
 			<MudTd DataLabel="Id" Style="border: 1px solid grey; text-align: center; vertical-align: middle;">@context.Id</MudTd>
@@ -31,6 +32,14 @@
 			<MudTd DataLabel="Current Price" Style="border: 1px solid grey; text-align: center; vertical-align: middle;">@context.CurrentPrice</MudTd>
 			<MudTd DataLabel="End Time" Style="border: 1px solid grey; text-align: center; vertical-align: middle;">@context.EndTime.ToString("g")</MudTd>
 			<MudTd DataLabel="Status" Style="border: 1px solid grey; text-align: center; vertical-align: middle;">@context.Status.ToString()</MudTd>
+			<MudTd DataLabel="" Style="border: 1px solid grey; text-align: center; vertical-align: middle;">
+				@if(!string.IsNullOrEmpty(NavigateUrl))
+				{
+					<MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => NavigateToUrl(context.Id)">
+						@NavigationButtonName
+					</MudButton>
+				}
+			</MudTd>
 		</RowTemplate>
 		<PagerContent>
 			<MudTablePager PageSizeOptions="@RowsPerPageOptions"/>
