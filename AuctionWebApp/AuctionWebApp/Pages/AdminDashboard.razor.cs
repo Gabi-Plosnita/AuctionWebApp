@@ -11,7 +11,7 @@ public partial class AdminDashboard : ComponentBase
 		Status = AuctionStatus.InTransit,
 		IgnoreDriverId = false,
 		DriverId = null,
-		PageSize = 10,
+		PageSize = 5,
 		Page = 1
 	};
 }
