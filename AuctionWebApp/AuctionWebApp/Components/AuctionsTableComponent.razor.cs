@@ -17,6 +17,9 @@ public partial class AuctionsTableComponent : ComponentBase
 	[Parameter]
 	public AuctionFilterViewModel Filter { get; set; } = new AuctionFilterViewModel();
 
+	[Parameter]
+	public int[] RowsPerPageOptions { get; set; } = new[] { 5, 10, 20 }; 
+
 	private async Task<TableData<PreviewAuctionViewModel>> LoadAuctions(TableState state, CancellationToken cancellationToken)
 	{
 		Filter.Page = state.Page + 1;

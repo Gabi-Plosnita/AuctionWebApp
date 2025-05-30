@@ -35,7 +35,7 @@
 			<MudTd DataLabel="Status" Style="border: 1px solid grey; text-align: center; vertical-align: middle;">@context.Status.ToString()</MudTd>
 		</RowTemplate>
 		<PagerContent>
-			<MudTablePager />
+			<MudTablePager PageSizeOptions="@RowsPerPageOptions"/>
 		</PagerContent>
 	</MudTable>
 </div>
