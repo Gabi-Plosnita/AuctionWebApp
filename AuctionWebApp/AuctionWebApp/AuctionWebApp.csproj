@@ -20,7 +20,6 @@
 	<Folder Include="Layout\" />
 	<Folder Include="Models\" />
 	<Folder Include="Mappings\" />
-	<Folder Include="Enums\" />
 	<Folder Include="HttpClients\" />
 	<Folder Include="Services\" />
 	<Folder Include="Helpers\" />

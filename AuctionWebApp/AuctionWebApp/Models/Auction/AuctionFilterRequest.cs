@@ -10,7 +10,7 @@ public record AuctionFilterRequest
 
 	public int? BidderId { get; init; }
 
-	public bool IgnoreDriverId { get; init; }
+	public DriverFilterMode DriverFilterMode { get; init; } = DriverFilterMode.Ignore;
 
 	public int? DriverId { get; init; }
 

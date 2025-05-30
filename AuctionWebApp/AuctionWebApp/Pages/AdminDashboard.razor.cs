@@ -9,9 +9,12 @@ public partial class AdminDashboard : ComponentBase
 	private AuctionFilterViewModel auctionsWithNoDriver = new AuctionFilterViewModel
 	{
 		Status = AuctionStatus.InTransit,
-		IgnoreDriverId = false,
-		DriverId = null,
-		PageSize = 5,
-		Page = 1
+		DriverFilterMode = DriverFilterMode.NoDriver,
+	};
+
+	private AuctionFilterViewModel auctionsWithDriver = new AuctionFilterViewModel
+	{
+		Status = AuctionStatus.InTransit,
+		DriverFilterMode = DriverFilterMode.AnyDriver,
 	};
 }
