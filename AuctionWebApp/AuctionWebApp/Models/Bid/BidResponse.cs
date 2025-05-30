@@ -2,7 +2,7 @@
 
 public record BidResponse
 {
-	public string BidderName { get; init; } = string.Empty;
+	public UserResponse Bidder { get; init; } = default!; 
 	public decimal Amount { get; init; }
 	public DateTime Date { get; init; }
 }

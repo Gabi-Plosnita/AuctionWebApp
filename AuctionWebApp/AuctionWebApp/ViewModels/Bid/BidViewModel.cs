@@ -2,7 +2,7 @@
 
 public class BidViewModel
 {
-	public string BidderName { get; set; } = string.Empty;
+	public UserViewModel Bidder { get; set; } = default!;
 	public decimal Amount { get; set; }
 	public DateTime Date { get; set; }
 }
