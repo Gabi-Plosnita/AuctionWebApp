@@ -1,0 +1,25 @@
+﻿<MudTable ServerData="LoadAuctions" Hover="true" Bordered="true" Striped="true">
+    <HeaderContent>
+        <MudTh>Id</MudTh>
+        <MudTh>Title</MudTh>
+        <MudTh>Image</MudTh>
+        <MudTh>End Time</MudTh>
+        <MudTh>Status</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Id">@context.Id</MudTd>
+        <MudTd DataLabel="Title">@context.Title</MudTd>
+        <MudTd DataLabel="Image">
+            @if (context.Images?.FirstOrDefault() is AuctionImageViewModel img)
+            {
+                <img src="@($"{AppSettings.ApiUrl}{img.ImageUrl}")" alt="Auction Image" width="100" />
+            }
+        </MudTd>
+        <MudTd DataLabel="End Time">@context.EndTime.ToString("g")</MudTd>
+        <MudTd DataLabel="Status">@context.Status.ToString()</MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager />
+    </PagerContent>
+</MudTable>
+
