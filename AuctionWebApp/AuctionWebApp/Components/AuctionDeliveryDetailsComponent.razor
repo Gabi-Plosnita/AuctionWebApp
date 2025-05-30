@@ -1,7 +1,7 @@
 ﻿@if (Auction is not null)
 {
 	<div class="auction-details card shadow p-4 mb-5 bg-white rounded">
-		<h2 class="mb-3 text-primary">@Auction.Title</h2>
+		<h1 class="mb-3 text-primary text-center">@Auction.Title</h1>
 
 		<p class="text-muted">@Auction.Description</p>
 
@@ -12,31 +12,30 @@
 			}
 		</div>
 
+		<div class="custom-separator"></div>
+
 		<div class="row">
-			<div class="col-md-6">
-				<p><strong>Starting Price:</strong> @Auction.StartingPrice:C</p>
-				<p><strong>Current Price:</strong> @Auction.CurrentPrice:C</p>
-			</div>
-			<div class="col-md-6">
+			<div class="col-md-6 text-center mx-auto">
+				<p><strong>Starting Price:</strong> @Auction.StartingPrice</p>
+				<p><strong>Current Price:</strong> @Auction.CurrentPrice</p>
 				<p><strong>Start Time:</strong> @Auction.StartTime.ToString("f")</p>
 				<p><strong>End Time:</strong> @Auction.EndTime.ToString("f")</p>
+				<p><strong>Status:</strong> <span class="badge bg-info text-dark">@Auction.Status</span></p>
 			</div>
 		</div>
 
-		<p><strong>Status:</strong> <span class="badge bg-info text-dark">@Auction.Status</span></p>
-
-		<hr />
+		<div class="custom-separator"></div>
 
 		<div class="row text-center mt-4">
 			<div class="col-md-4 mb-4 info-section">
-				<h5>Seller Information</h5>
+				<h5 class="mb-10">Seller Information</h5>
 				<p><strong>Email:</strong> @Auction.Seller.Email</p>
 				<p><strong>Name:</strong> @Auction.Seller.FirstName @Auction.Seller.LastName</p>
 				<p><strong>Address:</strong> @Auction.Seller.Address</p>
 			</div>
 
 			<div class="col-md-4 mb-4 info-section">
-				<h5>Driver Information</h5>
+				<h5 class="mb-10">Driver Information</h5>
 				@if (Auction.Driver is not null)
 				{
 					<p><strong>ID:</strong> @Auction.Driver.Id</p>
@@ -49,7 +48,7 @@
 			</div>
 
 			<div class="col-md-4 mb-4 info-section">
-				<h5>Winner Information</h5>
+				<h5 class="mb-10">Winner Information</h5>
 				@if (winner is not null)
 				{
 					<p><strong>Email:</strong> @winner.Email</p>

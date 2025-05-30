@@ -1,11 +1,18 @@
-﻿.auction-details {
+﻿.custom-separator {
+    height: 2px;
+    background-color: lightgray;
+    margin: 2rem 0;
+    border-radius: 3px;
+}
+
+.auction-details {
     max-width: 1000px;
     margin: auto;
     background-color: #fff;
 }
 
 .auction-image {
-    height: 300px;
+    height: 200px;
     object-fit: cover;
     border-radius: 0.5rem;
 }
