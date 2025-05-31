@@ -20,6 +20,8 @@ public partial class AssignDriverToAuction : ComponentBase
 	[Parameter]
 	public int AuctionId { get; set; }
 
+	private string ReturnUrl { get; set; } = "/admin-dashboard";
+
 	private DetailedAuctionViewModel auction;
 
 	private List<DriverViewModel> drivers = new List<DriverViewModel>();

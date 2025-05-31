@@ -23,6 +23,8 @@ public partial class EditCategory : ComponentBase
 
 	[Parameter] public int Id { get; set; }
 
+	private string ReturnUrl { get; set; } = "/admin-dashboard";
+
 	private MudForm? _form;
 
 	private CategoryViewModel _category = new();
