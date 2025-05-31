@@ -24,6 +24,8 @@ public partial class AssignDriverToAuction : ComponentBase
 
 	private List<DriverViewModel> drivers = new List<DriverViewModel>();
 
+	private string? selectedDriverEmail;
+
 	protected override async Task OnInitializedAsync()
 	{
 		var auctionResult = await AuctionService.GetDetailedByIdAsync(AuctionId);
@@ -38,6 +40,7 @@ public partial class AssignDriverToAuction : ComponentBase
 			return;
 		}
 		auction = auctionResult.Data;
+		selectedDriverEmail = auction?.Driver?.Email ?? "No Driver";
 
 		var driversResult = await DriverService.GetAllAsync();
 		if (driversResult.HasErrors)
@@ -51,5 +54,31 @@ public partial class AssignDriverToAuction : ComponentBase
 			return;
 		}
 		drivers = driversResult.Data;
+	}
+
+	private async Task AssignDriver()
+	{
+		if (selectedDriverEmail == "No Driver")
+		{
+			Snackbar.ShowError("No driver selected");
+			return;
+		}
+
+		var selectedDriver = drivers.FirstOrDefault(d => d.Email == selectedDriverEmail);
+		if (selectedDriver == null)
+		{
+			Snackbar.ShowError("Selected driver not found");
+			return;
+		}
+
+		var result = await AuctionService.AssignDriverAsync(AuctionId, selectedDriver.Id);
+		if (result.HasErrors)
+		{
+			Snackbar.ShowErrors(result.Errors);
+			return;
+		}
+		Snackbar.ShowSuccess("Driver assigned successfully");
+
+		StateHasChanged();
 	}
 }
