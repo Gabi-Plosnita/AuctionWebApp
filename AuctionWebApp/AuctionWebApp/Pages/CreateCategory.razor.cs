@@ -21,6 +21,8 @@ public partial class CreateCategory : ComponentBase
 	[Inject]
 	private ISnackbar Snackbar { get; set; } = default!;
 
+	private string ReturnUrl { get; set; } = "/admin-dashboard";
+
 	protected MudForm? _form;
 
 	protected CreateCategoryViewModel _model = new();
