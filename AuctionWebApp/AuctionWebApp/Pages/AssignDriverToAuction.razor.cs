@@ -26,6 +26,8 @@ public partial class AssignDriverToAuction : ComponentBase
 
 	private string? selectedDriverEmail;
 
+	private bool isLoading = true;
+
 	protected override async Task OnInitializedAsync()
 	{
 		var auctionResult = await AuctionService.GetDetailedByIdAsync(AuctionId);
@@ -54,6 +56,8 @@ public partial class AssignDriverToAuction : ComponentBase
 			return;
 		}
 		drivers = driversResult.Data;
+
+		isLoading = false;
 	}
 
 	private async Task AssignDriver()

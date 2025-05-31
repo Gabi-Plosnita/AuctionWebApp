@@ -4,29 +4,35 @@
 @page "/auctions/{AuctionId:int}/assign-driver"
 @attribute [Authorize(Roles = "Admin,SuperAdmin")]
 
-<AuctionDeliveryDetailsComponent Auction="@auction"></AuctionDeliveryDetailsComponent>
+@if (isLoading)
+{
+    <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+}
+else
+{
+    <AuctionDeliveryDetailsComponent Auction="@auction"></AuctionDeliveryDetailsComponent>
 
-<MudPaper Class="p-4">
-    <MudText Typo="Typo.h6">Current Driver</MudText>
+    <MudPaper Class="p-4">
+        <MudText Typo="Typo.h6">Current Driver</MudText>
 
-    <MudSelect T="string" Label="Assign Driver"
-               @bind-Value="selectedDriverEmail"
-               Dense="true"
-               Placeholder="Select a driver">
-        @if (selectedDriverEmail == null)
-        {
-            <MudSelectItem Value="selectedDriverEmail">No Driver</MudSelectItem>
-        }
+        <MudSelect T="string" Label="Assign Driver"
+                   @bind-Value="selectedDriverEmail"
+                   Dense="true"
+                   Placeholder="Select a driver">
+            @if (selectedDriverEmail == null)
+            {
+                <MudSelectItem Value="selectedDriverEmail">No Driver</MudSelectItem>
+            }
 
-        @foreach (var driver in drivers)
-        {
-            <MudSelectItem Value="@driver.Email">@driver.Email</MudSelectItem>
-        }
-    </MudSelect>
+            @foreach (var driver in drivers)
+            {
+                <MudSelectItem Value="@driver.Email">@driver.Email</MudSelectItem>
+            }
+        </MudSelect>
 
-    <MudButton OnClick="AssignDriver" Variant="Variant.Filled" Color="Color.Primary" Class="mt-4">
-        Submit
-    </MudButton>
-</MudPaper>
-
+        <MudButton OnClick="AssignDriver" Variant="Variant.Filled" Color="Color.Primary" Class="mt-4">
+            Submit
+        </MudButton>
+    </MudPaper>
+}
 
