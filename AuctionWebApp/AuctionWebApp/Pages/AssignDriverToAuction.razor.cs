@@ -79,6 +79,7 @@ public partial class AssignDriverToAuction : ComponentBase
 		}
 		Snackbar.ShowSuccess("Driver assigned successfully");
 
+		auction.Driver = selectedDriver;
 		StateHasChanged();
 	}
 }
