@@ -6,33 +6,44 @@
 
 @if (isLoading)
 {
-    <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+	<MudProgressCircular Color="Color.Primary"
+						 Indeterminate="true"
+						 Class="d-flex mx-auto mt-12" />
 }
 else
 {
-    <AuctionDeliveryDetailsComponent Auction="@auction"></AuctionDeliveryDetailsComponent>
+	<AuctionDeliveryDetailsComponent Auction="@auction"></AuctionDeliveryDetailsComponent>
 
-    <MudPaper Class="p-4">
-        <MudText Typo="Typo.h6">Current Driver</MudText>
+	<div class="d-flex justify-center">
+		<div class="auction-details card shadow p-4 mb-5 bg-white rounded text-center" style="width: 100%; max-width: 800px;">
+			<MudText Typo="Typo.h5" Class="mb-4">Current Driver</MudText>
 
-        <MudSelect T="string" Label="Assign Driver"
-                   @bind-Value="selectedDriverEmail"
-                   Dense="true"
-                   Placeholder="Select a driver">
-            @if (selectedDriverEmail == null)
-            {
-                <MudSelectItem Value="selectedDriverEmail">No Driver</MudSelectItem>
-            }
+			<MudSelect T="string"
+					   Label="Assign Driver"
+					   @bind-Value="selectedDriverEmail"
+					   Dense="false"
+					   Placeholder="Select a driver"
+					   Class="mb-4"
+					   Style="width: 100%;">
+				@if (auction?.Driver?.Email == null)
+				{
+					<MudSelectItem Value="selectedDriverEmail">No Driver</MudSelectItem>
+				}
 
-            @foreach (var driver in drivers)
-            {
-                <MudSelectItem Value="@driver.Email">@driver.Email</MudSelectItem>
-            }
-        </MudSelect>
+				@foreach (var driver in drivers)
+				{
+					<MudSelectItem Value="@driver.Email">@driver.Email</MudSelectItem>
+				}
+			</MudSelect>
 
-        <MudButton OnClick="AssignDriver" Variant="Variant.Filled" Color="Color.Primary" Class="mt-4">
-            Submit
-        </MudButton>
-    </MudPaper>
+			<MudButton OnClick="AssignDriver"
+					   Variant="Variant.Filled"
+					   Color="Color.Primary"
+					   Class="mt-2"
+					   Style="width: 100%; font-size: 1.1rem; padding: 12px;">
+				Submit
+			</MudButton>
+		</div>
+	</div>
 }
 
