@@ -5,38 +5,50 @@
 @page "/admin-dashboard"
 @attribute [Authorize(Roles = "Admin,SuperAdmin")]
 
-<MudTabs Class="full-screen-tabs"
-		 Style="width:100vw; height:100vh; margin:0; padding:0;"
-		 Centered="true"
-		 Elevation="0"
-		 Rounded="false"
-		 Bordered="false"
-		 ApplyEffectsToContainer="false"
-		 PanelClass="pa-6"
-		 Color="Color.Primary">
-	<MudTabPanel Text="Categories">
-		<h1 class="text-center mt-10 mb-20">Categories</h1>
-		<CategoriesTableComponent></CategoriesTableComponent>
-	</MudTabPanel>
-	<AuthorizeView Roles="SuperAdmin">
-		<Authorized>
+@if (isLoading)
+{
+	<MudProgressCircular Color="Color.Primary"
+						 Indeterminate="true"
+						 Class="d-flex mx-auto mt-12" />
+}
+else
+{
+	<MudTabs Class="full-screen-tabs"
+			 Style="width:100vw; height:100vh; margin:0; padding:0;"
+			 Centered="true"
+			 Elevation="0"
+			 Rounded="false"
+			 Bordered="false"
+			 ApplyEffectsToContainer="false"
+			 PanelClass="pa-6"
+			 Color="Color.Primary">
+		<MudTabPanel Text="Categories">
+			<h1 class="text-center mt-10 mb-20">Welcome to admin dashboard</h1>
+			<LogoutComponent></LogoutComponent>
+		</MudTabPanel>
+		<MudTabPanel Text="Categories">
+			<h1 class="text-center mt-10 mb-20">Categories</h1>
+			<CategoriesTableComponent></CategoriesTableComponent>
+		</MudTabPanel>
+		@if (isSuperAdmin)
+		{
 			<MudTabPanel Text="Admins">
 				<h1 class="text-center mt-10 mb-20">Admins</h1>
 				<AdminsTableComponent></AdminsTableComponent>
 			</MudTabPanel>
-		</Authorized>
-	</AuthorizeView>
-	<MudTabPanel Text="Drivers">
-		<h1 class="text-center mt-10 mb-20">Drivers</h1>
-		<DriversTableComponent></DriversTableComponent>
-	</MudTabPanel>
-	<MudTabPanel Text="Auctions with driver">
-		<h1 class="text-center mt-10 mb-20">Auctions with Driver</h1>
-		<AuctionsTableComponent Filter="auctionsWithDriver" NavigateUrl="@navigateUrl" NavigationButtonName="@navigationButtonName"></AuctionsTableComponent>
-	</MudTabPanel>
-	<MudTabPanel Text="Auctions without driver">
-		<h1 class="text-center mt-10 mb-20">Auctions without Driver</h1>
-		<AuctionsTableComponent Filter="auctionsWithNoDriver" NavigateUrl="@navigateUrl" NavigationButtonName="@navigationButtonName"></AuctionsTableComponent>
-	</MudTabPanel>
-</MudTabs>
+		}
+		<MudTabPanel Text="Drivers">
+			<h1 class="text-center mt-10 mb-20">Drivers</h1>
+			<DriversTableComponent></DriversTableComponent>
+		</MudTabPanel>
+		<MudTabPanel Text="Auctions with driver">
+			<h1 class="text-center mt-10 mb-20">Auctions with Driver</h1>
+			<AuctionsTableComponent Filter="auctionsWithDriver" NavigateUrl="@navigateUrl" NavigationButtonName="@navigationButtonName"></AuctionsTableComponent>
+		</MudTabPanel>
+		<MudTabPanel Text="Auctions without driver">
+			<h1 class="text-center mt-10 mb-20">Auctions without Driver</h1>
+			<AuctionsTableComponent Filter="auctionsWithNoDriver" NavigateUrl="@navigateUrl" NavigationButtonName="@navigationButtonName"></AuctionsTableComponent>
+		</MudTabPanel>
+	</MudTabs>
+}
 
