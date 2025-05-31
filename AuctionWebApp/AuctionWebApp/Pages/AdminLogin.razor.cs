@@ -13,6 +13,8 @@ public partial class AdminLogin : ComponentBase
 	[Inject]
 	public NavigationManager Navigation { get; set; } = default!;
 
+	private string ReturnUrl { get; set; } = "/";
+
 	protected LoginViewModel AdminModel { get; set; } = new LoginViewModel();
 
 	protected async Task<Result> HandleAdminLogin(LoginViewModel model)
