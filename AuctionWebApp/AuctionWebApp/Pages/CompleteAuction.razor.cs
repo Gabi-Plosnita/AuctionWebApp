@@ -10,7 +10,7 @@ namespace AuctionWebApp.Pages;
 public partial class CompleteAuction : ComponentBase
 {
 	[Inject]
-	private IJSRuntime JS { get; set; } = default!;
+	private IDialogService DialogService { get; set; } = default!;
 
 	[Inject]
 	private ISnackbar Snackbar { get; set; } = default!;
@@ -50,9 +50,13 @@ public partial class CompleteAuction : ComponentBase
 
 	private async Task CompleteAuctionAsync()
 	{
-		bool confirmed = await JS.InvokeAsync<bool>("confirm", "Are you sure you want to complete this auction?");
+		bool? dialogResult = await DialogService.ShowMessageBox(
+		"Confirm Completion",
+		"Are you sure you want to complete this auction?",
+		yesText: "Yes",
+		cancelText: "Cancel");
 
-		if (confirmed)
+		if (dialogResult == true)
 		{
 			var result = await AuctionService.CompleteAuctionAsync(AuctionId);
 			if (result.HasErrors)
