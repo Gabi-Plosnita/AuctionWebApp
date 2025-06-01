@@ -29,27 +29,28 @@
 	</MudTabPanel>
 	<MudTabPanel Text="	My Bids">
 
-		<MudSelect T="AuctionStatus?"
-				   Value="@myBidsAuctionFilter.Status"
-				   ValueChanged="HandleBidStatusFilterChanged"
-				   Label="Status"
-				   Dense="true"
-				   Class="mb-4"
-				   Style="width: fit-content;">
+		<div style="width: 300px">
+			<MudSelect T="AuctionStatus?"
+					   Value="@myBidsAuctionFilter.Status"
+					   ValueChanged="HandleBidStatusFilterChanged"
+					   Label="Auction Status"
+					   Dense="true"
+					   Class="mb-4">
 
-			<MudSelectItem T="AuctionStatus?"
-						   Value="@((AuctionStatus?)null)">
-				All
-			</MudSelectItem>
-
-			@foreach (AuctionStatus status in Enum.GetValues(typeof(AuctionStatus)))
-			{
 				<MudSelectItem T="AuctionStatus?"
-							   Value="@(status)">
-					@status.ToString()
+							   Value="@((AuctionStatus?)null)">
+					All
 				</MudSelectItem>
-			}
-		</MudSelect>
+
+				@foreach (AuctionStatus status in Enum.GetValues(typeof(AuctionStatus)))
+				{
+					<MudSelectItem T="AuctionStatus?"
+								   Value="@(status)">
+						@status.ToString()
+					</MudSelectItem>
+				}
+			</MudSelect>
+		</div>
 
 		<AuctionsTableComponent @ref="bidAuctionsTable"
 								NavigateUrl="@bidAuctionUrl"
