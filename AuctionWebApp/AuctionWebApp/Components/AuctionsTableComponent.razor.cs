@@ -29,6 +29,14 @@ public partial class AuctionsTableComponent : ComponentBase
 	[Parameter]
 	public string? NavigationButtonName { get; set; }
 
+
+	private MudTable<PreviewAuctionViewModel> table = default!;
+
+	public async Task Reload()
+	{
+		await table.ReloadServerData();
+	}
+
 	private async Task<TableData<PreviewAuctionViewModel>> LoadAuctions(TableState state, CancellationToken cancellationToken)
 	{
 		Filter.Page = state.Page + 1;

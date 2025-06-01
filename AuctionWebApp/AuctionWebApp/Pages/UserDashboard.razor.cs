@@ -1,4 +1,5 @@
-﻿using AuctionWebApp.Enums;
+﻿using AuctionWebApp.Components;
+using AuctionWebApp.Enums;
 using AuctionWebApp.Services;
 using AuctionWebApp.ViewModels;
 using Microsoft.AspNetCore.Components;
@@ -10,14 +11,16 @@ public partial class UserDashboard : ComponentBase
 	[Inject]
 	private IAuthService AuthService { get; set; } = default!;
 
-	private string detailedAuctionUrl = "/auctions/{id}/bid";
+	private int authenticatedUserId;
+
+	private string bidAuctionUrl = "/auctions/{id}/bid";
 
 	private AuctionFilterViewModel myBidsAuctionFilter = new AuctionFilterViewModel
 	{
 		Status = AuctionStatus.InProgress,
 	};
 
-	private int authenticatedUserId;
+	private AuctionsTableComponent bidAuctionsTable;
 
 	protected override async Task OnInitializedAsync()
 	{
@@ -33,5 +36,12 @@ public partial class UserDashboard : ComponentBase
 		authenticatedUserId = result.Data.Id;
 		myBidsAuctionFilter.BidderId = authenticatedUserId;
 	}
+
+	private async Task OnBidAuctionStatusChanged(AuctionStatus? status)
+	{
+		myBidsAuctionFilter.Status = status;
+		await bidAuctionsTable.Reload();
+	}
+
 
 }

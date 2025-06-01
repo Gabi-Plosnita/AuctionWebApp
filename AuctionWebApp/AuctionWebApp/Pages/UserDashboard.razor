@@ -30,7 +30,8 @@
 	<MudTabPanel Text="	My Bids">
 
 		<MudSelect T="AuctionStatus?"
-				   @bind-Value="myBidsAuctionFilter.Status"
+				   Value="@myBidsAuctionFilter.Status"
+				   ValueChanged="OnBidAuctionStatusChanged"
 				   Label="Status"
 				   Dense="true"
 				   Class="mb-4">
@@ -49,7 +50,8 @@
 			}
 		</MudSelect>
 
-		<AuctionsTableComponent NavigateUrl="@detailedAuctionUrl"
+		<AuctionsTableComponent @ref="bidAuctionsTable"
+								NavigateUrl="@bidAuctionUrl"
 								NavigationButtonName="View"
 								Filter="myBidsAuctionFilter"></AuctionsTableComponent>
 	</MudTabPanel>

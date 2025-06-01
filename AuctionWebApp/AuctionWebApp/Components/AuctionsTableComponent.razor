@@ -1,7 +1,8 @@
 ﻿@using AuctionWebApp.ViewModels
 
 <div style="width: 80%; margin: 0 auto; margin-top: 40px;">
-	<MudTable T="PreviewAuctionViewModel"
+	<MudTable @ref="table"
+			  T="PreviewAuctionViewModel"
 			  ServerData="LoadAuctions"
 			  RowsPerPage="5"
 			  Hover="true" Bordered="true"
@@ -33,7 +34,7 @@
 			<MudTd DataLabel="End Time" Style="border: 1px solid grey; text-align: center; vertical-align: middle;">@context.EndTime.ToString("g")</MudTd>
 			<MudTd DataLabel="Status" Style="border: 1px solid grey; text-align: center; vertical-align: middle;">@context.Status.ToString()</MudTd>
 			<MudTd DataLabel="" Style="border: 1px solid grey; text-align: center; vertical-align: middle;">
-				@if(!string.IsNullOrEmpty(NavigateUrl))
+				@if (!string.IsNullOrEmpty(NavigateUrl))
 				{
 					<MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => NavigateToUrl(context.Id)">
 						@NavigationButtonName
@@ -42,7 +43,7 @@
 			</MudTd>
 		</RowTemplate>
 		<PagerContent>
-			<MudTablePager PageSizeOptions="@RowsPerPageOptions"/>
+			<MudTablePager PageSizeOptions="@RowsPerPageOptions" />
 		</PagerContent>
 	</MudTable>
 </div>
