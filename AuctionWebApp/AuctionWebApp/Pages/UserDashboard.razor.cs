@@ -37,7 +37,7 @@ public partial class UserDashboard : ComponentBase
 		myBidsAuctionFilter.BidderId = authenticatedUserId;
 	}
 
-	private async Task OnBidAuctionStatusChanged(AuctionStatus? status)
+	private async Task HandleBidStatusFilterChanged(AuctionStatus? status)
 	{
 		myBidsAuctionFilter.Status = status;
 		await bidAuctionsTable.Reload();

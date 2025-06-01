@@ -31,10 +31,11 @@
 
 		<MudSelect T="AuctionStatus?"
 				   Value="@myBidsAuctionFilter.Status"
-				   ValueChanged="OnBidAuctionStatusChanged"
+				   ValueChanged="HandleBidStatusFilterChanged"
 				   Label="Status"
 				   Dense="true"
-				   Class="mb-4">
+				   Class="mb-4"
+				   Style="width: fit-content;">
 
 			<MudSelectItem T="AuctionStatus?"
 						   Value="@((AuctionStatus?)null)">
