@@ -12,7 +12,7 @@ public partial class AuctionDeliveryDetailsComponent : ComponentBase
 
 	private List<string> imageUrls = new List<string>();
 
-	protected override async Task OnParametersSetAsync()
+	protected override void OnParametersSet()
 	{
 		if (Auction?.Bids != null && Auction.Bids.Any())
 		{
