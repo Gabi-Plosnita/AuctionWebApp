@@ -1,10 +1,14 @@
 ﻿using AuctionWebApp.ViewModels;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 
 namespace AuctionWebApp.Components;
 
 public partial class DetailedAuctionComponent : ComponentBase
 {
+	[Inject]
+	private IJSRuntime JS { get; set; } = default!;
+
 	[Parameter]
 	public required DetailedAuctionViewModel Auction { get; set; }
 
@@ -15,6 +19,13 @@ public partial class DetailedAuctionComponent : ComponentBase
 		if (Auction?.Images != null && Auction.Images.Any())
 		{
 			imageUrls = Auction.Images.Select(i => i.ImageUrl).ToList();
+		}
+	}
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		if (firstRender)
+		{
+			await JS.InvokeVoidAsync("startCountdown", Auction.EndTime.ToUniversalTime().ToString("o"));
 		}
 	}
 }

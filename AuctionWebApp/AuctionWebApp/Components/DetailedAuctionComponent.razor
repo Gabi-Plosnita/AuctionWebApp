@@ -42,65 +42,44 @@
 
 	<div class="custom-separator"></div>
 
-    <div class="bid-history-container mx-auto">
-        <h5 class="mb-3 text-center">Bidding History</h5>
-        @if (Auction.Bids.Any())
-        {
-            <div class="bid-list">
-                @foreach (var bid in Auction.Bids.OrderByDescending(b => b.Date))
-                {
-                    <div class="bid-entry d-flex justify-content-between align-items-center">
-                        <span class="bidder-name @(bid == Auction.Bids.OrderByDescending(b => b.Date).First() ? "fw-bold" : "")">
-                            @("Bidder " + bid.Bidder.Id)
-                        </span>
-                        <span class="bid-date text-muted">
-                            @DateHelper.GetRelativeTime(bid.Date)
-                        </span>
-                        <span class="bid-amount @(bid == Auction.Bids.OrderByDescending(b => b.Amount).First() ? "fw-bold" : "")">
-                            @bid.Amount.ToString("C")
-                        </span>
-                    </div>
-                }
-            </div>
-        }
-        else
-        {
-            <p class="text-muted text-center">No bids yet.</p>
-        }
-    </div>
+	<div class="bid-history-container mx-auto">
+		<h5 class="mb-3 text-center">Bidding History</h5>
+		@if (Auction.Bids.Any())
+		{
+			<div class="bid-list">
+				@foreach (var bid in Auction.Bids.OrderByDescending(b => b.Date))
+				{
+					<div class="bid-entry d-flex justify-content-between align-items-center">
+						<span class="bidder-name @(bid == Auction.Bids.OrderByDescending(b => b.Date).First() ? "fw-bold" : "")">
+							@("Bidder " + bid.Bidder.Id)
+						</span>
+						<span class="bid-date text-muted">
+							@DateHelper.GetRelativeTime(bid.Date)
+						</span>
+						<span class="bid-amount @(bid == Auction.Bids.OrderByDescending(b => b.Amount).First() ? "fw-bold" : "")">
+							@bid.Amount.ToString("C")
+						</span>
+					</div>
+				}
+			</div>
+		}
+		else
+		{
+			<p class="text-muted text-center">No bids yet.</p>
+		}
+	</div>
 
 	<div class="custom-separator"></div>
 
-	@* <div class="mt-4">
-                <h5>Time Remaining</h5>
-                <p class="countdown" id="countdown"></p>
-            </div> *@
+	@if (Auction.EndTime > DateTime.UtcNow)
+	{
+		<div class="mt-4 text-center">
+			<h5>Time Remaining</h5>
+			<p class="countdown" id="countdown"></p>
+		</div>
+	}
+	else
+	{
+		<p class="text-muted text-center">This auction has ended.</p>
+	}
 </div>
-
-@* @section Scripts {
-<script>
-    const endTime = new Date("@Auction.EndTime.ToUniversalTime().ToString("o")");
-    const countdownEl = document.getElementById("countdown");
-
-    function updateCountdown() {
-        const now = new Date();
-        const diff = endTime - now;
-
-        if (diff <= 0) {
-            countdownEl.textContent = "Auction ended";
-            clearInterval(timer);
-            return;
-        }
-
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-        const minutes = Math.floor((diff / 1000 / 60) % 60);
-        const seconds = Math.floor((diff / 1000) % 60);
-
-        countdownEl.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-    }
-
-    updateCountdown();
-    const timer = setInterval(updateCountdown, 1000);
-</script>
-} *@
