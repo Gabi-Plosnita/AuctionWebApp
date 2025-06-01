@@ -19,7 +19,7 @@ public partial class UserLogin : ComponentBase
 
 	protected async Task<Result> HandleUserLogin(LoginViewModel model)
 	{
-		var result = await _authService.LoginDriverAsync(model);
+		var result = await _authService.LoginUserAsync(model);
 		if (!result.HasErrors)
 		{
 			Navigation.NavigateTo("/user-dashboard");
