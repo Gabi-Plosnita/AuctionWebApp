@@ -27,6 +27,8 @@
 		<h1 class="text-center mt-10 mb-20">My Listings</h1>
 	</MudTabPanel>
 	<MudTabPanel Text="	My Bids">
-		<h1 class="text-center mt-10 mb-20">My Bids</h1>
+		<AuctionsTableComponent NavigateUrl="@detailedAuctionUrl"
+								NavigationButtonName="View"
+								Filter="myBidsAuctionFilter"></AuctionsTableComponent>
 	</MudTabPanel>
 </MudTabs>
