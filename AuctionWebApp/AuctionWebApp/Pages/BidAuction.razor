@@ -1,0 +1,21 @@
+﻿@using AuctionWebApp.Components
+@using Microsoft.AspNetCore.Authorization
+
+@page "/auctions/{AuctionId:int}/bid"
+@attribute [Authorize(Roles = "User")]
+
+@if (isLoading)
+{
+	<MudProgressCircular Color="Color.Primary"
+						 Indeterminate="true"
+						 Class="d-flex mx-auto mt-12" />
+}
+else
+{
+	<NavigationComponent Url="@ReturnUrl"></NavigationComponent>
+
+	<div class="mt-10">
+		<DetailedAuctionComponent Auction="@auction"></DetailedAuctionComponent>
+	</div>
+}
+
