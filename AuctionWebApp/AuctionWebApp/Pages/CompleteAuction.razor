@@ -1,8 +1,8 @@
 ﻿@using AuctionWebApp.Components
 @using Microsoft.AspNetCore.Authorization
 
-@page "/auctions/{AuctionId:int}/assign-driver"
-@attribute [Authorize(Roles = "Admin,SuperAdmin")]
+@page "/auctions/{AuctionId:int}/complete"
+@attribute [Authorize(Roles = "Driver")]
 
 @if (isLoading)
 {
@@ -14,12 +14,18 @@ else
 {
 	<NavigationComponent Url="@ReturnUrl"></NavigationComponent>
 
-	<MudButton OnClick="CompleteAuctionAsync"
-			   Variant="Variant.Filled"
-			   Color="Color.Primary"
-			   Class="mt-2"
-			   Style="width: 100%; font-size: 1.1rem; padding: 12px;">
-		Complete
-	</MudButton>
+	<div class="mt-10">
+		<AuctionDeliveryDetailsComponent Auction="@auction" />
+	</div>
+
+	<div class="d-flex justify-center mb-10">
+		<MudButton OnClick="CompleteAuctionAsync"
+				   Variant="Variant.Filled"
+				   Color="Color.Primary"
+				   Class="mt-2"
+				   Style="width: 250px; font-size: 1.1rem; padding: 12px;">
+			Complete
+		</MudButton>
+	</div>
 }
 
