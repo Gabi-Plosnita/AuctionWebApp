@@ -25,9 +25,38 @@
 		<h1 class="text-center mt-10 mb-20">Browse Auctions</h1>
 	</MudTabPanel>
 	<MudTabPanel Text="	My Listings">
-		<h1 class="text-center mt-10 mb-20">My Listings</h1>
+		<h1 class="text-center mt-10 mb-15">My Listings</h1>
+
+		<div style="width: 80%; margin: 0 auto; margin-top: 40px;">
+			<MudSelect T="AuctionStatus?"
+					   Value="@myListingsAuctionFilter.Status"
+					   ValueChanged="HandleListingStatusFilterChanged"
+					   Label="Auction Status"
+					   Dense="true"
+					   Class="mb-4">
+
+				<MudSelectItem T="AuctionStatus?"
+							   Value="@((AuctionStatus?)null)">
+					All
+				</MudSelectItem>
+
+				@foreach (AuctionStatus status in Enum.GetValues(typeof(AuctionStatus)))
+				{
+					<MudSelectItem T="AuctionStatus?"
+								   Value="@(status)">
+						@status.ToString()
+					</MudSelectItem>
+				}
+			</MudSelect>
+		</div>
+
+		<AuctionsTableComponent @ref="listingsAuctionsTable"
+								NavigateUrl="@editAuctionUrl"
+								NavigationButtonName="Edit"
+								Filter="myListingsAuctionFilter"></AuctionsTableComponent>
 	</MudTabPanel>
 	<MudTabPanel Text="	My Bids">
+		<h1 class="text-center mt-10 mb-15">My Bids</h1>
 
 		<div style="width: 80%; margin: 0 auto; margin-top: 40px;">
 			<MudSelect T="AuctionStatus?"
@@ -52,7 +81,7 @@
 			</MudSelect>
 		</div>
 
-		<AuctionsTableComponent @ref="bidAuctionsTable"
+		<AuctionsTableComponent @ref="bidsAuctionsTable"
 								NavigateUrl="@bidAuctionUrl"
 								NavigationButtonName="View"
 								Filter="myBidsAuctionFilter"></AuctionsTableComponent>

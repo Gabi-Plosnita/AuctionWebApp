@@ -13,6 +13,25 @@ public partial class UserDashboard : ComponentBase
 
 	private int authenticatedUserId;
 
+	// User Listed Auctions //
+
+	private string editAuctionUrl = "/auctions/{id}/edit";
+
+	private AuctionFilterViewModel myListingsAuctionFilter = new AuctionFilterViewModel
+	{
+		Status = AuctionStatus.InProgress,
+	};
+
+	private AuctionsTableComponent listingsAuctionsTable;
+
+	private async Task HandleListingStatusFilterChanged(AuctionStatus? status)
+	{
+		myListingsAuctionFilter.Status = status;
+		await listingsAuctionsTable.Reload();
+	}
+
+	// User Bids //
+
 	private string bidAuctionUrl = "/auctions/{id}/bid";
 
 	private AuctionFilterViewModel myBidsAuctionFilter = new AuctionFilterViewModel
@@ -20,7 +39,15 @@ public partial class UserDashboard : ComponentBase
 		Status = AuctionStatus.InProgress,
 	};
 
-	private AuctionsTableComponent bidAuctionsTable;
+	private AuctionsTableComponent bidsAuctionsTable;
+
+	private async Task HandleBidStatusFilterChanged(AuctionStatus? status)
+	{
+		myBidsAuctionFilter.Status = status;
+		await bidsAuctionsTable.Reload();
+	}
+
+	// Other methods //
 
 	protected override async Task OnInitializedAsync()
 	{
@@ -35,13 +62,10 @@ public partial class UserDashboard : ComponentBase
 		}
 		authenticatedUserId = result.Data.Id;
 		myBidsAuctionFilter.BidderId = authenticatedUserId;
+		myListingsAuctionFilter.SellerId = authenticatedUserId;
 	}
 
-	private async Task HandleBidStatusFilterChanged(AuctionStatus? status)
-	{
-		myBidsAuctionFilter.Status = status;
-		await bidAuctionsTable.Reload();
-	}
+	
 
 
 }
