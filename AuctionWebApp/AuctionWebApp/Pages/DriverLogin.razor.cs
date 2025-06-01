@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace AuctionWebApp.Pages;
 
-public partial class AdminLogin : ComponentBase
+public partial class DriverLogin
 {
 	[Inject]
 	public IAuthService _authService { get; set; } = default!;
@@ -17,12 +17,12 @@ public partial class AdminLogin : ComponentBase
 
 	protected LoginViewModel LoginModel { get; set; } = new LoginViewModel();
 
-	protected async Task<Result> HandleAdminLogin(LoginViewModel model)
+	protected async Task<Result> HandleDriverLogin(LoginViewModel model)
 	{
-		var result = await _authService.LoginAdminAsync(model);
+		var result = await _authService.LoginDriverAsync(model);
 		if (!result.HasErrors)
 		{
-			Navigation.NavigateTo("/admin-dashboard");
+			Navigation.NavigateTo("/driver-dashboard");
 		}
 		return result;
 	}

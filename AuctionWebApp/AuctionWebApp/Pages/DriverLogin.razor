@@ -2,12 +2,12 @@
 @using AuctionWebApp.ViewModels
 @using Microsoft.AspNetCore.Authorization
 
-@page "/admin-login"
+@page "/driver-login"
 
 <NavigationComponent Url="@ReturnUrl"></NavigationComponent>
 
 <div class="login-wrapper">
-    <LoginComponent Title="Login Admin"
+    <LoginComponent Title="Login Driver"
                     Model="LoginModel"
-                    OnValidSubmit="HandleAdminLogin" />
+                    OnValidSubmit="HandleDriverLogin" />
 </div>
