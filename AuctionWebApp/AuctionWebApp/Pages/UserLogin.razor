@@ -1,0 +1,13 @@
+﻿@using AuctionWebApp.Components
+@using AuctionWebApp.ViewModels
+@using Microsoft.AspNetCore.Authorization
+
+@page "/user-login"
+
+<NavigationComponent Url="@ReturnUrl"></NavigationComponent>
+
+<div class="login-wrapper">
+    <LoginComponent Title="Login User"
+                    Model="LoginModel"
+                    OnValidSubmit="HandleUserLogin" />
+</div>
