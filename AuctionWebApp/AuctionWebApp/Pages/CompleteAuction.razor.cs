@@ -2,6 +2,7 @@
 using AuctionWebApp.Services;
 using AuctionWebApp.ViewModels;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using MudBlazor;
 
 namespace AuctionWebApp.Pages;
@@ -9,10 +10,16 @@ namespace AuctionWebApp.Pages;
 public partial class CompleteAuction : ComponentBase
 {
 	[Inject]
-	private IAuctionService AuctionService { get; set; } = default!;
+	private IJSRuntime JS { get; set; } = default!;
 
 	[Inject]
 	private ISnackbar Snackbar { get; set; } = default!;
+
+	[Inject]
+	private NavigationManager NavigationManager { get; set; } = default!;
+
+	[Inject]
+	private IAuctionService AuctionService { get; set; } = default!;
 
 	[Parameter]
 	public int AuctionId { get; set; }
@@ -43,6 +50,18 @@ public partial class CompleteAuction : ComponentBase
 
 	private async Task CompleteAuctionAsync()
 	{
-		
+		bool confirmed = await JS.InvokeAsync<bool>("confirm", "Are you sure you want to complete this auction?");
+
+		if (confirmed)
+		{
+			var result = await AuctionService.CompleteAuctionAsync(AuctionId);
+			if (result.HasErrors)
+			{
+				Snackbar.ShowErrors(result.Errors);
+				return;
+			}
+			Snackbar.ShowSuccess("Auction completed successfully.");
+			NavigationManager.NavigateTo(ReturnUrl, true);
+		}
 	}
 }
