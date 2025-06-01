@@ -19,7 +19,7 @@ public partial class UserDashboard : ComponentBase
 
 	private AuctionFilterViewModel myListingsAuctionFilter = new AuctionFilterViewModel
 	{
-		Status = AuctionStatus.InProgress,
+		Status = null,
 	};
 
 	private AuctionsTableComponent listingsAuctionsTable;
@@ -36,7 +36,7 @@ public partial class UserDashboard : ComponentBase
 
 	private AuctionFilterViewModel myBidsAuctionFilter = new AuctionFilterViewModel
 	{
-		Status = AuctionStatus.InProgress,
+		Status = null,
 	};
 
 	private AuctionsTableComponent bidsAuctionsTable;

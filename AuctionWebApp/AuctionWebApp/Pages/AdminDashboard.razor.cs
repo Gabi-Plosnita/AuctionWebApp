@@ -14,7 +14,7 @@ public partial class AdminDashboard : ComponentBase
 	private AuctionFilterViewModel auctionFilter = new AuctionFilterViewModel
 	{
 		Status = AuctionStatus.InTransit,
-		DriverFilterMode = DriverFilterMode.NoDriver,
+		DriverFilterMode = DriverFilterMode.Ignore,
 	};
 
 	private AuctionsTableComponent auctionsTable;
