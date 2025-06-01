@@ -34,7 +34,7 @@
 	<div class="custom-separator"></div>
 
 	<div class="col-md-4 mb-4 info-section text-center mx-auto">
-		<h5 class="mb-10">Seller Information</h5>
+		<h2 class="mb-10">Seller Information</h2>
 		<p><strong>Email:</strong> @Auction.Seller.Email</p>
 		<p><strong>Name:</strong> @Auction.Seller.FirstName @Auction.Seller.LastName</p>
 		<p><strong>Address:</strong> @Auction.Seller.Address</p>
@@ -43,20 +43,20 @@
 	<div class="custom-separator"></div>
 
 	<div class="bid-history-container mx-auto">
-		<h5 class="mb-3 text-center">Bidding History</h5>
+		<h2 class="mb-10 text-center">Bidding History</h2>
 		@if (Auction.Bids.Any())
 		{
 			<div class="bid-list">
 				@foreach (var bid in Auction.Bids.OrderByDescending(b => b.Date))
 				{
 					<div class="bid-entry d-flex justify-content-between align-items-center">
-						<span class="bidder-name @(bid == Auction.Bids.OrderByDescending(b => b.Date).First() ? "fw-bold" : "")">
+						<span class="bidder-name flex-fill @(bid == Auction.Bids.OrderByDescending(b => b.Date).First() ? "fw-bold" : "")">
 							@("Bidder " + bid.Bidder.Id)
 						</span>
-						<span class="bid-date text-muted">
+						<span class="bid-date flex-fill text-muted">
 							@DateHelper.GetRelativeTime(bid.Date)
 						</span>
-						<span class="bid-amount @(bid == Auction.Bids.OrderByDescending(b => b.Amount).First() ? "fw-bold" : "")">
+						<span class="bid-amount flex-fill @(bid == Auction.Bids.OrderByDescending(b => b.Amount).First() ? "fw-bold" : "")">
 							@bid.Amount.ToString("C")
 						</span>
 					</div>
@@ -74,7 +74,7 @@
 	@if (Auction.EndTime > DateTime.UtcNow)
 	{
 		<div class="mt-4 text-center">
-			<h5>Time Remaining</h5>
+			<h2 class="mb-10">Time Remaining</h2>
 			<p class="countdown" id="countdown"></p>
 		</div>
 	}
