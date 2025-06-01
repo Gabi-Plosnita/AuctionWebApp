@@ -16,7 +16,7 @@ public class AuctionFilterViewModel
 	public DriverFilterMode DriverFilterMode { get; init; } = DriverFilterMode.Ignore;
 
 	[Range(1, int.MaxValue, ErrorMessage = "DriverId must be a positive integer")]
-	public int? DriverId { get; init; }
+	public int? DriverId { get; set; }
 
 	[StringLength(200, ErrorMessage = "TextSearch cannot exceed 200 characters")]
 	public string? TextSearch { get; set; }

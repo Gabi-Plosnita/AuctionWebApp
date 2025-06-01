@@ -24,7 +24,6 @@
 	<Folder Include="Services\" />
 	<Folder Include="Helpers\" />
 	<Folder Include="Components\" />
-	<Folder Include="Pages\" />
   </ItemGroup>
 
 </Project>

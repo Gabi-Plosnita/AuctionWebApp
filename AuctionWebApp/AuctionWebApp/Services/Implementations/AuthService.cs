@@ -67,7 +67,7 @@ public class AuthService(IAuthHttpClient _authClient, IMapper _mapper) : IAuthSe
 		return clientResult;
 	}
 
-	public async Task<Result<AuthenticatedUserViewModel>> GetAuthenticatedUser()
+	public async Task<Result<AuthenticatedUserViewModel>> GetAuthenticatedUserAsync()
 	{
 		var clientResult = await _authClient.GetAuthenticatedUserResponseAsync();
 		var authenticatedUserViewModel = _mapper.Map<AuthenticatedUserViewModel>(clientResult.Data);
