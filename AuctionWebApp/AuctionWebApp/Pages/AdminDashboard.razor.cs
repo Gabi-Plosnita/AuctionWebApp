@@ -2,7 +2,6 @@
 using AuctionWebApp.ViewModels;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
-using System.Security.Claims;
 
 namespace AuctionWebApp.Pages;
 
@@ -11,13 +10,13 @@ public partial class AdminDashboard : ComponentBase
 	[Inject]
 	private AuthenticationStateProvider AuthenticationStateProvider { get; set; } = default!;
 
-	private AuctionFilterViewModel auctionsWithNoDriver = new AuctionFilterViewModel
+	private AuctionFilterViewModel auctionsWithNoDriverFilter = new AuctionFilterViewModel
 	{
 		Status = AuctionStatus.InTransit,
 		DriverFilterMode = DriverFilterMode.NoDriver,
 	};
 
-	private AuctionFilterViewModel auctionsWithDriver = new AuctionFilterViewModel
+	private AuctionFilterViewModel auctionsWithDriverFilter = new AuctionFilterViewModel
 	{
 		Status = AuctionStatus.InTransit,
 		DriverFilterMode = DriverFilterMode.AnyDriver,
