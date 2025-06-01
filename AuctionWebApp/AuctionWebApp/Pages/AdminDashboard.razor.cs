@@ -1,4 +1,5 @@
-﻿using AuctionWebApp.Enums;
+﻿using AuctionWebApp.Components;
+using AuctionWebApp.Enums;
 using AuctionWebApp.ViewModels;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -10,17 +11,19 @@ public partial class AdminDashboard : ComponentBase
 	[Inject]
 	private AuthenticationStateProvider AuthenticationStateProvider { get; set; } = default!;
 
-	private AuctionFilterViewModel auctionsWithNoDriverFilter = new AuctionFilterViewModel
+	private AuctionFilterViewModel auctionFilter = new AuctionFilterViewModel
 	{
 		Status = AuctionStatus.InTransit,
 		DriverFilterMode = DriverFilterMode.NoDriver,
 	};
 
-	private AuctionFilterViewModel auctionsWithDriverFilter = new AuctionFilterViewModel
+	private AuctionsTableComponent auctionsTable;
+
+	private async Task HandleDriverFilterChanged(DriverFilterMode status)
 	{
-		Status = AuctionStatus.InTransit,
-		DriverFilterMode = DriverFilterMode.AnyDriver,
-	};
+		auctionFilter.DriverFilterMode = status;
+		await auctionsTable.Reload();
+	}
 
 	private string? navigateUrl = "auctions/{id}/assign-driver";
 
