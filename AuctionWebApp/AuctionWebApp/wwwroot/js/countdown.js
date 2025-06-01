@@ -1,8 +1,10 @@
-﻿function startCountdown(endTimeIsoString) {
+﻿window.startCountdown = function (endTimeIsoString) {
     const endTime = new Date(endTimeIsoString);
     const countdownEl = document.getElementById("countdown");
 
     function updateCountdown() {
+        if (!countdownEl) return;
+
         const now = new Date();
         const diff = endTime - now;
 
@@ -17,7 +19,13 @@
         const minutes = Math.floor((diff / 1000 / 60) % 60);
         const seconds = Math.floor((diff / 1000) % 60);
 
-        countdownEl.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        let parts = [];
+        if (days > 0) parts.push(`${days}d`);
+        if (hours > 0) parts.push(`${hours}h`);
+        if (minutes > 0) parts.push(`${minutes}m`);
+        if (seconds > 0 || parts.length === 0) parts.push(`${seconds}s`);
+
+        countdownEl.textContent = parts.join(" ");
     }
 
     updateCountdown();
