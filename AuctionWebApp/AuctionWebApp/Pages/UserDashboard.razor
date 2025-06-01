@@ -1,4 +1,5 @@
-﻿@using Microsoft.AspNetCore.Authorization
+﻿@using AuctionWebApp.Enums
+@using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.Authorization
 @using AuctionWebApp.Components
 
@@ -27,6 +28,27 @@
 		<h1 class="text-center mt-10 mb-20">My Listings</h1>
 	</MudTabPanel>
 	<MudTabPanel Text="	My Bids">
+
+		<MudSelect T="AuctionStatus?"
+				   @bind-Value="myBidsAuctionFilter.Status"
+				   Label="Status"
+				   Dense="true"
+				   Class="mb-4">
+
+			<MudSelectItem T="AuctionStatus?"
+						   Value="@((AuctionStatus?)null)">
+				All
+			</MudSelectItem>
+
+			@foreach (AuctionStatus status in Enum.GetValues(typeof(AuctionStatus)))
+			{
+				<MudSelectItem T="AuctionStatus?"
+							   Value="@(status)">
+					@status.ToString()
+				</MudSelectItem>
+			}
+		</MudSelect>
+
 		<AuctionsTableComponent NavigateUrl="@detailedAuctionUrl"
 								NavigationButtonName="View"
 								Filter="myBidsAuctionFilter"></AuctionsTableComponent>
