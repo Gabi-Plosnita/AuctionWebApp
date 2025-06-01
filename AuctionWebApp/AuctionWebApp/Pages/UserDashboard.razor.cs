@@ -64,8 +64,4 @@ public partial class UserDashboard : ComponentBase
 		myBidsAuctionFilter.BidderId = authenticatedUserId;
 		myListingsAuctionFilter.SellerId = authenticatedUserId;
 	}
-
-	
-
-
 }
