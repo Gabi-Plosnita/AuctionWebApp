@@ -21,6 +21,8 @@ public partial class BidAuction : ComponentBase
 
 	private DetailedAuctionViewModel auction;
 
+	private CreateBidViewModel bid = new();
+
 	private bool isLoading = true;
 
 	protected override async Task OnInitializedAsync()
@@ -37,7 +39,35 @@ public partial class BidAuction : ComponentBase
 			return;
 		}
 		auction = auctionResult.Data;
+		bid.AuctionId = auction.Id;
+
+		bid = new CreateBidViewModel
+		{
+			AuctionId = auction.Id,
+		};
 
 		isLoading = false;
 	}
+
+	private async Task SubmitBid()
+	{
+		var result = await AuctionService.CreateBidAsync(bid);
+
+		if (result.HasErrors)
+		{
+			Snackbar.ShowErrors(result.Errors);
+			return;
+		}
+
+		if (result.Data is null)
+		{
+			Snackbar.ShowError("Bid creation failed.");
+			return;
+		}
+
+		Snackbar.Add("Bid placed successfully!", Severity.Success);
+
+		await OnInitializedAsync(); 
+	}
+
 }

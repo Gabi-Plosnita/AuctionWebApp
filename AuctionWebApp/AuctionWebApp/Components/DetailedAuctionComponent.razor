@@ -1,85 +1,103 @@
-﻿@using AuctionWebApp.Helpers
-<div class="auction-details card shadow p-4 mb-5 bg-white rounded">
-	<h1 class="mt-10 mb-15 text-center">@Auction.Title</h1>
+﻿@using AuctionWebApp.Enums
+@using AuctionWebApp.Helpers
 
-	<div class="d-flex flex-column flex-md-row justify-content-between mb-4 image-description-container">
-		<div class="w-100 w-md-50 d-flex flex-wrap justify-content-center align-items-center">
-			@if (imageUrls is null || !imageUrls.Any())
+@if (Auction is null)
+{
+	<MudProgressCircular Color="Color.Primary" Indeterminate="true" Class="d-flex mx-auto mt-12" />
+	return;
+}
+else
+{
+	<div class="auction-details card shadow p-4 mb-5 bg-white rounded">
+		<h1 class="mt-10 mb-15 text-center">@Auction.Title</h1>
+
+		<div class="d-flex flex-column flex-md-row justify-content-between mb-4 image-description-container">
+			<div class="w-100 w-md-50 d-flex flex-wrap justify-content-center align-items-center">
+				@if (imageUrls is null || !imageUrls.Any())
+				{
+					<p class="text-muted">No images available for this auction.</p>
+				}
+				else
+				{
+					<MudCarousel T="string"
+								 Class="mud-width-full"
+								 ItemsSource="@imageUrls"
+								 ShowArrows="true"
+								 ShowBullets="true"
+								 AutoCycle="true"
+								 Style="height:300px;">
+						<ItemTemplate>
+							<div class="d-flex justify-center align-center" style="height:100%">
+								<img src="@($"{AppSettings.ApiUrl}{context}")" alt="Auction Image" class="carousel-image" />
+							</div>
+						</ItemTemplate>
+					</MudCarousel>
+				}
+			</div>
+
+			<div class="w-100 w-md-50 d-flex justify-content-center align-items-center px-4 text-center description-box">
+				<p class="text-muted m-0" style="font-size: 1rem">@Auction.Description</p>
+			</div>
+		</div>
+
+		<div class="custom-separator"></div>
+
+		@if(Auction.Seller != null)
+		{
+			<div class="col-md-4 mb-4 info-section text-center mx-auto">
+				<h2 class="mb-10">Seller Information</h2>
+				<p><strong>Email:</strong> @Auction.Seller.Email</p>
+				<p><strong>Name:</strong> @Auction.Seller.FirstName @Auction.Seller.LastName</p>
+				<p><strong>Address:</strong> @Auction.Seller.Address</p>
+			</div>
+
+			<div class="custom-separator"></div>
+		}
+		
+		<div class="bid-history-container mx-auto">
+			<h2 class="mb-10 text-center">Bidding History</h2>
+			@if (Auction.Bids.Any())
 			{
-				<p class="text-muted">No images available for this auction.</p>
+				<div class="bid-list">
+					@foreach (var bid in Auction.Bids.OrderByDescending(b => b.Date))
+					{
+						@if (bid.Bidder == null)
+							continue; 
+
+						<div class="bid-entry d-flex justify-content-between align-items-center">
+							<span class="bidder-name flex-fill @(bid == Auction.Bids.OrderByDescending(b => b.Date).First() ? "fw-bold" : "")">
+								@("Bidder " + bid.Bidder.Id)
+							</span>
+							<span class="bid-date flex-fill text-muted">
+								@DateHelper.GetRelativeTime(bid.Date)
+							</span>
+							<span class="bid-amount flex-fill @(bid == Auction.Bids.OrderByDescending(b => b.Amount).First() ? "fw-bold" : "")">
+								@bid.Amount.ToString("C")
+							</span>
+						</div>
+					}
+				</div>
 			}
 			else
 			{
-				<MudCarousel T="string"
-							 Class="mud-width-full"
-							 ItemsSource="@imageUrls"
-							 ShowArrows="true"
-							 ShowBullets="true"
-							 AutoCycle="true"
-							 Style="height:300px;">
-					<ItemTemplate>
-						<div class="d-flex justify-center align-center" style="height:100%">
-							<img src="@($"{AppSettings.ApiUrl}{context}")" alt="Auction Image" class="carousel-image" />
-						</div>
-					</ItemTemplate>
-				</MudCarousel>
+				<p class="text-muted text-center">No bids yet.</p>
 			}
 		</div>
 
-		<div class="w-100 w-md-50 d-flex justify-content-center align-items-center px-4 text-center description-box">
-			<p class="text-muted m-0" style="font-size: 1rem">@Auction.Description</p>
-		</div>
-	</div>
+		<div class="custom-separator"></div>
 
-	<div class="custom-separator"></div>
-
-	<div class="col-md-4 mb-4 info-section text-center mx-auto">
-		<h2 class="mb-10">Seller Information</h2>
-		<p><strong>Email:</strong> @Auction.Seller.Email</p>
-		<p><strong>Name:</strong> @Auction.Seller.FirstName @Auction.Seller.LastName</p>
-		<p><strong>Address:</strong> @Auction.Seller.Address</p>
-	</div>
-
-	<div class="custom-separator"></div>
-
-	<div class="bid-history-container mx-auto">
-		<h2 class="mb-10 text-center">Bidding History</h2>
-		@if (Auction.Bids.Any())
+		@if (Auction.EndTime > DateTime.UtcNow && Auction.Status == AuctionStatus.InProgress)
 		{
-			<div class="bid-list">
-				@foreach (var bid in Auction.Bids.OrderByDescending(b => b.Date))
-				{
-					<div class="bid-entry d-flex justify-content-between align-items-center">
-						<span class="bidder-name flex-fill @(bid == Auction.Bids.OrderByDescending(b => b.Date).First() ? "fw-bold" : "")">
-							@("Bidder " + bid.Bidder.Id)
-						</span>
-						<span class="bid-date flex-fill text-muted">
-							@DateHelper.GetRelativeTime(bid.Date)
-						</span>
-						<span class="bid-amount flex-fill @(bid == Auction.Bids.OrderByDescending(b => b.Amount).First() ? "fw-bold" : "")">
-							@bid.Amount.ToString("C")
-						</span>
-					</div>
-				}
+			<div class="mt-4 text-center">
+				<h2 class="mb-10">Time Remaining</h2>
+				<p class="countdown" id="countdown"></p>
 			</div>
 		}
 		else
 		{
-			<p class="text-muted text-center">No bids yet.</p>
+			<p class="text-center" style="font-size: 20px; color: red;">
+				This auction has ended.
+			</p>
 		}
 	</div>
-
-	<div class="custom-separator"></div>
-
-	@if (Auction.EndTime > DateTime.UtcNow)
-	{
-		<div class="mt-4 text-center">
-			<h2 class="mb-10">Time Remaining</h2>
-			<p class="countdown" id="countdown"></p>
-		</div>
-	}
-	else
-	{
-		<p class="text-muted text-center">This auction has ended.</p>
-	}
-</div>
+}

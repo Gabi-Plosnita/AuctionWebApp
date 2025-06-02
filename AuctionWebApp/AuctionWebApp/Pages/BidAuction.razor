@@ -1,4 +1,5 @@
 ﻿@using AuctionWebApp.Components
+@using AuctionWebApp.Enums
 @using Microsoft.AspNetCore.Authorization
 
 @page "/auctions/{AuctionId:int}/bid"
@@ -17,5 +18,36 @@ else
 	<div class="mt-10">
 		<DetailedAuctionComponent Auction="@auction"></DetailedAuctionComponent>
 	</div>
+
+	@if (auction.EndTime > DateTime.Now && auction.Status == AuctionStatus.InProgress)
+	{
+        <div class="mt-10 p-6 max-w-md mx-auto bg-white rounded-xl shadow-md space-y-6">
+            <div>
+                <label class="font-semibold text-gray-700">Current Price:</label>
+                <div class="text-lg text-black">@auction.CurrentPrice.ToString("C")</div>
+            </div>
+
+            <div>
+                <label class="font-semibold text-gray-700">Minimum Bid Increment:</label>
+                <div class="text-lg text-black">@auction.MinBidIncrement.ToString("C")</div>
+            </div>
+
+            <MudTextField @bind-Value="bid.Amount"
+                          Label="Your Bid Amount"
+                          Variant="Variant.Outlined"
+                          Adornment="Adornment.End"
+                          AdornmentText="USD"
+                          For="@(() => bid.Amount)"
+                          Immediate="true"
+                          Class="w-full" />
+
+            <MudButton OnClick="SubmitBid"
+                       Variant="Variant.Filled"
+                       Color="Color.Primary"
+                       Class="w-full">
+                Place Bid
+            </MudButton>
+        </div>
+	}
 }
 
