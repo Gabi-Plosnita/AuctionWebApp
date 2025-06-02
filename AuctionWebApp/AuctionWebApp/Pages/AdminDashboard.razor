@@ -16,9 +16,12 @@ else
 {
 	<AdminNavigationBarComponent IsSuperAdmin="isSuperAdmin"></AdminNavigationBarComponent>
 
-	<div style="height:50px;"></div>
+	<h1 class="text-center mt-15 mb-20">Welcome to admin dashboard</h1>
+	<div class="d-flex justify-content-center mt-4">
+		<LogoutComponent />
+	</div>
 
-	<MudTabs Class="full-screen-tabs"
+	@* <MudTabs Class="full-screen-tabs"
 			 Style="width:100vw; height:100vh; margin:0; padding:0;"
 			 Centered="true"
 			 Elevation="0"
@@ -27,12 +30,6 @@ else
 			 ApplyEffectsToContainer="false"
 			 PanelClass="pa-6"
 			 Color="Color.Primary">
-		<MudTabPanel Text="Home">
-			<h1 class="text-center mt-10 mb-20">Welcome to admin dashboard</h1>
-			<div class="d-flex justify-content-center mt-4">
-				<LogoutComponent />
-			</div>
-		</MudTabPanel>
 		<MudTabPanel Text="Categories">
 			<h1 class="text-center mt-10 mb-20">Categories</h1>
 			<CategoriesTableComponent></CategoriesTableComponent>
@@ -81,6 +78,6 @@ else
 									NavigateUrl="@navigateUrl"
 									NavigationButtonName="@navigationButtonName"></AuctionsTableComponent>
 		</MudTabPanel>
-	</MudTabs>
+	</MudTabs> *@
 }
 
