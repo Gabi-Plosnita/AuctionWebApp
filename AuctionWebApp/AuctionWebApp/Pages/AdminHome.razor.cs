@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 
 namespace AuctionWebApp.Pages;
 
-public partial class AdminDashboard : ComponentBase
+public partial class AdminHome : ComponentBase
 {
 	[Inject]
 	private AuthenticationStateProvider AuthenticationStateProvider { get; set; } = default!;
