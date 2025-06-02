@@ -65,7 +65,7 @@ public partial class BidAuction : ComponentBase
 			return;
 		}
 
-		Snackbar.Add("Bid placed successfully!", Severity.Success);
+		Snackbar.ShowSuccess("Bid placed successfully!");
 
 		await OnInitializedAsync(); 
 	}
