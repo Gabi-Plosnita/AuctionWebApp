@@ -1,0 +1,22 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
+@using AuctionWebApp.Components
+@using AuctionWebApp.Enums
+
+@page "/admin-dashboard/categories"
+@attribute [Authorize(Roles = "Admin,SuperAdmin")]
+
+@if (isLoading)
+{
+	<MudProgressCircular Color="Color.Primary"
+						 Indeterminate="true"
+						 Class="d-flex mx-auto mt-12" />
+}
+else
+{
+	<AdminNavigationBarComponent IsSuperAdmin="isSuperAdmin"></AdminNavigationBarComponent>
+	<h1 class="text-center mt-15 mb-20">Categories</h1>
+	<div class="mb-10">
+		<CategoriesTableComponent></CategoriesTableComponent>
+	</div>
+}
