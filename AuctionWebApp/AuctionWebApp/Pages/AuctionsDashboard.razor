@@ -1,0 +1,51 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
+@using AuctionWebApp.Components
+@using AuctionWebApp.Enums
+
+@page "/admin/auctions-dashboard"
+@attribute [Authorize(Roles = "Admin,SuperAdmin")]
+
+@if (isLoading)
+{
+	<MudProgressCircular Color="Color.Primary"
+						 Indeterminate="true"
+						 Class="d-flex mx-auto mt-12" />
+}
+else
+{
+	<AdminNavigationBarComponent IsSuperAdmin="isSuperAdmin"></AdminNavigationBarComponent>
+	<h1 class="text-center mt-15 mb-20">Auctions with Driver</h1>
+
+	<div style="width: 80%; margin: 0 auto; margin-top: 40px;">
+		<MudSelect T="DriverFilterMode"
+				   Value="@auctionFilter.DriverFilterMode"
+				   ValueChanged="HandleDriverFilterChanged"
+				   Label="Driver Filter"
+				   Dense="true"
+				   Class="mb-4">
+
+			<MudSelectItem T="DriverFilterMode"
+						   Value="@DriverFilterMode.Ignore">
+				@DriverFilterMode.Ignore
+			</MudSelectItem>
+
+			<MudSelectItem T="DriverFilterMode"
+						   Value="@DriverFilterMode.AnyDriver">
+				@DriverFilterMode.AnyDriver
+			</MudSelectItem>
+
+			<MudSelectItem T="DriverFilterMode"
+						   Value="@DriverFilterMode.NoDriver">
+				@DriverFilterMode.NoDriver
+			</MudSelectItem>
+		</MudSelect>
+	</div>
+
+	<div class="mb-10">
+		<AuctionsTableComponent @ref="auctionsTable"
+								Filter="auctionFilter"
+								NavigateUrl="@navigateUrl"
+								NavigationButtonName="@navigationButtonName"></AuctionsTableComponent>
+	</div>
+}
