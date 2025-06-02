@@ -1,4 +1,6 @@
 ﻿window.startCountdown = function (endTimeIsoString) {
+    let timer; 
+
     const endTime = new Date(endTimeIsoString);
     const countdownEl = document.getElementById("countdown");
 
@@ -10,7 +12,7 @@
 
         if (diff <= 0) {
             countdownEl.textContent = "Auction ended";
-            clearInterval(timer);
+            clearInterval(timer); 
             return;
         }
 
@@ -29,5 +31,5 @@
     }
 
     updateCountdown();
-    const timer = setInterval(updateCountdown, 1000);
-}
+    timer = setInterval(updateCountdown, 1000);
+};
