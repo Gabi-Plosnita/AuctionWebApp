@@ -22,7 +22,7 @@ public partial class AdminLogin : ComponentBase
 		var result = await _authService.LoginAdminAsync(model);
 		if (!result.HasErrors)
 		{
-			Navigation.NavigateTo("/admin-dashboard");
+			Navigation.NavigateTo("admin-dashboard/home");
 		}
 		return result;
 	}
