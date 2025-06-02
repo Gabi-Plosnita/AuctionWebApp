@@ -1,67 +1,36 @@
-﻿/* NavBar.css */
-
-/* 1. Container for the entire nav bar */
-ul.navbar {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+﻿.navbar {
+    background-color: rgba(89,74,226,1);
+    overflow: hidden;
+    width: 100%;
+    height: 50px;
+    font-family: Arial, sans-serif;
     display: flex;
-    justify-content: center; /* center items horizontally */
-    align-items: center;
-    background-color: #594AE2; /* purple from your screenshot */
+    justify-content: center;
 }
 
-    /* 2. Remove default list padding/margin on each item */
-    ul.navbar li {
+    .navbar ul {
+        list-style-type: none;
         margin: 0;
         padding: 0;
+        display: flex;
+        align-items: center; 
+        height: 100%; 
     }
 
-        /* 3. Base styling for each NavLink */
-        ul.navbar li .nav-link {
-            display: block;
-            padding: 16px 24px;
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            font-weight: bold;
-            color: #ffffff;
-            text-decoration: none;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            position: relative;
-        }
-
-            /* 4. White underline for the “active” NavLink */
-            ul.navbar li .nav-link.active::after {
-                content: "";
-                position: absolute;
-                bottom: 0;
-                left: 25%;
-                width: 50%;
-                height: 3px;
-                background-color: #ffffff;
-                border-radius: 2px;
-            }
-
-            /* 5. Optional hover effect */
-            ul.navbar li .nav-link:hover {
-                background-color: rgba(255, 255, 255, 0.1);
-            }
-
-/* 6. Responsive: stack vertically on narrow screens */
-@media (max-width: 600px) {
-    ul.navbar {
-        flex-direction: column;
-        align-items: stretch;
+    .navbar li a {
+        display: block;
+        min-width: 160px;
+        color: white;
+        text-align: center;
+        padding: 14px 30px;
+        text-decoration: none;
+        font-family: 'Roboto', sans-serif;
+        font-weight: 500; 
+        font-size: 14px;
+        letter-spacing: 0.5px;
+        transition: background-color 0.3s ease;
     }
 
-        ul.navbar li .nav-link {
-            text-align: center;
-            padding: 12px;
+        .navbar li a:hover {
+            background-color: rgba(110, 95, 236, 1);
         }
-
-            ul.navbar li .nav-link.active::after {
-                left: 40%;
-                width: 20%;
-            }
-}
