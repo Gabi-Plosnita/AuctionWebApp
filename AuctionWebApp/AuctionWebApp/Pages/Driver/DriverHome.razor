@@ -1,0 +1,14 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
+@using AuctionWebApp.Components
+
+@namespace AuctionWebApp.Pages
+
+@page "/driver/home"
+@attribute [Authorize(Roles = "Driver")]
+
+<DriverNavigationBarComponent></DriverNavigationBarComponent>
+<h1 class="text-center mt-15 mb-20">Welcome to driver dashboard</h1>
+<div class="d-flex justify-content-center mt-4">
+	<LogoutComponent />
+</div>

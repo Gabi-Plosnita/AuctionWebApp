@@ -3,7 +3,7 @@
 
 @namespace AuctionWebApp.Pages
 
-@page "/auctions/{AuctionId:int}/assign-driver"
+@page "/admin/auctions-dashboard/{AuctionId:int}/assign-driver"
 @attribute [Authorize(Roles = "Admin,SuperAdmin")]
 
 @if (isLoading)

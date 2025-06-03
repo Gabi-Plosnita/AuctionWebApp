@@ -5,18 +5,15 @@ using Microsoft.AspNetCore.Components;
 
 namespace AuctionWebApp.Pages;
 
-public partial class DriverDashboard : ComponentBase
+public partial class AssignedAuctions(IAuthService AuthService) : ComponentBase
 {
-	[Inject]
-	private IAuthService AuthService { get; set; } = default!;
-
 	private AuctionFilterViewModel auctionsFilter = new AuctionFilterViewModel
 	{
 		Status = AuctionStatus.InTransit,
 		DriverFilterMode = DriverFilterMode.Specific,
 	};
 
-	private string? navigateUrl = "auctions/{id}/complete";
+	private string? navigateUrl = "assigned-auctions/{id}/complete";
 
 	private string? navigationButtonName = "View";
 

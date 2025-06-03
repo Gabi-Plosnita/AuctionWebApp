@@ -22,7 +22,7 @@ public partial class DriverLogin
 		var result = await _authService.LoginDriverAsync(model);
 		if (!result.HasErrors)
 		{
-			Navigation.NavigateTo("/driver-dashboard");
+			Navigation.NavigateTo("/driver/home");
 		}
 		return result;
 	}

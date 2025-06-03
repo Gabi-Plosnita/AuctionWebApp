@@ -1,7 +1,9 @@
 ﻿@using AuctionWebApp.Components
 @using Microsoft.AspNetCore.Authorization
 
-@page "/auctions/{AuctionId:int}/complete"
+@namespace AuctionWebApp.Pages
+
+@page "/driver/assigned-auctions/{AuctionId:int}/complete"
 @attribute [Authorize(Roles = "Driver")]
 
 @if (isLoading)
@@ -12,7 +14,7 @@
 }
 else
 {
-	<NavigationComponent Url="@ReturnUrl"></NavigationComponent>
+	<DriverNavigationBarComponent></DriverNavigationBarComponent>
 
 	<div class="mt-10">
 		<AuctionDeliveryDetailsComponent Auction="@auction" />

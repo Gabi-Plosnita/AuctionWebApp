@@ -21,6 +21,6 @@ public partial class CategoriesDashboard(AuthenticationStateProvider Authenticat
 
 	private void NavigateToCreateCategoryPage()
 	{
-		NavigationManager.NavigateTo("/categories/create");
+		NavigationManager.NavigateTo("admin/categories-dashboard/create");
 	}
 }

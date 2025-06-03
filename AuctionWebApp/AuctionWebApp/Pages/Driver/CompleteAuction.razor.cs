@@ -2,7 +2,6 @@
 using AuctionWebApp.Services;
 using AuctionWebApp.ViewModels;
 using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
 using MudBlazor;
 
 namespace AuctionWebApp.Pages;
@@ -24,11 +23,11 @@ public partial class CompleteAuction : ComponentBase
 	[Parameter]
 	public int AuctionId { get; set; }
 
-	private string ReturnUrl { get; set; } = "/driver-dashboard";
-
 	private DetailedAuctionViewModel auction;
 
 	private bool isLoading = true;
+
+	private string ReturnUrl = "/assigned-auctions";
 
 	protected override async Task OnInitializedAsync()
 	{
@@ -65,7 +64,7 @@ public partial class CompleteAuction : ComponentBase
 				return;
 			}
 			Snackbar.ShowSuccess("Auction completed successfully.");
-			NavigationManager.NavigateTo(ReturnUrl, true);
+			NavigationManager.NavigateTo(ReturnUrl);
 		}
 	}
 }

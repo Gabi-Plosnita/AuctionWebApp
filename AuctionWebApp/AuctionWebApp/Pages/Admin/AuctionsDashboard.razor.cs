@@ -22,7 +22,7 @@ public partial class AuctionsDashboard(AuthenticationStateProvider Authenticatio
 		await auctionsTable.Reload();
 	}
 
-	private string? navigateUrl = "auctions/{id}/assign-driver";
+	private string? navigateUrl = "admin/auctions-dashboard/{id}/assign-driver";
 
 	private string? navigationButtonName = "View";
 
