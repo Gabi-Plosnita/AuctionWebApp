@@ -13,7 +13,7 @@ public partial class AssignedAuctions(IAuthService AuthService) : ComponentBase
 		DriverFilterMode = DriverFilterMode.Specific,
 	};
 
-	private string? navigateUrl = "assigned-auctions/{id}/complete";
+	private string? navigateUrl = "driver/assigned-auctions/{id}/complete";
 
 	private string? navigationButtonName = "View";
 

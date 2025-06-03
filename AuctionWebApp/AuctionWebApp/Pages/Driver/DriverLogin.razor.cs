@@ -5,24 +5,18 @@ using Microsoft.AspNetCore.Components;
 
 namespace AuctionWebApp.Pages;
 
-public partial class DriverLogin
+public partial class DriverLogin(IAuthService AuthService, NavigationManager NavigationManager) : ComponentBase
 {
-	[Inject]
-	public IAuthService _authService { get; set; } = default!;
-
-	[Inject]
-	public NavigationManager Navigation { get; set; } = default!;
-
 	private string ReturnUrl { get; set; } = "/";
 
 	protected LoginViewModel LoginModel { get; set; } = new LoginViewModel();
 
 	protected async Task<Result> HandleDriverLogin(LoginViewModel model)
 	{
-		var result = await _authService.LoginDriverAsync(model);
+		var result = await AuthService.LoginDriverAsync(model);
 		if (!result.HasErrors)
 		{
-			Navigation.NavigateTo("/driver/home");
+			NavigationManager.NavigateTo("/driver/home");
 		}
 		return result;
 	}

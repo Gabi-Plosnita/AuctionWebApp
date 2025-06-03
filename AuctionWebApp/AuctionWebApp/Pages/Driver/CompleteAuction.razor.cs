@@ -6,20 +6,11 @@ using MudBlazor;
 
 namespace AuctionWebApp.Pages;
 
-public partial class CompleteAuction : ComponentBase
+public partial class CompleteAuction(IAuctionService AuctionService,
+									 NavigationManager NavigationManager,
+									 IDialogService DialogService,
+									 ISnackbar Snackbar) : ComponentBase
 {
-	[Inject]
-	private IDialogService DialogService { get; set; } = default!;
-
-	[Inject]
-	private ISnackbar Snackbar { get; set; } = default!;
-
-	[Inject]
-	private NavigationManager NavigationManager { get; set; } = default!;
-
-	[Inject]
-	private IAuctionService AuctionService { get; set; } = default!;
-
 	[Parameter]
 	public int AuctionId { get; set; }
 
@@ -27,7 +18,7 @@ public partial class CompleteAuction : ComponentBase
 
 	private bool isLoading = true;
 
-	private string ReturnUrl = "/assigned-auctions";
+	private string ReturnUrl = "driver/assigned-auctions";
 
 	protected override async Task OnInitializedAsync()
 	{
