@@ -7,12 +7,21 @@
 @page "/driver/assigned-auctions"
 @attribute [Authorize(Roles = "Driver")]
 
-<DriverNavigationBarComponent></DriverNavigationBarComponent>
-<h1 class="text-center mt-15 mb-20">Assigned Auctions</h1>
+@if (isLoading)
+{
+	<MudProgressCircular Color="Color.Primary"
+						 Indeterminate="true"
+						 Class="d-flex mx-auto mt-12" />
+}
+else
+{
+	<DriverNavigationBarComponent></DriverNavigationBarComponent>
+	<h1 class="text-center mt-15 mb-20">Assigned Auctions</h1>
 
-<div class="mb-10">
-	<AuctionsTableComponent Filter="auctionsFilter"
-							NavigateUrl="@navigateUrl"
-							NavigationButtonName="@navigationButtonName">
-	</AuctionsTableComponent>
-</div>
+	<div class="mb-10">
+		<AuctionsTableComponent Filter="auctionsFilter"
+								NavigateUrl="@navigateUrl"
+								NavigationButtonName="@navigationButtonName">
+		</AuctionsTableComponent>
+	</div>
+}

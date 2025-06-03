@@ -17,6 +17,8 @@ public partial class AssignedAuctions(IAuthService AuthService) : ComponentBase
 
 	private string? navigationButtonName = "View";
 
+	private bool isLoading = true;
+
 	protected override async Task OnInitializedAsync()
 	{
 		var result = await AuthService.GetAuthenticatedUserAsync();
@@ -29,5 +31,7 @@ public partial class AssignedAuctions(IAuthService AuthService) : ComponentBase
 			return;
 		}
 		auctionsFilter.DriverId = result.Data.Id;
+
+		isLoading = false;
 	}
 }
