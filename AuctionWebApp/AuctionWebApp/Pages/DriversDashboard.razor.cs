@@ -1,16 +1,10 @@
-﻿using AuctionWebApp.Components;
-using AuctionWebApp.Enums;
-using AuctionWebApp.ViewModels;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Components;
 
 namespace AuctionWebApp.Pages;
 
-public partial class DriversDashboard : ComponentBase
+public partial class DriversDashboard(AuthenticationStateProvider AuthenticationStateProvider) : ComponentBase
 {
-	[Inject]
-	private AuthenticationStateProvider AuthenticationStateProvider { get; set; } = default!;
-
 	private bool isSuperAdmin;
 
 	private bool isLoading = true;

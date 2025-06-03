@@ -1,49 +1,58 @@
 ﻿@using AuctionWebApp.Components
 @using Microsoft.AspNetCore.Authorization
 
-@page "/category-edit/{Id:int}"
+@page "/categories/edit/{Id:int}"
 @attribute [Authorize(Roles = "Admin,SuperAdmin")]
 
-<NavigationComponent Url="@ReturnUrl"></NavigationComponent>
+@if (isLoading)
+{
+	<MudProgressCircular Color="Color.Primary"
+						 Indeterminate="true"
+						 Class="d-flex mx-auto mt-12" />
+}
+else
+{
+	<AdminNavigationBarComponent IsSuperAdmin="isSuperAdmin"></AdminNavigationBarComponent>
 
-<div class="d-flex justify-center mt-12">
-	<MudPaper Class="pa-6" Style="max-width: 500px; width: 100%; background-color: #f9fafc; border-radius: 12px; border: 1px solid #e0e0e0; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);">
-		<MudText Typo="Typo.h5" Class="mb-6 text-center">Edit Category</MudText>
+	<div class="d-flex justify-center mt-15">
+		<MudPaper Class="pa-6" Style="max-width: 500px; width: 100%; background-color: #f9fafc; border-radius: 12px; border: 1px solid #e0e0e0; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);">
+			<MudText Typo="Typo.h5" Class="mb-6 text-center">Edit Category</MudText>
 
-		<MudForm @ref="_form" Model="_model">
-			<MudTextField T="string"
-						  Label="Category Name"
-						  For="@(() => _model.Name)"
-						  @bind-Value="_model.Name"
-						  Required="true"
-						  Immediate="true"
-						  Margin="Margin.Dense"
-						  Variant="Variant.Filled"
-						  Class="mb-4" />
+			<MudForm @ref="_form" Model="_model">
+				<MudTextField T="string"
+							  Label="Category Name"
+							  For="@(() => _model.Name)"
+							  @bind-Value="_model.Name"
+							  Required="true"
+							  Immediate="true"
+							  Margin="Margin.Dense"
+							  Variant="Variant.Filled"
+							  Class="mb-4" />
 
-			<MudText Typo="Typo.body2" Class="mb-2">
-				Upload Image (JPG, PNG, max 2MB)
-			</MudText>
+				<MudText Typo="Typo.body2" Class="mb-2">
+					Upload Image (JPG, PNG, max 2MB)
+				</MudText>
 
-			<InputFile OnChange="HandleImageChange" accept=".jpg,.jpeg,.png,image/jpeg,image/png" />
+				<InputFile OnChange="HandleImageChange" accept=".jpg,.jpeg,.png,image/jpeg,image/png" />
 
-			@if (!string.IsNullOrEmpty(_imagePreviewUrl))
-			{
-				<div class="mt-3">
-					<img src="@_imagePreviewUrl" style="max-width: 150px; border-radius: 6px; border: 1px solid #ccc;" />
+				@if (!string.IsNullOrEmpty(_imagePreviewUrl))
+				{
+					<div class="mt-3">
+						<img src="@_imagePreviewUrl" style="max-width: 150px; border-radius: 6px; border: 1px solid #ccc;" />
+					</div>
+				}
+
+				<div class="text-center mt-6">
+					<MudButton Color="Color.Primary"
+							   Variant="Variant.Filled"
+							   OnClick="SubmitAsync"
+							   Class="px-6 py-2"
+							   Style="font-weight: 500;">
+						Submit
+					</MudButton>
 				</div>
-			}
-
-			<div class="text-center mt-6">
-				<MudButton Color="Color.Primary"
-						   Variant="Variant.Filled"
-						   OnClick="SubmitAsync"
-						   Class="px-6 py-2"
-						   Style="font-weight: 500;">
-					Submit
-				</MudButton>
-			</div>
-		</MudForm>
-	</MudPaper>
-</div>
+			</MudForm>
+		</MudPaper>
+	</div>
+}
 

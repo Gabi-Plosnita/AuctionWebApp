@@ -1,16 +1,11 @@
-﻿using AuctionWebApp.Components;
-using AuctionWebApp.Enums;
-using AuctionWebApp.ViewModels;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 
 namespace AuctionWebApp.Pages;
 
-public partial class CategoriesDashboard : ComponentBase
+public partial class CategoriesDashboard(AuthenticationStateProvider AuthenticationStateProvider,
+										 NavigationManager NavigationManager) : ComponentBase
 {
-	[Inject]
-	private AuthenticationStateProvider AuthenticationStateProvider { get; set; } = default!;
-
 	private bool isSuperAdmin;
 
 	private bool isLoading = true;
@@ -22,5 +17,10 @@ public partial class CategoriesDashboard : ComponentBase
 
 		isSuperAdmin = user.IsInRole("SuperAdmin");
 		isLoading = false;
+	}
+
+	private void NavigateToCreateCategoryPage()
+	{
+		NavigationManager.NavigateTo("/categories/create");
 	}
 }

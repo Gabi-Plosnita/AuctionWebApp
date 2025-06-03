@@ -2,32 +2,36 @@
 using AuctionWebApp.Services;
 using AuctionWebApp.ViewModels;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Forms;
 using MudBlazor;
 
 namespace AuctionWebApp.Pages;
 
-public partial class CreateCategory : ComponentBase
+public partial class CreateCategory(ICategoryService CategoryService,
+									FileHandlerService FileValidator,
+									AuthenticationStateProvider AuthenticationStateProvider,
+									NavigationManager NavigationManager,
+									ISnackbar Snackbar) : ComponentBase
 {
-	[Inject]
-	private ICategoryService CategoryService { get; set; } = default!;
-
-	[Inject]
-	private FileHandlerService FileValidator { get; set; } = default!;
-
-	[Inject]
-	private NavigationManager NavigationManager { get; set; } = default!;
-
-	[Inject]
-	private ISnackbar Snackbar { get; set; } = default!;
-
-	private string ReturnUrl { get; set; } = "/admin-dashboard";
-
 	protected MudForm? _form;
 
 	protected CreateCategoryViewModel _model = new();
 
 	protected string? _imagePreviewUrl;
+
+	private bool isSuperAdmin;
+
+	private bool isLoading = true;
+
+	protected override async Task OnInitializedAsync()
+	{
+		var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+		var user = authState.User;
+
+		isSuperAdmin = user.IsInRole("SuperAdmin");
+		isLoading = false;
+	}
 
 	protected async Task HandleImageChange(InputFileChangeEventArgs e)
 	{

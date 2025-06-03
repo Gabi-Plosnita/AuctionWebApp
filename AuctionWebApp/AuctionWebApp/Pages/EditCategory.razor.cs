@@ -2,28 +2,19 @@
 using AuctionWebApp.Services;
 using AuctionWebApp.ViewModels;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Forms;
 using MudBlazor;
 
 namespace AuctionWebApp.Pages;
 
-public partial class EditCategory : ComponentBase
+public partial class EditCategory(ICategoryService CategoryService,
+								  FileHandlerService FileValidator,
+								  NavigationManager NavigationManager,
+								  AuthenticationStateProvider AuthenticationStateProvider,
+								  ISnackbar Snackbar) : ComponentBase
 {
-	[Inject]
-	private ICategoryService CategoryService { get; set; } = default!;
-
-	[Inject]
-	private FileHandlerService FileValidator { get; set; } = default!;
-
-	[Inject]
-	private NavigationManager NavigationManager { get; set; } = default!;
-
-	[Inject]
-	private ISnackbar Snackbar { get; set; } = default!;
-
 	[Parameter] public int Id { get; set; }
-
-	private string ReturnUrl { get; set; } = "/admin-dashboard";
 
 	private MudForm? _form;
 
@@ -32,6 +23,10 @@ public partial class EditCategory : ComponentBase
 	private UpdateCategoryViewModel _model = new();
 
 	private string? _imagePreviewUrl;
+
+	private bool isSuperAdmin;
+
+	private bool isLoading = true;
 
 	protected override async Task OnInitializedAsync()
 	{
@@ -50,6 +45,12 @@ public partial class EditCategory : ComponentBase
 		_category.ImageUrl = string.IsNullOrEmpty(_category.ImageUrl) ? null : $"{AppSettings.ApiUrl}{_category.ImageUrl}";
 		_model = new UpdateCategoryViewModel() { Name = _category.Name, KeepImage = true};
 		_imagePreviewUrl = _category.ImageUrl;
+
+		var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+		var user = authState.User;
+
+		isSuperAdmin = user.IsInRole("SuperAdmin");
+		isLoading = false;
 	}
 
 	protected async Task HandleImageChange(InputFileChangeEventArgs e)
@@ -99,7 +100,7 @@ public partial class EditCategory : ComponentBase
 			else
 			{
 				Snackbar.ShowSuccess("Category updated successfully.");
-				NavigationManager.NavigateTo("/admin-dashboard");
+				NavigationManager.NavigateTo("/admin/categories-dashboard");
 			}
 		}
 	}

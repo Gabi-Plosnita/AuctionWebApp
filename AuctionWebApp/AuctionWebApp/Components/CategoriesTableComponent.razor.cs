@@ -6,17 +6,10 @@ using MudBlazor;
 
 namespace AuctionWebApp.Components;
 
-public partial class CategoriesTableComponent
+public partial class CategoriesTableComponent(ICategoryService CategoryService, 
+											  NavigationManager NavigationManager, 
+											  ISnackbar Snackbar) : ComponentBase
 {
-	[Inject] 
-	private ICategoryService CategoryService { get; set; } = default!;
-
-	[Inject] 
-	private ISnackbar Snackbar { get; set; } = default!;
-
-	[Inject] 
-	protected NavigationManager NavigationManager { get; set; } = default!;
-
 	[Parameter]
 	public int[] RowsPerPageOptions { get; set; } = new[] { 5, 10, 20 };
 
@@ -37,13 +30,8 @@ public partial class CategoriesTableComponent
 		_loading = false;
 	}
 
-	private void NavigateToCreateCategoryPage()
-	{
-		NavigationManager.NavigateTo("/category-create");
-	}
-
 	private void NavigateToEditCategoryPage(CategoryViewModel category)
 	{
-		NavigationManager.NavigateTo($"/category-edit/{category.Id}");
+		NavigationManager.NavigateTo($"/categories/edit/{category.Id}");
 	}
 }

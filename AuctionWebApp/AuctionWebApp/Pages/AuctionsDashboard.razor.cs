@@ -6,11 +6,8 @@ using Microsoft.AspNetCore.Components.Authorization;
 
 namespace AuctionWebApp.Pages;
 
-public partial class AuctionsDashboard : ComponentBase
+public partial class AuctionsDashboard(AuthenticationStateProvider AuthenticationStateProvider) : ComponentBase
 {
-	[Inject]
-	private AuthenticationStateProvider AuthenticationStateProvider { get; set; } = default!;
-
 	private AuctionFilterViewModel auctionFilter = new AuctionFilterViewModel
 	{
 		Status = AuctionStatus.InTransit,
