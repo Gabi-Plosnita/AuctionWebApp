@@ -2,31 +2,28 @@
 using AuctionWebApp.Services;
 using AuctionWebApp.ViewModels;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using MudBlazor;
 
 namespace AuctionWebApp.Pages;
 
-public partial class AssignDriverToAuction : ComponentBase
+public partial class AssignDriverToAuction(IDriverService DriverService,
+										   IAuctionService AuctionService,
+										   AuthenticationStateProvider AuthenticationStateProvider,
+										   ISnackbar Snackbar) : ComponentBase
 {
-	[Inject]
-	private IDriverService DriverService { get; set; } = default!;
-
-	[Inject]
-	private IAuctionService AuctionService { get; set; } = default!;
-
-	[Inject]
-	private ISnackbar Snackbar { get; set; } = default!;
-
 	[Parameter]
 	public int AuctionId { get; set; }
 
-	private string ReturnUrl { get; set; } = "/admin-dashboard";
+	private string ReturnUrl { get; set; } = "/admin/auctions-dashboard";
 
 	private DetailedAuctionViewModel auction;
 
 	private List<DriverViewModel> drivers = new List<DriverViewModel>();
 
 	private string? selectedDriverEmail;
+
+	private bool isSuperAdmin;
 
 	private bool isLoading = true;
 
@@ -59,6 +56,10 @@ public partial class AssignDriverToAuction : ComponentBase
 		}
 		drivers = driversResult.Data;
 
+		var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+		var user = authState.User;
+
+		isSuperAdmin = user.IsInRole("SuperAdmin");
 		isLoading = false;
 	}
 

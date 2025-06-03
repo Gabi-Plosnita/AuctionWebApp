@@ -10,7 +10,6 @@ namespace AuctionWebApp.Pages;
 
 public partial class EditCategory(ICategoryService CategoryService,
 								  FileHandlerService FileValidator,
-								  NavigationManager NavigationManager,
 								  AuthenticationStateProvider AuthenticationStateProvider,
 								  ISnackbar Snackbar) : ComponentBase
 {
@@ -94,13 +93,14 @@ public partial class EditCategory(ICategoryService CategoryService,
 				Snackbar.ShowErrors(result.Errors);
 				_model = new UpdateCategoryViewModel() { Name = _category.Name, KeepImage = true };
 				ResetImage();
-				StateHasChanged();
 				return;
 			}
 			else
 			{
 				Snackbar.ShowSuccess("Category updated successfully.");
-				NavigationManager.NavigateTo("/admin/categories-dashboard");
+				_category.Name = _model.Name;
+				_category.ImageUrl = _imagePreviewUrl;
+				ResetImage();
 			}
 		}
 	}

@@ -1,6 +1,8 @@
 ﻿@using AuctionWebApp.Components
 @using Microsoft.AspNetCore.Authorization
 
+@namespace AuctionWebApp.Pages
+
 @page "/auctions/{AuctionId:int}/assign-driver"
 @attribute [Authorize(Roles = "Admin,SuperAdmin")]
 
@@ -12,9 +14,9 @@
 }
 else
 {
-	<NavigationComponent Url="@ReturnUrl"></NavigationComponent>
+	<AdminNavigationBarComponent IsSuperAdmin="isSuperAdmin"></AdminNavigationBarComponent>
 
-	<div class="mt-10">
+	<div class="mt-15">
 		<AuctionDeliveryDetailsComponent Auction="@auction"></AuctionDeliveryDetailsComponent>
 
 		<div class="d-flex justify-center">
