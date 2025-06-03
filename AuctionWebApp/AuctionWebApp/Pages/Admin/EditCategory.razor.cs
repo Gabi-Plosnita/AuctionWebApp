@@ -53,7 +53,7 @@ public partial class EditCategory(ICategoryService CategoryService,
 		isLoading = false;
 	}
 
-	protected async Task HandleImageChange(InputFileChangeEventArgs e)
+	private async Task HandleImageChange(InputFileChangeEventArgs e)
 	{
 		var result = FileValidator.ValidateFile(e.File, allowedExtensions: new[] { ".jpg", ".jpeg", ".png" }, maxSizeInMB: 2);
 		if (result.HasErrors)
@@ -76,7 +76,7 @@ public partial class EditCategory(ICategoryService CategoryService,
 		}
 	}
 
-	protected async Task SubmitAsync()
+	private async Task SubmitAsync()
 	{
 		if (_form is null)
 			return;

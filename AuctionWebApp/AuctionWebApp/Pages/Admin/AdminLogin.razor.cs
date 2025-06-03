@@ -5,21 +5,15 @@ using Microsoft.AspNetCore.Components;
 
 namespace AuctionWebApp.Pages;
 
-public partial class AdminLogin : ComponentBase
+public partial class AdminLogin(IAuthService AuthService, NavigationManager Navigation) : ComponentBase
 {
-	[Inject]
-	public IAuthService _authService { get; set; } = default!;
-
-	[Inject]
-	public NavigationManager Navigation { get; set; } = default!;
-
 	private string ReturnUrl { get; set; } = "/";
 
 	protected LoginViewModel LoginModel { get; set; } = new LoginViewModel();
 
 	protected async Task<Result> HandleAdminLogin(LoginViewModel model)
 	{
-		var result = await _authService.LoginAdminAsync(model);
+		var result = await AuthService.LoginAdminAsync(model);
 		if (!result.HasErrors)
 		{
 			Navigation.NavigateTo("admin/home");

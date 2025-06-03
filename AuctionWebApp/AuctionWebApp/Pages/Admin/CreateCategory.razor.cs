@@ -14,11 +14,11 @@ public partial class CreateCategory(ICategoryService CategoryService,
 									NavigationManager NavigationManager,
 									ISnackbar Snackbar) : ComponentBase
 {
-	protected MudForm? _form;
+	private MudForm? _form;
 
-	protected CreateCategoryViewModel _model = new();
+	private CreateCategoryViewModel _model = new();
 
-	protected string? _imagePreviewUrl;
+	private string? _imagePreviewUrl;
 
 	private bool isSuperAdmin;
 
@@ -33,7 +33,7 @@ public partial class CreateCategory(ICategoryService CategoryService,
 		isLoading = false;
 	}
 
-	protected async Task HandleImageChange(InputFileChangeEventArgs e)
+	private async Task HandleImageChange(InputFileChangeEventArgs e)
 	{
 		var result = FileValidator.ValidateFile(e.File, allowedExtensions: new[] { ".jpg", ".jpeg", ".png" }, maxSizeInMB: 2);
 		if(result.HasErrors)
@@ -56,7 +56,7 @@ public partial class CreateCategory(ICategoryService CategoryService,
 		}
 	}
 
-	protected async Task SubmitAsync()
+	private async Task SubmitAsync()
 	{
 		if (_form is null)
 			return;

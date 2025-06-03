@@ -1,7 +1,9 @@
 ﻿@using AuctionWebApp.Components
 @using Microsoft.AspNetCore.Authorization
 
-@page "/categories/create"
+@namespace AuctionWebApp.Pages
+
+@page "/categories/edit/{Id:int}"
 @attribute [Authorize(Roles = "Admin,SuperAdmin")]
 
 @if (isLoading)
@@ -16,7 +18,7 @@ else
 
 	<div class="d-flex justify-center mt-15">
 		<MudPaper Class="pa-6" Style="max-width: 500px; width: 100%; background-color: #f9fafc; border-radius: 12px; border: 1px solid #e0e0e0; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);">
-			<MudText Typo="Typo.h5" Class="mb-6 text-center">Create New Category</MudText>
+			<MudText Typo="Typo.h5" Class="mb-6 text-center">Edit Category</MudText>
 
 			<MudForm @ref="_form" Model="_model">
 				<MudTextField T="string"
@@ -54,5 +56,5 @@ else
 			</MudForm>
 		</MudPaper>
 	</div>
-
 }
+
