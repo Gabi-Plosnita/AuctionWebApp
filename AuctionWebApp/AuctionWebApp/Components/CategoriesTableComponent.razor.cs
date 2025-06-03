@@ -32,6 +32,6 @@ public partial class CategoriesTableComponent(ICategoryService CategoryService,
 
 	private void NavigateToEditCategoryPage(CategoryViewModel category)
 	{
-		NavigationManager.NavigateTo($"admin/categories-dashboard/edit/{category.Id}");
+		NavigationManager.NavigateTo($"admin/categories-dashboard/{category.Id}/edit");
 	}
 }
