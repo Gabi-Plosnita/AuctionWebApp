@@ -11,26 +11,26 @@ public partial class BidAuction(IAuctionService AuctionService, ISnackbar Snackb
 	[Parameter]
 	public int AuctionId { get; set; }
 
-	private string ReturnUrl { get; set; } = "/user-dashboard";
-
 	private DetailedAuctionViewModel auction;
 
 	private CreateBidViewModel bid = new();
 
 	private bool isLoading = true;
 
+	private bool showErrorComponent = false;
+
 	protected override async Task OnInitializedAsync()
 	{
 		var auctionResult = await AuctionService.GetDetailedByIdAsync(AuctionId);
 		if (auctionResult.HasErrors)
 		{
-			Snackbar.ShowErrors(auctionResult.Errors);
+			showErrorComponent = true;
 			isLoading = false;
 			return;
 		}
 		if (auctionResult.Data is null)
 		{
-			Snackbar.ShowError("Auction not found");
+			showErrorComponent = true;
 			isLoading = false;
 			return;
 		}

@@ -4,7 +4,7 @@
 
 @namespace AuctionWebApp.Pages
 
-@page "/auctions/{AuctionId:int}/bid"
+@page "/user/auctions/{AuctionId:int}/bid"
 @attribute [Authorize(Roles = "User")]
 
 @if (isLoading)
@@ -15,50 +15,57 @@
 }
 else
 {
-	<NavigationComponent Url="@ReturnUrl"></NavigationComponent>
-
-	<div class="mt-10">
-		<DetailedAuctionComponent Auction="@auction"></DetailedAuctionComponent>
-	</div>
-
-	@if (auction.EndTime > DateTime.Now && auction.Status == AuctionStatus.InProgress)
+	@if (showErrorComponent)
 	{
-        <div class="mt-5 mb-10 p-4 mx-auto card shadow p-4 mb-5 bg-white rounded" style="max-width: 1000px;">
-            <div class="d-flex justify-content-center align-items-center mb-3 fs-4 fw-semibold text-dark">
-                <span class="me-2">Current Price:</span>
-                <span>@auction.CurrentPrice.ToString("C")</span>
-            </div>
+		<ErrorComponent></ErrorComponent>
+	}
+	else
+	{
+		<UserNavigationBarComponent></UserNavigationBarComponent>
 
-            <div class="d-flex justify-content-center align-items-center mb-4 fs-4 fw-semibold text-dark">
-                <span class="me-2">Minimum Bid Increment:</span>
-                <span>@auction.MinBidIncrement.ToString("C")</span>
-            </div>
+		<div class="mt-10">
+			<DetailedAuctionComponent Auction="@auction"></DetailedAuctionComponent>
+		</div>
 
-            <div class="d-flex justify-content-center mb-4">
-                <div class="w-50 min-w-250">
-                    <MudTextField @bind-Value="bid.Amount"
-                                  Label="Your Bid Amount"
-                                  Variant="Variant.Outlined"
-                                  Adornment="Adornment.End"
-                                  AdornmentText="RON"
-                                  For="@(() => bid.Amount)"
-                                  Immediate="true"
-                                  Class="form-control fs-5" />
-                </div>
-            </div>
+		@if (auction.EndTime > DateTime.Now && auction.Status == AuctionStatus.InProgress)
+		{
+			<div class="mt-5 mb-10 p-4 mx-auto card shadow p-4 mb-5 bg-white rounded" style="max-width: 1000px;">
+				<div class="d-flex justify-content-center align-items-center mb-3 fs-4 fw-semibold text-dark">
+					<span class="me-2">Current Price:</span>
+					<span>@auction.CurrentPrice.ToString("C")</span>
+				</div>
 
-            <div class="d-flex justify-content-center">
-                <div class="w-25 min-w-200">
-                    <MudButton OnClick="SubmitBid"
-                               Variant="Variant.Filled"
-                               Color="Color.Primary"
-                               Class="w-100 fs-5 py-2">
-                        Place Bid
-                    </MudButton>
-                </div>
-            </div>
-        </div>
+				<div class="d-flex justify-content-center align-items-center mb-4 fs-4 fw-semibold text-dark">
+					<span class="me-2">Minimum Bid Increment:</span>
+					<span>@auction.MinBidIncrement.ToString("C")</span>
+				</div>
 
+				<div class="d-flex justify-content-center mb-4">
+					<div class="w-50 min-w-250">
+						<MudTextField @bind-Value="bid.Amount"
+									  Label="Your Bid Amount"
+									  Variant="Variant.Outlined"
+									  Adornment="Adornment.End"
+									  AdornmentText="RON"
+									  For="@(() => bid.Amount)"
+									  Immediate="true"
+									  Class="form-control fs-5" />
+					</div>
+				</div>
+
+				<div class="d-flex justify-content-center">
+					<div class="w-25 min-w-200">
+						<MudButton OnClick="SubmitBid"
+								   Variant="Variant.Filled"
+								   Color="Color.Primary"
+								   Class="w-100 fs-5 py-2">
+							Place Bid
+						</MudButton>
+					</div>
+				</div>
+			</div>
+
+		}
 	}
 }
 

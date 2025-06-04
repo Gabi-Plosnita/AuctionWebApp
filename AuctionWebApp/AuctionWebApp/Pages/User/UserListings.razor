@@ -1,0 +1,47 @@
+﻿@using AuctionWebApp.Enums
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
+@using AuctionWebApp.Components
+
+@namespace AuctionWebApp.Pages
+
+@page "/user/my-listings"
+@attribute [Authorize(Roles = "User")]
+
+@if(showErrorComponent)
+{
+	<ErrorComponent></ErrorComponent>
+}
+else
+{
+	<UserNavigationBarComponent></UserNavigationBarComponent>
+	<h1 class="text-center mt-10 mb-15">My Listings</h1>
+
+	<div style="width: 80%; margin: 0 auto; margin-top: 40px;">
+		<MudSelect T="AuctionStatus?"
+				   Value="@myListingsAuctionFilter.Status"
+				   ValueChanged="HandleListingStatusFilterChanged"
+				   Label="Auction Status"
+				   Dense="true"
+				   Class="mb-4">
+
+			<MudSelectItem T="AuctionStatus?"
+						   Value="@((AuctionStatus?)null)">
+				All
+			</MudSelectItem>
+
+			@foreach (AuctionStatus status in Enum.GetValues(typeof(AuctionStatus)))
+			{
+				<MudSelectItem T="AuctionStatus?"
+							   Value="@(status)">
+					@status.ToString()
+				</MudSelectItem>
+			}
+		</MudSelect>
+	</div>
+
+	<AuctionsTableComponent @ref="listingsAuctionsTable"
+							NavigateUrl="@editAuctionUrl"
+							NavigationButtonName="Edit"
+							Filter="myListingsAuctionFilter"></AuctionsTableComponent>
+}
