@@ -2,6 +2,8 @@
 @using AuctionWebApp.Enums
 @using Microsoft.AspNetCore.Authorization
 
+@namespace AuctionWebApp.Pages
+
 @page "/auctions/{AuctionId:int}/bid"
 @attribute [Authorize(Roles = "User")]
 
