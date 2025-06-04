@@ -7,6 +7,7 @@ using MudBlazor;
 namespace AuctionWebApp.Pages;
 
 public partial class CompleteAuction(IAuctionService AuctionService,
+									 IAuthService AuthService,
 									 NavigationManager NavigationManager,
 									 IDialogService DialogService,
 									 ISnackbar Snackbar) : ComponentBase
@@ -17,6 +18,8 @@ public partial class CompleteAuction(IAuctionService AuctionService,
 	private DetailedAuctionViewModel auction;
 
 	private bool isLoading = true;
+
+	private bool isAuthorized = true;
 
 	private string ReturnUrl = "driver/assigned-auctions";
 
@@ -34,6 +37,8 @@ public partial class CompleteAuction(IAuctionService AuctionService,
 			return;
 		}
 		auction = auctionResult.Data;
+
+		await AuthorizeAuthenticatedDriverAsync();
 
 		isLoading = false;
 	}
@@ -56,6 +61,28 @@ public partial class CompleteAuction(IAuctionService AuctionService,
 			}
 			Snackbar.ShowSuccess("Auction completed successfully.");
 			NavigationManager.NavigateTo(ReturnUrl);
+		}
+	}
+
+	private async Task AuthorizeAuthenticatedDriverAsync()
+	{
+		var authenticatedUserResult = await AuthService.GetAuthenticatedUserAsync();
+		if (authenticatedUserResult.HasErrors)
+		{
+			Snackbar.ShowErrors(authenticatedUserResult.Errors);
+			isAuthorized = false;
+			return;
+		}
+		var authenticatedUser = authenticatedUserResult.Data;
+		if (authenticatedUser is null)
+		{
+			isAuthorized = false;
+			return;
+		}
+		if (auction.Driver is null || auction.Driver.Id != authenticatedUser.Id)
+		{
+			isAuthorized = false;
+			return;
 		}
 	}
 }

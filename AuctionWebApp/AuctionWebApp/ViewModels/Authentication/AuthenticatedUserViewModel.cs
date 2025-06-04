@@ -2,9 +2,9 @@
 
 public class AuthenticatedUserViewModel
 {
-	public int Id { get; init; }
+	public int Id { get; set; }
 
-	public string Email { get; init; } = string.Empty;
+	public string Email { get; set; } = string.Empty;
 
-	public string Role { get; init; } = string.Empty;
+	public string Role { get; set; } = string.Empty;
 }
