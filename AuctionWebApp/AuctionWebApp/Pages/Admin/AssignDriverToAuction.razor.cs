@@ -1,4 +1,5 @@
-﻿using AuctionWebApp.Helpers;
+﻿using AuctionWebApp.Enums;
+using AuctionWebApp.Helpers;
 using AuctionWebApp.Services;
 using AuctionWebApp.ViewModels;
 using Microsoft.AspNetCore.Components;
@@ -27,36 +28,43 @@ public partial class AssignDriverToAuction(IDriverService DriverService,
 
 	private bool isLoading = true;
 
-	private bool requestHasErrors = false;
+	private bool showErrorComponent = false;
 
 	protected override async Task OnInitializedAsync()
 	{
 		var auctionResult = await AuctionService.GetDetailedByIdAsync(AuctionId);
 		if (auctionResult.HasErrors)
 		{
-			requestHasErrors = true;
+			showErrorComponent = true;
 			isLoading = false;
 			return;
 		}
 		if (auctionResult.Data is null)
 		{
-			requestHasErrors = true;
+			showErrorComponent = true;
+			isLoading = false;
+			return;
+		}
+		if(auctionResult.Data.Status != AuctionStatus.InTransit)
+		{
+			showErrorComponent = true;
 			isLoading = false;
 			return;
 		}
 		auction = auctionResult.Data;
+
 		selectedDriverEmail = auction?.Driver?.Email ?? "No Driver";
 
 		var driversResult = await DriverService.GetAllAsync();
 		if (driversResult.HasErrors)
 		{
-			requestHasErrors = true;
+			showErrorComponent = true;
 			isLoading = false;
 			return;
 		}
 		if (driversResult.Data is null)
 		{
-			requestHasErrors = true;
+			showErrorComponent = true;
 			isLoading = false;
 			return;
 		}
