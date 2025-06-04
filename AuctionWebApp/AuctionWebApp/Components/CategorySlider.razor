@@ -11,7 +11,7 @@
             @foreach (var category in CategoryViewModels)
             {
                 <div class="category-item-wrapper">
-                    <CategoryFilterOption Category="category" />
+                    <CategoryFilterOption Category="category" OnCategoryClicked="HandleCategorySelectionAsync" />
                 </div>
             }
         }

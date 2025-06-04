@@ -1,4 +1,6 @@
-﻿<div class="category-card">
+﻿@using AuctionWebApp.ViewModels
+
+<div class="category-card" @onclick="HandleCardClickAsync">
     @if (Category.ImageUrl == null)
     {
         <div class="category-image placeholder-image">
