@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace AuctionWebApp.Pages;
 
-public partial class UserDashboard : ComponentBase
+public partial class UserHome : ComponentBase
 {
 	[Inject]
 	private IAuthService AuthService { get; set; } = default!;

@@ -22,7 +22,7 @@ public partial class UserLogin : ComponentBase
 		var result = await _authService.LoginUserAsync(model);
 		if (!result.HasErrors)
 		{
-			Navigation.NavigateTo("/user-dashboard");
+			Navigation.NavigateTo("/user/home");
 		}
 		return result;
 	}
