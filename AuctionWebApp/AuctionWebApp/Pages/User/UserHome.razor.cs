@@ -8,5 +8,5 @@ namespace AuctionWebApp.Pages;
 
 public partial class UserHome() : ComponentBase
 {
-	
+	// add isLoading
 }

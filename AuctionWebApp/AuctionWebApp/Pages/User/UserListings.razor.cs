@@ -8,8 +8,6 @@ namespace AuctionWebApp.Pages;
 
 public partial class UserListings(IAuthService AuthService) : ComponentBase
 {
-	private bool showErrorComponent = false;
-
 	private string editAuctionUrl = "user/my-listings/{id}/edit";
 
 	private AuctionFilterViewModel myListingsAuctionFilter = new AuctionFilterViewModel
@@ -18,6 +16,10 @@ public partial class UserListings(IAuthService AuthService) : ComponentBase
 	};
 
 	private AuctionsTableComponent listingsAuctionsTable;
+
+	private bool isLoading = true;
+
+	private bool showErrorComponent = false;
 
 	private async Task HandleListingStatusFilterChanged(AuctionStatus? status)
 	{
@@ -31,13 +33,17 @@ public partial class UserListings(IAuthService AuthService) : ComponentBase
 		if (result.HasErrors)
 		{
 			showErrorComponent = true;
+			isLoading = false;
 			return;
 		}
 		if (result.Data == null)
 		{
 			showErrorComponent = true;
+			isLoading = false;
 			return;
 		}
 		myListingsAuctionFilter.SellerId = result.Data.Id;
+
+		isLoading = false;
 	}
 }
