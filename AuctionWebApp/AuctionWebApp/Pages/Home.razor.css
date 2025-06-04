@@ -1,8 +1,16 @@
-﻿.login-wrapper {
+﻿.main-wrapper {
     height: 100vh;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: space-around;
     align-items: center;
+    padding: 2rem;
+}
+
+.login-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
 }
 
 .login-container {
@@ -28,4 +36,9 @@
     font-size: 48px;
     margin-bottom: 1rem;
     color: #1976d2;
+}
+
+.empty-spacer {
+    height: 100px;
+    width: 100%;
 }
