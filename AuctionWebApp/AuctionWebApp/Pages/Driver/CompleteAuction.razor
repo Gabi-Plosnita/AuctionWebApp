@@ -15,7 +15,15 @@
 }
 else
 {
-	@if (isAuthorized && auction.Status == AuctionStatus.InTransit)
+	@if (!isAuthorized)
+	{
+		<UnauthorizedComponent></UnauthorizedComponent>
+	}
+	else if (showErrorComponent)
+	{
+		<ErrorComponent></ErrorComponent>
+	}
+	else
 	{
 		<DriverNavigationBarComponent></DriverNavigationBarComponent>
 
@@ -32,10 +40,6 @@ else
 				Complete
 			</MudButton>
 		</div>
-	}
-	else
-	{
-		<UnauthorizedComponent></UnauthorizedComponent>
 	}
 }
 

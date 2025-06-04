@@ -1,4 +1,5 @@
-﻿using AuctionWebApp.Helpers;
+﻿using AuctionWebApp.Enums;
+using AuctionWebApp.Helpers;
 using AuctionWebApp.Services;
 using AuctionWebApp.ViewModels;
 using Microsoft.AspNetCore.Components;
@@ -23,18 +24,26 @@ public partial class CompleteAuction(IAuctionService AuctionService,
 
 	private string ReturnUrl = "driver/assigned-auctions";
 
+	private bool showErrorComponent = false;
+
 	protected override async Task OnInitializedAsync()
 	{
 		var auctionResult = await AuctionService.GetDetailedByIdAsync(AuctionId);
 		if (auctionResult.HasErrors)
 		{
-			Snackbar.ShowErrors(auctionResult.Errors);
+			showErrorComponent = true;
 			isLoading = false;
 			return;
 		}
 		if (auctionResult.Data is null)
 		{
-			Snackbar.ShowError("Auction not found");
+			showErrorComponent = true;
+			isLoading = false;
+			return;
+		}
+		if (auctionResult.Data.Status != AuctionStatus.InTransit)
+		{
+			showErrorComponent = true;
 			isLoading = false;
 			return;
 		}
