@@ -79,7 +79,7 @@ namespace AuctionWebApp.Components
 
 		protected async Task HandleCategorySelectionAsync(CategoryViewModel selectedCategory)
 		{
-			System.Console.WriteLine($"Selected category: {selectedCategory.Name}, ID: {selectedCategory.Id}");
+			// update auctions //
 			await Task.CompletedTask;
 		}
 
