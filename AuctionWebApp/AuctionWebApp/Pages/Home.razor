@@ -1,15 +1,16 @@
 ﻿@page "/"
 
-<a href="/admin/home">Admin Dashboard</a>
-<br />
-<a href="/driver/home">Driver Dashboard</a>
-<br />
-<a href="/user/home">User Dashboard</a>
-<br />
-<br />
-<br />
-<a href="/admin/login">Admin Login</a>
-<br />
-<a href="/driver/login">Driver Login</a>
-<br />
-<a href="/user/login">User Login</a>
+@if (isLoading)
+{
+	<MudProgressCircular Color="Color.Primary"
+						 Indeterminate="true"
+						 Class="d-flex mx-auto mt-12" />
+}
+else
+{
+	<a href="/admin/login">Admin Login</a>
+	<br />
+	<a href="/driver/login">Driver Login</a>
+	<br />
+	<a href="/user/login">User Login</a>
+}

@@ -23,7 +23,6 @@
 	<Folder Include="HttpClients\" />
 	<Folder Include="Services\" />
 	<Folder Include="Helpers\" />
-	<Folder Include="Components\" />
   </ItemGroup>
 
 </Project>

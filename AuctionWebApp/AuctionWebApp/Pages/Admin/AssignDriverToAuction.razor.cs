@@ -27,17 +27,21 @@ public partial class AssignDriverToAuction(IDriverService DriverService,
 
 	private bool isLoading = true;
 
+	private bool requestHasErrors = false;
+
 	protected override async Task OnInitializedAsync()
 	{
 		var auctionResult = await AuctionService.GetDetailedByIdAsync(AuctionId);
 		if (auctionResult.HasErrors)
 		{
-			Snackbar.ShowErrors(auctionResult.Errors);
+			requestHasErrors = true;
+			isLoading = false;
 			return;
 		}
 		if (auctionResult.Data is null)
 		{
-			Snackbar.ShowError("Auction not found");
+			requestHasErrors = true;
+			isLoading = false;
 			return;
 		}
 		auction = auctionResult.Data;
@@ -46,12 +50,14 @@ public partial class AssignDriverToAuction(IDriverService DriverService,
 		var driversResult = await DriverService.GetAllAsync();
 		if (driversResult.HasErrors)
 		{
-			Snackbar.ShowErrors(driversResult.Errors);
+			requestHasErrors = true;
+			isLoading = false;
 			return;
 		}
 		if (driversResult.Data is null)
 		{
-			Snackbar.ShowError("No drivers found");
+			requestHasErrors = true;
+			isLoading = false;
 			return;
 		}
 		drivers = driversResult.Data;

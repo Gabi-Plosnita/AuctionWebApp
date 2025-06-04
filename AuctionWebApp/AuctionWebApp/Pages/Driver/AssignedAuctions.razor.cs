@@ -24,10 +24,12 @@ public partial class AssignedAuctions(IAuthService AuthService) : ComponentBase
 		var result = await AuthService.GetAuthenticatedUserAsync();
 		if (result.HasErrors)
 		{
+			isLoading = false;
 			return;
 		}
 		if (result.Data == null)
 		{
+			isLoading = false;
 			return;
 		}
 		auctionsFilter.DriverId = result.Data.Id;

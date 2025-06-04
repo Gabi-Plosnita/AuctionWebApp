@@ -29,11 +29,13 @@ public partial class CompleteAuction(IAuctionService AuctionService,
 		if (auctionResult.HasErrors)
 		{
 			Snackbar.ShowErrors(auctionResult.Errors);
+			isLoading = false;
 			return;
 		}
 		if (auctionResult.Data is null)
 		{
 			Snackbar.ShowError("Auction not found");
+			isLoading = false;
 			return;
 		}
 		auction = auctionResult.Data;

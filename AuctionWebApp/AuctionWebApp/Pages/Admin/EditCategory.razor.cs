@@ -27,17 +27,21 @@ public partial class EditCategory(ICategoryService CategoryService,
 
 	private bool isLoading = true;
 
+	private bool requestHasErrors = false;
+
 	protected override async Task OnInitializedAsync()
 	{
 		var result = await CategoryService.GetByIdAsync(Id);
 		if (result.HasErrors)
 		{
-			Snackbar.ShowErrors(result.Errors);
+			requestHasErrors = true;
+			isLoading = false;
 			return;
 		}
 		if (result.Data is null)
 		{
-			Snackbar.ShowError("Category not found.");
+			requestHasErrors = true;
+			isLoading = false;
 			return;
 		}
 		_category = result.Data;

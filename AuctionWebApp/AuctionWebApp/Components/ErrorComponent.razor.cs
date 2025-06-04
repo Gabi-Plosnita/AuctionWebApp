@@ -2,7 +2,7 @@
 
 namespace AuctionWebApp.Components;
 
-public partial class UnauthorizedComponent(NavigationManager NavigationManager) : ComponentBase
+public partial class ErrorComponent(NavigationManager NavigationManager) : ComponentBase
 {
 	protected void GoHome() => NavigationManager.NavigateTo("/");
 }
