@@ -1,11 +1,13 @@
-﻿<MudPaper Class="category-card" Elevation="3">
+﻿<div class="category-card">
     @if (Category.ImageUrl == null)
     {
-        <MudAvatar Size="Size.Large" Icon="@Icons.Material.Filled.ImageNotSupported" Class="category-image" />
+        <div class="category-image placeholder-image">
+            <span>No Image</span>
+        </div>
     }
     else
     {
-        <img src="@($"{AppSettings.ApiUrl}{Category.ImageUrl}")" class="category-image" />
+        <img src="@($"{AppSettings.ApiUrl}{Category.ImageUrl}")" class="category-image" alt="@Category.Name" />
     }
     <div class="category-name">@Category.Name</div>
-</MudPaper>
+</div>

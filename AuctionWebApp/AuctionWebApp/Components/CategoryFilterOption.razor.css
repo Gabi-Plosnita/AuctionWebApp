@@ -1,40 +1,48 @@
 ﻿.category-card {
-    height: 100%;
-    width: 200px;
-    padding: 1rem;
-    margin: 0.5rem;
+    width: 160px;
+    height: 170px;
+    padding: 12px;
+    margin: 4px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    border-radius: 12px;
     background-color: white;
     box-sizing: border-box;
-    transition: box-shadow 0.2s ease;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    overflow: hidden;
 }
-
-    .category-card:hover {
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
 
 .category-image {
-    width: 64px;
-    height: 64px;
-    margin-bottom: 0.75rem;
+    width: 60px;
+    height: 60px;
+    margin-bottom: 10px;
     object-fit: contain;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #757575;
 }
 
-.category-card .mud-avatar.category-image .mud-icon-root {
-    font-size: 40px;
-    color: #757575;
+img.category-image {
+    background-color: transparent;
+}
+
+.category-image.placeholder-image {
+    background-color: #f0f0f0;
+    font-size: 12px;
+    border: 1px dashed #ccc;
 }
 
 .category-name {
     font-weight: 500;
-    font-size: 0.9rem;
+    font-size: 0.875rem;
     color: #333;
     max-width: 100%;
     overflow-wrap: break-word;
-    line-height: 1.2;
+    word-break: break-word;
+    line-height: 1.3;
 }

@@ -1,7 +1,9 @@
-﻿@using AuctionWebApp.ViewModels 
+﻿@using AuctionWebApp.ViewModels
 
 <div class="categories-slider-container">
-    <MudIconButton Icon="@Icons.Material.Filled.ChevronLeft" OnClick="ScrollLeft" Class="scroll-arrow" Disabled="@disableLeftScroll" Size="Size.Medium" />
+    <button class="scroll-arrow scroll-arrow-left" @onclick="ScrollLeft" disabled="@disableLeftScroll">
+        &lt;
+    </button>
 
     <div @ref="scrollableDiv" class="categories-scroll-area" @onscroll="HandleScrollAsync">
         @if (CategoryViewModels != null)
@@ -15,5 +17,7 @@
         }
     </div>
 
-    <MudIconButton Icon="@Icons.Material.Filled.ChevronRight" OnClick="ScrollRight" Class="scroll-arrow" Disabled="@disableRightScroll" Size="Size.Medium" />
+    <button class="scroll-arrow scroll-arrow-right" @onclick="ScrollRight" disabled="@disableRightScroll">
+        &gt;
+    </button>
 </div>
