@@ -5,24 +5,18 @@ using Microsoft.AspNetCore.Components;
 
 namespace AuctionWebApp.Pages;
 
-public partial class UserLogin : ComponentBase
+public partial class UserLogin(IAuthService AuthService, NavigationManager NavigationManager) : ComponentBase
 {
-	[Inject]
-	public IAuthService _authService { get; set; } = default!;
-
-	[Inject]
-	public NavigationManager Navigation { get; set; } = default!;
-
 	private string ReturnUrl { get; set; } = "/";
 
 	protected LoginViewModel LoginModel { get; set; } = new LoginViewModel();
 
 	protected async Task<Result> HandleUserLogin(LoginViewModel model)
 	{
-		var result = await _authService.LoginUserAsync(model);
+		var result = await AuthService.LoginUserAsync(model);
 		if (!result.HasErrors)
 		{
-			Navigation.NavigateTo("/user/home");
+			NavigationManager.NavigateTo("/user/home");
 		}
 		return result;
 	}

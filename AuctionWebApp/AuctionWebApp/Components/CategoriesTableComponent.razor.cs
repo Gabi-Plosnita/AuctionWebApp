@@ -15,11 +15,11 @@ public partial class CategoriesTableComponent(ICategoryService CategoryService,
 
 	private List<CategoryViewModel> categories = new();
 
-	private bool _loading;
+	private bool isLoading;
 
 	protected override async Task OnInitializedAsync()
 	{
-		_loading = true;
+		isLoading = true;
 		var result = await CategoryService.GetAllAsync();
 		if (!result.HasErrors)
 			categories = result.Data;
@@ -27,7 +27,7 @@ public partial class CategoriesTableComponent(ICategoryService CategoryService,
 		{
 			Snackbar.ShowErrors(result.Errors);
 		}
-		_loading = false;
+		isLoading = false;
 	}
 
 	private void NavigateToEditCategoryPage(CategoryViewModel category)

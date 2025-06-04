@@ -4,11 +4,8 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Routing;
 using MudBlazor;
 
-public partial class MainLayout : LayoutComponentBase, IDisposable
+public partial class MainLayout(NavigationManager Navigation, ISnackbar Snackbar) : LayoutComponentBase, IDisposable
 {
-	[Inject] private ISnackbar Snackbar { get; set; } = default!;
-	[Inject] private NavigationManager Navigation { get; set; } = default!;
-
 	protected override void OnInitialized()
 	{
 		Navigation.LocationChanged += OnLocationChanged;

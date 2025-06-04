@@ -4,11 +4,8 @@ using Microsoft.JSInterop;
 
 namespace AuctionWebApp.Components;
 
-public partial class DetailedAuctionComponent : ComponentBase
+public partial class DetailedAuctionComponent(IJSRuntime JS) : ComponentBase
 {
-	[Inject]
-	private IJSRuntime JS { get; set; } = default!;
-
 	[Parameter]
 	public required DetailedAuctionViewModel Auction { get; set; }
 

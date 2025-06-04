@@ -6,27 +6,18 @@ using MudBlazor;
 
 namespace AuctionWebApp.Components;
 
-public partial class AdminsTableComponent : ComponentBase
+public partial class AdminsTableComponent(IAdminService AdminService, ISnackbar Snackbar) : ComponentBase
 {
-	[Inject]
-	private IAdminService AdminService { get; set; } = default!;
-
-	[Inject]
-	private ISnackbar Snackbar { get; set; } = default!;
-
-	[Inject]
-	protected NavigationManager NavigationManager { get; set; } = default!;
-
 	[Parameter]
 	public int[] RowsPerPageOptions { get; set; } = new[] { 5, 10, 20 };
 
 	private List<AdminViewModel> admins = new();
 
-	private bool _loading;
+	private bool isLoading;
 
 	protected override async Task OnInitializedAsync()
 	{
-		_loading = true;
+		isLoading = true;
 		var result = await AdminService.GetAllAsync();
 		if (!result.HasErrors)
 			admins = result.Data;
@@ -34,7 +25,7 @@ public partial class AdminsTableComponent : ComponentBase
 		{
 			Snackbar.ShowErrors(result.Errors);
 		}
-		_loading = false;
+		isLoading = false;
 	}
 
 	private async Task DeleteAdminAsync(int id)

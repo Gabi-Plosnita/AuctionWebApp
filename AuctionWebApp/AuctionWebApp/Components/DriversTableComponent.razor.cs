@@ -6,27 +6,18 @@ using MudBlazor;
 
 namespace AuctionWebApp.Components;
 
-public partial class DriversTableComponent : ComponentBase
+public partial class DriversTableComponent(IDriverService DriverService, ISnackbar Snackbar) : ComponentBase
 {
-	[Inject]
-	private IDriverService DriverService { get; set; } = default!;
-
-	[Inject]
-	private ISnackbar Snackbar { get; set; } = default!;
-
-	[Inject]
-	protected NavigationManager NavigationManager { get; set; } = default!;
-
 	[Parameter]
 	public int[] RowsPerPageOptions { get; set; } = new[] { 5, 10, 20 };
 
 	private List<DriverViewModel> drivers = new();
 
-	private bool _loading;
+	private bool isLoading;
 
 	protected override async Task OnInitializedAsync()
 	{
-		_loading = true;
+		isLoading = true;
 		var result = await DriverService.GetAllAsync();
 		if (!result.HasErrors)
 			drivers = result.Data;
@@ -34,7 +25,7 @@ public partial class DriversTableComponent : ComponentBase
 		{
 			Snackbar.ShowErrors(result.Errors);
 		}
-		_loading = false;
+		isLoading = false;
 	}
 
 	private async Task DeleteDriverAsync(int id)

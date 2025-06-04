@@ -6,17 +6,10 @@ using MudBlazor;
 
 namespace AuctionWebApp.Components;
 
-public partial class AuctionsTableComponent : ComponentBase
+public partial class AuctionsTableComponent(IAuctionService AuctionsService, 
+											NavigationManager NavigationManager, 
+											ISnackbar Snackbar) : ComponentBase
 {
-	[Inject] 
-	private IAuctionService AuctionsService { get; set; } = default!;
-
-	[Inject]
-	private ISnackbar Snackbar { get; set; } = default!;
-
-	[Inject]
-	protected NavigationManager NavigationManager { get; set; } = default!;
-
 	[Parameter]
 	public AuctionFilterViewModel Filter { get; set; } = new AuctionFilterViewModel();
 

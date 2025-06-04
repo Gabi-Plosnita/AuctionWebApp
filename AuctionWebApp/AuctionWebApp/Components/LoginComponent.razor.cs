@@ -18,14 +18,14 @@ public partial class LoginComponent : ComponentBase
 
 	private List<string> LoginErrorMessages { get; set; } = new List<string>();
 
-	private EditContext _editContext;
+	private EditContext editContext;
 
 	private bool showSummary;
 	protected bool ShowPassword { get; set; }
 
 	protected override void OnInitialized()
 	{
-		_editContext = new EditContext(Model);
+		editContext = new EditContext(Model);
 	}
 
 	protected async Task HandleValidSubmit()

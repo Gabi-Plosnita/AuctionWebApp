@@ -2,11 +2,8 @@
 
 namespace AuctionWebApp.Components;
 
-public partial class NavigationComponent : ComponentBase
+public partial class NavigationComponent(NavigationManager NavigationManager) : ComponentBase
 {
-	[Inject]
-	private NavigationManager NavigationManager { get; set; } = default!;
-
 	[Parameter]
 	public required string Url { get; set; }
 

@@ -6,11 +6,8 @@ using Microsoft.AspNetCore.Components;
 
 namespace AuctionWebApp.Pages;
 
-public partial class UserHome : ComponentBase
+public partial class UserHome(IAuthService AuthService) : ComponentBase
 {
-	[Inject]
-	private IAuthService AuthService { get; set; } = default!;
-
 	private int authenticatedUserId;
 
 	// User Listed Auctions //

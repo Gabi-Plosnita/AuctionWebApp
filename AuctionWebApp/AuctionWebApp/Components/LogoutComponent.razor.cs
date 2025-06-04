@@ -3,15 +3,8 @@ using Microsoft.AspNetCore.Components;
 
 namespace AuctionWebApp.Components;
 
-public partial class LogoutComponent : ComponentBase
+public partial class LogoutComponent(IAuthService AuthService, NavigationManager NavigationManager) : ComponentBase
 {
-	[Inject]
-	private NavigationManager NavigationManager { get; set; } = default!;
-
-	[Inject]
-
-	private IAuthService AuthService { get; set; } = default!;
-
 	private async Task LogoutAsync()
 	{
 		NavigationManager.NavigateTo("/");

@@ -6,14 +6,8 @@ using MudBlazor;
 
 namespace AuctionWebApp.Pages;
 
-public partial class BidAuction : ComponentBase
+public partial class BidAuction(IAuctionService AuctionService, ISnackbar Snackbar) : ComponentBase
 {
-	[Inject]
-	private IAuctionService AuctionService { get; set; } = default!;
-
-	[Inject]
-	private ISnackbar Snackbar { get; set; } = default!;
-
 	[Parameter]
 	public int AuctionId { get; set; }
 
