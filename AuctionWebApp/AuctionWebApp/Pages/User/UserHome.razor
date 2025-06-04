@@ -5,10 +5,16 @@
 
 @namespace AuctionWebApp.Pages
 
-@page "/user-dashboard"
+@page "/user/home"
 @attribute [Authorize(Roles = "User")]
 
-<MudTabs Class="full-screen-tabs"
+<UserNavigationBarComponent></UserNavigationBarComponent>
+<h1 class="text-center mt-15 mb-20">Welcome to user dashboard</h1>
+<div class="d-flex justify-content-center mt-4">
+	<LogoutComponent />
+</div>
+
+@* <MudTabs Class="full-screen-tabs"
 		 Style="width:100vw; height:100vh; margin:0; padding:0;"
 		 Centered="true"
 		 Elevation="0"
@@ -18,10 +24,7 @@
 		 PanelClass="pa-6"
 		 Color="Color.Primary">
 	<MudTabPanel Text="Home">
-		<h1 class="text-center mt-10 mb-20">Welcome to user dashboard</h1>
-		<div class="d-flex justify-content-center mt-4">
-			<LogoutComponent />
-		</div>
+		
 	</MudTabPanel>
 	<MudTabPanel Text="Browse Auctions">
 		<h1 class="text-center mt-10 mb-20">Browse Auctions</h1>
@@ -88,4 +91,4 @@
 								NavigationButtonName="View"
 								Filter="myBidsAuctionFilter"></AuctionsTableComponent>
 	</MudTabPanel>
-</MudTabs>
+</MudTabs> *@
