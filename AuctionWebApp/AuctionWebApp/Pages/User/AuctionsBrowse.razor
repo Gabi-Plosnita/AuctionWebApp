@@ -1,0 +1,26 @@
+﻿@using AuctionWebApp.Components
+@using AuctionWebApp.Enums
+@using Microsoft.AspNetCore.Authorization
+
+@namespace AuctionWebApp.Pages
+
+@page "/user/auctions"
+@attribute [Authorize(Roles = "User")]
+
+@if (isLoading)
+{
+	<MudProgressCircular Color="Color.Primary"
+						 Indeterminate="true"
+						 Class="d-flex mx-auto mt-12" />
+}
+else
+{
+	@if (showErrorComponent)
+	{
+		<ErrorComponent></ErrorComponent>
+	}
+	else
+	{
+
+	}
+}
