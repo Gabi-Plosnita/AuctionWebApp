@@ -1,12 +1,15 @@
 ﻿.category-card {
     width: 120px;
-    padding: 1rem;
+    height: auto;
+    padding: 1.5rem; /* Increased padding for overall spacing */
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center; /* Vertical centering if needed */
     border-radius: 12px;
     transition: box-shadow 0.2s ease;
+    box-sizing: border-box;
 }
 
     .category-card:hover {
@@ -14,11 +17,16 @@
     }
 
 .category-image {
+    width: 64px;
+    height: 64px;
     margin-bottom: 0.5rem;
+    object-fit: cover;
+    border-radius: 8px; /* optional for images */
 }
 
 .category-name {
     font-weight: 500;
     font-size: 1rem;
     color: #333;
+    text-align: center;
 }
