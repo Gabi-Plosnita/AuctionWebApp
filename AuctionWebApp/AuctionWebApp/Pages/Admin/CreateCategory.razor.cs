@@ -11,7 +11,6 @@ namespace AuctionWebApp.Pages;
 public partial class CreateCategory(ICategoryService CategoryService,
 									FileHandlerService FileValidator,
 									AuthenticationStateProvider AuthenticationStateProvider,
-									NavigationManager NavigationManager,
 									ISnackbar Snackbar) : ComponentBase
 {
 	private MudForm? _form;
