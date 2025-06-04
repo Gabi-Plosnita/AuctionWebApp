@@ -1,50 +1,38 @@
-﻿/* File: CategorySlider.razor.css (or your global CSS) */
-.categories-slider-container {
+﻿.categories-slider-container {
     display: flex;
     align-items: center;
+    height: 200px;
     width: 100%;
     box-sizing: border-box;
-    position: relative; /* Useful if you ever need absolute positioning for arrows */
-    padding: 8px 0; /* Vertical padding for the whole container */
+    position: relative;
+    padding: 8px 0;
 }
 
 .scroll-arrow {
-    /* MudIconButton styling is largely handled by MudBlazor. */
-    /* You can add custom overrides here if needed. */
-    /* Example: make it more compact if desired */
-    /* min-width: 36px; */
-    /* height: 36px; */
-    flex-shrink: 0; /* Prevent arrows from shrinking */
+    flex-shrink: 0;
 }
 
 .categories-scroll-area {
-    display: flex; /* Lays out category items horizontally */
-    overflow-x: auto; /* Enables horizontal scrolling */
-    scroll-behavior: smooth; /* Smooth scrolling for JS-triggered scrolls */
-    flex-grow: 1; /* Allows the scroll area to take available space */
-    margin: 0 4px; /* Small margin between arrows and scroll area */
-    padding: 4px 0; /* Inner padding for items, if CategoryFilterOption's padding isn't enough */
-    /* Hide scrollbar for a cleaner look (as in the reference image) */
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* Internet Explorer 10+ */
+    display: flex;
+    align-items: flex-start;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    flex-grow: 1;
+    margin: 0 4px;
+    padding: 4px 0;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 
     .categories-scroll-area::-webkit-scrollbar {
-        display: none; /* Safari, Chrome, Opera */
-        /* height: 0; */ /* Alternatively, set height to 0 */
+        display: none;
     }
 
 .category-item-wrapper {
-    flex-shrink: 0; /* Prevents category items from shrinking */
-    margin-right: 8px; /* Spacing between category cards */
-    /* The CategoryFilterOption has width: 120px */
+    flex-shrink: 0;
+    margin-right: 8px;
 }
 
     .category-item-wrapper:last-child {
-        margin-right: 0; /* No margin for the last item */
+        margin-right: 0;
     }
-
-/* The CSS for CategoryFilterOption (.category-card, .category-image, .category-name) 
-is provided by you and should be globally available or imported.
-Ensure it's loaded for the CategorySlider component to display items correctly.
-*/
