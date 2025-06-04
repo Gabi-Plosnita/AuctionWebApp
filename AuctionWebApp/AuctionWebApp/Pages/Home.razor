@@ -8,9 +8,28 @@
 }
 else
 {
-	<a href="/admin/login">Admin Login</a>
-	<br />
-	<a href="/driver/login">Driver Login</a>
-	<br />
-	<a href="/user/login">User Login</a>
+    <div class="login-wrapper">
+        <MudContainer MaxWidth="MaxWidth.Large" Class="d-flex justify-space-around align-center login-container">
+            <MudPaper Class="login-card" Elevation="4">
+                <MudIcon Icon="@Icons.Material.Filled.AdminPanelSettings" Size="Size.Large" Class="login-icon" />
+                <MudButton Href="/admin/login" Variant="Variant.Filled" Color="Color.Primary">
+                    Login as Admin
+                </MudButton>
+            </MudPaper>
+
+            <MudPaper Class="login-card" Elevation="4">
+                <MudIcon Icon="@Icons.Material.Filled.LocalShipping" Size="Size.Large" Class="login-icon" />
+                <MudButton Href="/driver/login" Variant="Variant.Filled" Color="Color.Primary">
+                    Login as Driver
+                </MudButton>
+            </MudPaper>
+
+            <MudPaper Class="login-card" Elevation="4">
+                <MudIcon Icon="@Icons.Material.Filled.Person" Size="Size.Large" Class="login-icon" />
+                <MudButton Href="/user/login" Variant="Variant.Filled" Color="Color.Primary">
+                    Login as User
+                </MudButton>
+            </MudPaper>
+        </MudContainer>
+    </div>
 }
