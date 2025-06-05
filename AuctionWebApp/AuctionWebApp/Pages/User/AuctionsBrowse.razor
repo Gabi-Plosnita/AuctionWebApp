@@ -25,11 +25,19 @@ else
 
 		<CategorySlider CategoryViewModels="categoryViewModels" OnCategorySelected="HandleCategorySelectedAsync"></CategorySlider>
 
-		<div class="auction-list">
-			@foreach (var auction in previewAuctionViewModels)
-			{
-				<PreviewAuctionCardComponent Auction="auction" NavigationUrl="@($"user/auctions/{auction.Id}/bid")" />
-			}
-		</div>
+		@if (previewAuctionViewModels == null || previewAuctionViewModels.Count == 0)
+		{
+			<p class="text-center my-20 fs-3">
+				No auctions available at the moment.
+			</p>
+		}
+		{
+			<div class="auction-list">
+				@foreach (var auction in previewAuctionViewModels)
+				{
+					<PreviewAuctionCardComponent Auction="auction" NavigationUrl="@($"user/auctions/{auction.Id}/bid")" />
+				}
+			</div>
+		}
 	}
 }
