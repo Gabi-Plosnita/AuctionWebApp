@@ -3,11 +3,11 @@ using AuctionWebApp.Helpers;
 using AuctionWebApp.Services;
 using AuctionWebApp.ViewModels;
 using Microsoft.AspNetCore.Components;
+using MudBlazor;
 
 namespace AuctionWebApp.Pages;
 
-public partial class AuctionsBrowse(IAuctionService AuctionService,
-									ICategoryService CategoryService) : ComponentBase
+public partial class AuctionsBrowse(IAuctionService AuctionService, ICategoryService CategoryService) : ComponentBase
 {
 	private List<CategoryViewModel> categoryViewModels = new();
 
@@ -17,8 +17,6 @@ public partial class AuctionsBrowse(IAuctionService AuctionService,
 	{
 		Status = AuctionStatus.InProgress,
 	};
-
-	private CategoryViewModel? selectedCategory = null;
 
 	bool isLoading = true;
 
@@ -63,5 +61,22 @@ public partial class AuctionsBrowse(IAuctionService AuctionService,
 		previewAuctionViewModels = auctionsResult.Data.Items.ToList();
 
 		return auctionsResult;
+	}
+
+	private async Task HandleCategorySelectedAsync(int categoryId)
+	{
+		filterViewModel.CategoryId = categoryId;
+		isLoading = true;
+		showErrorComponent = false;
+		var auctionsResult = await AuctionService.GetByFilterAsync(filterViewModel);
+		if (auctionsResult.HasErrors || auctionsResult.Data == null)
+		{
+			showErrorComponent = true;
+			isLoading = false;
+			return;
+		}
+		previewAuctionViewModels = auctionsResult.Data.Items.ToList();
+		isLoading = false;
+		StateHasChanged();
 	}
 }

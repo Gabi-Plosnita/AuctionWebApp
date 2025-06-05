@@ -23,7 +23,7 @@ else
 	{
 		<UserNavigationBarComponent></UserNavigationBarComponent>
 
-		<CategorySlider CategoryViewModels="categoryViewModels"></CategorySlider>
+		<CategorySlider CategoryViewModels="categoryViewModels" OnCategorySelected="HandleCategorySelectedAsync"></CategorySlider>
 
 		<div class="auction-list">
 			@foreach (var auction in previewAuctionViewModels)

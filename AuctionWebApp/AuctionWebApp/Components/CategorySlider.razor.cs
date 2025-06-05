@@ -4,13 +4,13 @@ using Microsoft.JSInterop;
 
 namespace AuctionWebApp.Components
 {
-	public partial class CategorySlider : ComponentBase
+	public partial class CategorySlider(IJSRuntime JSRuntime) : ComponentBase
 	{
 		[Parameter]
 		public List<CategoryViewModel> CategoryViewModels { get; set; } = new List<CategoryViewModel>();
 
-		[Inject]
-		protected IJSRuntime JSRuntime { get; set; } = default!;
+		[Parameter]
+		public EventCallback<int> OnCategorySelected { get; set; }
 
 		protected ElementReference scrollableDiv;
 		protected bool disableLeftScroll = true;
@@ -79,8 +79,7 @@ namespace AuctionWebApp.Components
 
 		protected async Task HandleCategorySelectionAsync(CategoryViewModel selectedCategory)
 		{
-			// update auctions //
-			await Task.CompletedTask;
+			await OnCategorySelected.InvokeAsync(selectedCategory.Id);
 		}
 
 		private class ScrollProperties
