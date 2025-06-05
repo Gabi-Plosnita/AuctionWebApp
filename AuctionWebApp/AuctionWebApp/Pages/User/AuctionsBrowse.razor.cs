@@ -3,7 +3,6 @@ using AuctionWebApp.Helpers;
 using AuctionWebApp.Services;
 using AuctionWebApp.ViewModels;
 using Microsoft.AspNetCore.Components;
-using MudBlazor;
 
 namespace AuctionWebApp.Pages;
 
@@ -17,6 +16,7 @@ public partial class AuctionsBrowse(IAuctionService AuctionService,
 
 	private AuctionFilterViewModel filterViewModel = new AuctionFilterViewModel
 	{
+		PageSize = 2,
 		Status = AuctionStatus.InProgress,
 	};
 
@@ -65,6 +65,7 @@ public partial class AuctionsBrowse(IAuctionService AuctionService,
 			return auctionsResult;
 		}
 		previewAuctionViewModels = auctionsResult.Data.Items.ToList();
+		totalPages = auctionsResult.Data.TotalPages;
 
 		return auctionsResult;
 	}
@@ -84,6 +85,7 @@ public partial class AuctionsBrowse(IAuctionService AuctionService,
 	private async Task HandleCategorySelectedAsync(int categoryId)
 	{
 		filterViewModel.CategoryId = categoryId;
+		ResetPagination();
 		isLoading = true;
 		showErrorComponent = false;
 		var auctionsResult = await AuctionService.GetByFilterAsync(filterViewModel);
@@ -94,7 +96,55 @@ public partial class AuctionsBrowse(IAuctionService AuctionService,
 			return;
 		}
 		previewAuctionViewModels = auctionsResult.Data.Items.ToList();
+		totalPages = auctionsResult.Data.TotalPages;
 		isLoading = false;
 		StateHasChanged();
+	}
+
+	// Pagination //
+
+	private int totalPages = 1;
+
+	private bool CanGoToPreviousPage => filterViewModel.Page > 1;
+	private bool CanGoToNextPage => filterViewModel.Page < totalPages;
+
+	private async Task NextPage()
+	{
+		if (!CanGoToNextPage) return;
+
+		filterViewModel.Page++;
+		await LoadPagedAuctionsAsync();
+	}
+
+	private async Task PreviousPage()
+	{
+		if (!CanGoToPreviousPage) return;
+
+		filterViewModel.Page--;
+		await LoadPagedAuctionsAsync();
+	}
+
+	private async Task LoadPagedAuctionsAsync()
+	{
+		isLoading = true;
+		showErrorComponent = false;
+
+		var result = await AuctionService.GetByFilterAsync(filterViewModel);
+		if (result.HasErrors || result.Data == null)
+		{
+			showErrorComponent = true;
+			isLoading = false;
+			return;
+		}
+
+		previewAuctionViewModels = result.Data.Items.ToList();
+		totalPages = result.Data.TotalPages;
+		isLoading = false;
+		StateHasChanged();
+	}
+	private void ResetPagination()
+	{
+		filterViewModel.Page = 1;
+		totalPages = 1;
 	}
 }

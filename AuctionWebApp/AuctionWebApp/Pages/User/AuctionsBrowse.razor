@@ -31,12 +31,19 @@ else
 				No auctions available at the moment.
 			</p>
 		}
+		else 
 		{
 			<div class="auction-list">
 				@foreach (var auction in previewAuctionViewModels)
 				{
 					<PreviewAuctionCardComponent Auction="auction" NavigationUrl="@($"user/auctions/{auction.Id}/bid")" />
 				}
+			</div>
+
+			<div class="auction-pagination">
+				<button class="pagination-button" @onclick="PreviousPage" disabled="@(!CanGoToPreviousPage)">Previous</button>
+				<span class="pagination-label">Page @filterViewModel.Page</span>
+				<button class="pagination-button" @onclick="NextPage" disabled="@(!CanGoToNextPage)">Next</button>
 			</div>
 		}
 	}

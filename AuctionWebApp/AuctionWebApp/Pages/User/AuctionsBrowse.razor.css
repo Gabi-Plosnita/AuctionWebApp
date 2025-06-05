@@ -8,3 +8,37 @@
     margin-top: 100px;
     margin-bottom: 100px;
 }
+
+.auction-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 40px auto 100px;
+    gap: 24px;
+}
+
+.pagination-label {
+    font-size: 18px;
+    font-weight: 500;
+    color: #333;
+}
+
+.pagination-button {
+    padding: 8px 16px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+    .pagination-button:hover:enabled {
+        background-color: #0056b3;
+    }
+
+    .pagination-button:disabled {
+        background-color: #cccccc;
+        cursor: not-allowed;
+    }
