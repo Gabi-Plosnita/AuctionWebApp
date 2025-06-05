@@ -1,0 +1,37 @@
+﻿.auction-card {
+    width: 220px;
+    height: auto;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    text-align: center;
+    background-color: #fff;
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+    cursor: pointer;
+}
+
+    .auction-card:hover {
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+        transform: translateY(-2px);
+    }
+
+.auction-image {
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-bottom: 12px;
+}
+
+.auction-title {
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+}
+
+.price {
+    font-size: 1rem;
+    color: #2e7d32;
+    font-weight: 500;
+}
