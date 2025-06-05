@@ -11,6 +11,9 @@ public class AuctionFilterViewModel
 	[Range(1, int.MaxValue, ErrorMessage = "SellerId must be a positive integer")]
 	public int? SellerId { get; set; }
 
+	[Range(1, int.MaxValue, ErrorMessage = "ExcludedSellerId must be a positive integer")]
+	public int? ExcludedSellerId { get; set; }
+
 	[Range(1, int.MaxValue, ErrorMessage = "BidderId must be a positive integer")]
 	public int? BidderId { get; set; }
 	public DriverFilterMode DriverFilterMode { get; set; } = DriverFilterMode.Ignore;

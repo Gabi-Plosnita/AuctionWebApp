@@ -8,6 +8,8 @@ public record AuctionFilterRequest
 
 	public int? SellerId { get; init; }
 
+	public int? ExcludedSellerId { get; init; }
+
 	public int? BidderId { get; init; }
 
 	public DriverFilterMode DriverFilterMode { get; init; } = DriverFilterMode.Ignore;

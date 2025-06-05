@@ -7,7 +7,9 @@ using MudBlazor;
 
 namespace AuctionWebApp.Pages;
 
-public partial class AuctionsBrowse(IAuctionService AuctionService, ICategoryService CategoryService) : ComponentBase
+public partial class AuctionsBrowse(IAuctionService AuctionService, 
+									ICategoryService CategoryService,
+									IAuthService AuthService) : ComponentBase
 {
 	private List<CategoryViewModel> categoryViewModels = new();
 
@@ -24,13 +26,17 @@ public partial class AuctionsBrowse(IAuctionService AuctionService, ICategorySer
 
 	protected override async Task OnInitializedAsync()
 	{
+		await SetExcludedSellerIdInAuctionFilterAsync();
+		if (showErrorComponent || !isLoading)
+			return;
+
 		var categoriesResult = await InitializeCategoriesAsync();
 		if (showErrorComponent || !isLoading)
 			return;
 
 		var auctionsResult = await InitializeAuctionsAsync();
 		if (showErrorComponent || !isLoading)
-			return;
+			return;	
 
 		isLoading = false;
 	}
@@ -61,6 +67,18 @@ public partial class AuctionsBrowse(IAuctionService AuctionService, ICategorySer
 		previewAuctionViewModels = auctionsResult.Data.Items.ToList();
 
 		return auctionsResult;
+	}
+
+	private async Task SetExcludedSellerIdInAuctionFilterAsync()
+	{
+		var authenticatedUserResult = await AuthService.GetAuthenticatedUserAsync();
+		if (authenticatedUserResult.HasErrors || authenticatedUserResult.Data == null)
+		{
+			showErrorComponent = true;
+			isLoading = false;
+			return;
+		}
+		filterViewModel.ExcludedSellerId = authenticatedUserResult.Data.Id;
 	}
 
 	private async Task HandleCategorySelectedAsync(int categoryId)
