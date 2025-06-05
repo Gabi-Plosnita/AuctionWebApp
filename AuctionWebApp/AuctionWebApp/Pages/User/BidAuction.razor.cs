@@ -6,7 +6,9 @@ using MudBlazor;
 
 namespace AuctionWebApp.Pages;
 
-public partial class BidAuction(IAuctionService AuctionService, ISnackbar Snackbar) : ComponentBase
+public partial class BidAuction(IAuctionService AuctionService,
+								IAuthService AuthService,
+								ISnackbar Snackbar) : ComponentBase
 {
 	[Parameter]
 	public int AuctionId { get; set; }
@@ -21,22 +23,15 @@ public partial class BidAuction(IAuctionService AuctionService, ISnackbar Snackb
 
 	protected override async Task OnInitializedAsync()
 	{
-		var auctionResult = await AuctionService.GetDetailedByIdAsync(AuctionId);
-		if (auctionResult.HasErrors)
-		{
-			showErrorComponent = true;
-			isLoading = false;
+		await InitializeAuctionAsync();
+		if (showErrorComponent || !isLoading)
 			return;
-		}
-		if (auctionResult.Data is null)
-		{
-			showErrorComponent = true;
-			isLoading = false;
-			return;
-		}
-		auction = auctionResult.Data;
-		bid.AuctionId = auction.Id;
 
+		await AuthenticateUserAsync();
+		if (showErrorComponent || !isLoading)
+			return;
+
+		bid.AuctionId = auction.Id;
 		bid = new CreateBidViewModel
 		{
 			AuctionId = auction.Id,
@@ -63,7 +58,31 @@ public partial class BidAuction(IAuctionService AuctionService, ISnackbar Snackb
 
 		Snackbar.ShowSuccess("Bid placed successfully!");
 
-		await OnInitializedAsync(); 
+		await OnInitializedAsync();
 	}
 
+	private async Task AuthenticateUserAsync()
+	{
+		var authenticatedUserResult = await AuthService.GetAuthenticatedUserAsync();
+		if (authenticatedUserResult.HasErrors
+			|| authenticatedUserResult.Data is null
+			|| authenticatedUserResult.Data.Id == auction.Seller.Id)
+		{
+			showErrorComponent = true;
+			isLoading = false;
+			return;
+		}
+	}
+
+	private async Task InitializeAuctionAsync()
+	{
+		var auctionResult = await AuctionService.GetDetailedByIdAsync(AuctionId);
+		if (auctionResult.HasErrors || auctionResult.Data is null)
+		{
+			showErrorComponent = true;
+			isLoading = false;
+			return;
+		}
+		auction = auctionResult.Data;
+	}
 }
