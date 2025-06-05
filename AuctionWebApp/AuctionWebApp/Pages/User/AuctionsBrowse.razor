@@ -24,5 +24,12 @@ else
 		<UserNavigationBarComponent></UserNavigationBarComponent>
 
 		<CategorySlider CategoryViewModels="categoryViewModels"></CategorySlider>
+
+		<div class="auction-list">
+			@foreach (var auction in previewAuctionViewModels)
+			{
+				<PreviewAuctionCardComponent Auction="auction" NavigationUrl="@($"user/auctions/{auction.Id}/bid")" />
+			}
+		</div>
 	}
 }
