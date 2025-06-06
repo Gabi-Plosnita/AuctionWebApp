@@ -40,8 +40,9 @@ else
 			}
 			else
 			{
-				<MudPaper Class="pa-6 mud-paper-custom" Style="max-width: 500px; width: 100%;">
-					<MudText Typo="Typo.h6" Class="mb-4 text-center">Create Stripe Connected Account</MudText>
+				<MudPaper Class="pa-6 mt-15 mud-paper-custom"
+						  Style="max-width: 500px; width: 100%; background-color: #f9fafc; border-radius: 12px; border: 1px solid #e0e0e0; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);">
+					<MudText Typo="Typo.h6" Class="mb-10 text-center">Create Stripe Connected Account</MudText>
 
 					<MudForm @ref="_form" Model="createConnectedStripeAccountViewModel">
 						<MudTextField T="string"
