@@ -20,6 +20,11 @@ public partial class SellerSettings(IUserService UserService,
 
 	protected override async Task OnInitializedAsync()
 	{
+		await LoadConnectedAccountDetailsAsync();
+	}
+	private async Task LoadConnectedAccountDetailsAsync()
+	{
+		isLoading = true;
 		var result = await UserService.GetStripeConnectedAccountDetailsAsync();
 		stripeConnectedAccountDetails = result.Data;
 		isLoading = false;
@@ -35,15 +40,17 @@ public partial class SellerSettings(IUserService UserService,
 		if (!_form.IsValid)
 			return;
 
+		isLoading = true;
 		var result = await UserService.CreateConnectedAccountAsync(createConnectedStripeAccountViewModel);
 
 		if (result.HasErrors)
 		{
 			Snackbar.ShowErrors(result.Errors);
+			isLoading = false;
 			return;
 		}
 
 		Snackbar.ShowSuccess("Stripe account created successfully.");
-		StateHasChanged();
+		await LoadConnectedAccountDetailsAsync();
 	}
 }
