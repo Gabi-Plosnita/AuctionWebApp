@@ -33,7 +33,7 @@ public static class ToastHelper
 		snackbar.Clear();
 
 		snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopCenter;
-		snackbar.Configuration.ShowCloseIcon = false;
+		snackbar.Configuration.ShowCloseIcon = true;
 		snackbar.Configuration.VisibleStateDuration = 3000; 
 		snackbar.Add(message, Severity.Success);
 	}
