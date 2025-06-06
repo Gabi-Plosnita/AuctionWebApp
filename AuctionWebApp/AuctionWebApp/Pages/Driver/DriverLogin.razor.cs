@@ -9,6 +9,8 @@ public partial class DriverLogin(IAuthService AuthService, NavigationManager Nav
 {
 	private string ReturnUrl { get; set; } = "/";
 
+	private string RegisterUrl { get; set; } = "/driver/register";
+
 	protected LoginViewModel LoginModel { get; set; } = new LoginViewModel();
 
 	protected async Task<Result> HandleDriverLogin(LoginViewModel model)
