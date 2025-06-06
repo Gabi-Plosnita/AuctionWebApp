@@ -1,0 +1,87 @@
+﻿@using AuctionWebApp.Enums
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
+@using AuctionWebApp.Components
+
+@namespace AuctionWebApp.Pages
+
+@page "/user/seller-settings"
+@attribute [Authorize(Roles = "User")]
+
+@if (isLoading)
+{
+	<MudProgressCircular Color="Color.Primary"
+						 Indeterminate="true"
+						 Class="d-flex mx-auto mt-12" />
+}
+else
+{
+
+	<UserNavigationBarComponent />
+
+	<div class="settings-flex">
+		<UserSettingsMenuComponent />
+
+		<div class="content-column">
+			<h1 class="text-center mt-15 mb-20">Seller Account Settings</h1>
+
+			@if (stripeConnectedAccountDetails != null)
+			{
+				<MudPaper Class="pa-6 mud-paper-custom" Style="max-width: 500px; width: 100%;">
+					<MudText Typo="Typo.h6" Class="mb-4 text-center">Connected Stripe Account</MudText>
+
+					<MudText><b>Account ID:</b> @stripeConnectedAccountDetails.AccountId</MudText>
+					<MudText><b>Business Name:</b> @(string.IsNullOrWhiteSpace(stripeConnectedAccountDetails.BusinessName) ? "Not provided" : stripeConnectedAccountDetails.BusinessName)</MudText>
+					<MudText><b>Email:</b> @(string.IsNullOrWhiteSpace(stripeConnectedAccountDetails.Email) ? "Not provided" : stripeConnectedAccountDetails.Email)</MudText>
+					<MudText><b>Country:</b> @stripeConnectedAccountDetails.Country</MudText>
+					<MudText><b>Charges Enabled:</b> @(stripeConnectedAccountDetails.ChargesEnabled ? "Yes" : "No")</MudText>
+					<MudText><b>Payouts Enabled:</b> @(stripeConnectedAccountDetails.PayoutsEnabled ? "Yes" : "No")</MudText>
+					<MudText><b>Details Submitted:</b> @(stripeConnectedAccountDetails.DetailsSubmitted ? "Yes" : "No")</MudText>
+				</MudPaper>
+			}
+			else
+			{
+				<MudPaper Class="pa-6 mud-paper-custom" Style="max-width: 500px; width: 100%;">
+					<MudText Typo="Typo.h6" Class="mb-4 text-center">Create Stripe Connected Account</MudText>
+
+					<MudForm @ref="_form" Model="createConnectedStripeAccountViewModel">
+						<MudTextField T="string"
+									  Label="Email"
+									  For="@(() => createConnectedStripeAccountViewModel.Email)"
+									  @bind-Value="createConnectedStripeAccountViewModel.Email"
+									  Required="true"
+									  Variant="Variant.Filled"
+									  Margin="Margin.Dense"
+									  Class="mb-4" />
+
+						<MudTextField T="string"
+									  Label="Country (e.g., US)"
+									  For="@(() => createConnectedStripeAccountViewModel.Country)"
+									  @bind-Value="createConnectedStripeAccountViewModel.Country"
+									  Required="true"
+									  Variant="Variant.Filled"
+									  Margin="Margin.Dense"
+									  Class="mb-4" />
+
+						<MudTextField T="string"
+									  Label="Currency (e.g., USD)"
+									  For="@(() => createConnectedStripeAccountViewModel.Currency)"
+									  @bind-Value="createConnectedStripeAccountViewModel.Currency"
+									  Required="true"
+									  Variant="Variant.Filled"
+									  Margin="Margin.Dense"
+									  Class="mb-4" />
+
+						<MudButton Color="Color.Primary"
+								   Variant="Variant.Filled"
+								   OnClick="CreateConnectedAccountAsync"
+								   FullWidth="true"
+								   Class="mt-4">
+							Create Account
+						</MudButton>
+					</MudForm>
+				</MudPaper>
+			}
+		</div>
+	</div>
+}
