@@ -1,6 +1,6 @@
 ﻿.settings-flex {
     display: flex;
-    height: calc(100vh - 200px);
+    height: calc(100vh - 120px);
 }
 
 .menu-column {
@@ -10,8 +10,8 @@
 .content-column {
     width: 90%;
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    flex-direction: column;
+    align-items: center;
 }
 
 .mud-paper-custom {
