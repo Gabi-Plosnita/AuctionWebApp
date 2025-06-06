@@ -14,19 +14,51 @@ public partial class CreateAuction(IAuctionService AuctionService,
 								   ISnackbar Snackbar,
 								   IJSRuntime JSRuntime) : ComponentBase
 {
-	private readonly CreateAuctionViewModel _model = new() 
+	private CreateAuctionViewModel _model = new() 
 	{ 
 		EndTime = DateTime.Now.AddDays(7), 
 		StartingPrice = 1,
 		MinBidIncrement = 1,
 	};
+
 	private readonly Dictionary<int, string> _imagePreviews = new();
+
 	private int _currentImageIndex;
 
-	private async Task HandleValidSubmit()
+	private EditContext _editContext;
+
+	protected override void OnInitialized()
 	{
-		var filesToUpload = _model.Images.Values.ToList();
-		Console.WriteLine($"Form submitted successfully with {filesToUpload.Count} images!");
+		_editContext = new EditContext(_model);
+	}
+
+	private async Task HandleValidSubmitAsync()
+	{
+		var result = await AuctionService.CreateAsync(_model);
+		if (result.HasErrors)
+		{
+			Snackbar.ShowErrors(result.Errors);
+			return;
+		}
+
+		Snackbar.ShowSuccess("Auction created successfully!");
+
+		ResetForm();
+		StateHasChanged();
+	}
+
+	private void ResetForm()
+	{
+		_model = new CreateAuctionViewModel
+		{
+			EndTime = DateTime.Now.AddDays(7),
+			StartingPrice = 1,
+			MinBidIncrement = 1,
+		};
+
+		_editContext = new EditContext(_model);
+
+		_imagePreviews.Clear();
 	}
 
 	private async Task OpenFileExplorer(int index)
@@ -86,4 +118,6 @@ public partial class CreateAuction(IAuctionService AuctionService,
 		_model.Images.Remove(index);
 		_imagePreviews.Remove(index);
 	}
+
+
 }
