@@ -1,0 +1,10 @@
+﻿@using AuctionWebApp.Components
+@using Microsoft.AspNetCore.Authorization
+
+@namespace AuctionWebApp.Pages
+
+@page "/user/my-listings/create"
+@attribute [Authorize(Roles = "User")]
+
+
+
