@@ -11,5 +11,6 @@ public class StripeProfile : Profile
 		CreateMap<CreateAccountLinkViewModel, CreateAccountLinkRequest>();
 		CreateMap<CreateConnectedStripeAccountViewModel, CreateConnectedStripeAccountRequest>();
 		CreateMap<CreateStripeCustomerAccountViewModel, CreateStripeCustomerAccountRequest>();
+		CreateMap<StripeConnectedAccountResponse, StripeConnectedAccountViewModel>();
 	}
 }

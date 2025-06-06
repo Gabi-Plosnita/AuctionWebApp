@@ -14,4 +14,6 @@ public interface IUserService
 	Task<Result<string>> GetAccountLinkAsync(CreateAccountLinkViewModel createLinkViewModel);
 
 	Task<Result<string>> CreateCustomerAccountAsync(CreateStripeCustomerAccountViewModel createCustomerAccountViewModel);
+
+	Task<Result<StripeConnectedAccountViewModel>> GetStripeConnectedAccountDetailsAsync();
 }

@@ -46,4 +46,16 @@ public class UserService(IUserHttpClient _userClient, IMapper _mapper) : IUserSe
 		var clientResult = await _userClient.CreateCustomerAccountAsync(createCustomerAccountRequest);
 		return clientResult;
 	}
+
+	public async Task<Result<StripeConnectedAccountViewModel>> GetStripeConnectedAccountDetailsAsync()
+	{
+		var clientResult = await _userClient.GetStripeConnectedAccountDetails();
+		var stripeConnectedAccountViewModel = _mapper.Map<StripeConnectedAccountViewModel>(clientResult.Data);
+		var serviceResult = new Result<StripeConnectedAccountViewModel>
+		{
+			Data = stripeConnectedAccountViewModel,
+			Errors = clientResult.Errors
+		};
+		return serviceResult;
+	}
 }
