@@ -9,14 +9,13 @@
 @attribute [Authorize(Roles = "User")]
 
 <div class="page-container">
-    <UserNavigationBarComponent />
+	<UserNavigationBarComponent />
 
-    <div class="settings-flex">
-        <div class="menu-column">
-            <UserSettingsMenuComponent />
-        </div>
-        <div class="content-column">
-            <h1 class="text-center mt-15 mb-20">Welcome to user dashboard</h1>
-        </div>
-    </div>
+	<div class="settings-flex">
+		<UserSettingsMenuComponent />
+
+		<div class="content-column">
+			<h1 class="text-center mt-15 mb-20">Welcome to user dashboard</h1>
+		</div>
+	</div>
 </div>
