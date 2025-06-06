@@ -19,9 +19,9 @@
                     @for (var i = 0; i < 4; i++)
                     {
                         var index = i;
-                        <div class="image-placeholder @(_model.Images.ContainsKey(index) ? "filled" : "")"
+                        <div class="image-placeholder @(_imageSlots.ContainsKey(index) ? "filled" : "")"
                              @onclick="() => OpenFileExplorer(index)">
-                            @if (_model.Images.ContainsKey(index))
+                            @if (_imageSlots.ContainsKey(index))
                             {
                                 <img src="@_imagePreviews[index]" alt="Auction Image" />
                                 <span class="delete-icon" @onclick:stopPropagation="true" @onclick="() => DeleteImage(index)">X</span>

@@ -14,15 +14,15 @@ public partial class CreateAuction(IAuctionService AuctionService,
 								   ISnackbar Snackbar,
 								   IJSRuntime JSRuntime) : ComponentBase
 {
-	private CreateAuctionViewModel _model = new() 
-	{ 
-		EndTime = DateTime.Now.AddDays(7), 
+	private CreateAuctionViewModel _model = new()
+	{
+		EndTime = DateTime.Now.AddDays(7),
 		StartingPrice = 1,
 		MinBidIncrement = 1,
 	};
 
+	private readonly Dictionary<int, IBrowserFile> _imageSlots = new();
 	private readonly Dictionary<int, string> _imagePreviews = new();
-
 	private int _currentImageIndex;
 
 	private EditContext _editContext;
@@ -34,6 +34,18 @@ public partial class CreateAuction(IAuctionService AuctionService,
 
 	private async Task HandleValidSubmitAsync()
 	{
+		if (_imageSlots.Count == 0)
+		{
+			Snackbar.ShowError("Please upload at least one image.");
+			return;
+		}
+
+		_model.Images = _imageSlots
+			.OrderBy(kvp => kvp.Key)
+			.Where(kvp => kvp.Value is not null)
+			.Select(kvp => kvp.Value)
+			.ToList();
+
 		var result = await AuctionService.CreateAsync(_model);
 		if (result.HasErrors)
 		{
@@ -42,7 +54,6 @@ public partial class CreateAuction(IAuctionService AuctionService,
 		}
 
 		Snackbar.ShowSuccess("Auction created successfully!");
-
 		ResetForm();
 		StateHasChanged();
 	}
@@ -56,9 +67,9 @@ public partial class CreateAuction(IAuctionService AuctionService,
 			MinBidIncrement = 1,
 		};
 
-		_editContext = new EditContext(_model);
-
+		_imageSlots.Clear();
 		_imagePreviews.Clear();
+		_editContext = new EditContext(_model);
 	}
 
 	private async Task OpenFileExplorer(int index)
@@ -96,7 +107,7 @@ public partial class CreateAuction(IAuctionService AuctionService,
 			return;
 		}
 
-		_model.Images[_currentImageIndex] = file;
+		_imageSlots[_currentImageIndex] = file;
 		_imagePreviews[_currentImageIndex] = readImageResult.Data;
 
 		StateHasChanged();
@@ -104,8 +115,8 @@ public partial class CreateAuction(IAuctionService AuctionService,
 
 	private void ResetImageAt(int index)
 	{
-		if (_model.Images.ContainsKey(index))
-			_model.Images.Remove(index);
+		if (_imageSlots.ContainsKey(index))
+			_imageSlots.Remove(index);
 
 		if (_imagePreviews.ContainsKey(index))
 			_imagePreviews.Remove(index);
@@ -115,9 +126,8 @@ public partial class CreateAuction(IAuctionService AuctionService,
 
 	private void DeleteImage(int index)
 	{
-		_model.Images.Remove(index);
+		_imageSlots.Remove(index);
 		_imagePreviews.Remove(index);
+		StateHasChanged();
 	}
-
-
 }

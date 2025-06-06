@@ -18,11 +18,10 @@ public class CreateAuctionViewModel
 	[DataType(DataType.MultilineText)]
 	public string Description { get; set; } = string.Empty;
 
-	[MinLength(1, ErrorMessage = "You must upload at least one image.")]
 	[MaxBrowserFileCount(5, ErrorMessage = "You can upload at most 5 images.")]
 	[MaxBrowserFileSize(2 * 1024 * 1024, ErrorMessage = "Each image must be 2 MB or smaller.")]
 	[AllowedBrowserExtensions(new[] { ".jpg", ".jpeg", ".png" }, ErrorMessage = "Only .jpg/.jpeg/.png files are allowed.")]
-	public Dictionary<int, IBrowserFile> Images { get; set; } = new();
+	public List<IBrowserFile> Images { get; set; } = new();
 
 	[Range(1, double.MaxValue, ErrorMessage = "StartingPrice must be at least 1")]
 	[DataType(DataType.Currency)]
