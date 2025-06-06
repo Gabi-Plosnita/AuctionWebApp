@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
+using System.ComponentModel.DataAnnotations;
 
 namespace AuctionWebApp.Pages;
 
@@ -13,9 +14,12 @@ public partial class CreateAuction(IJSRuntime JSRuntime) : ComponentBase
 
 	private async Task HandleValidSubmit()
 	{
+		// Now you can get the files from the dictionary's values
+		var filesToUpload = _model.Images.Values.ToList();
+
 		// This is where you would call your API to save the auction
 		// For example: await Http.PostAsJsonAsync("api/auctions", _model);
-		Console.WriteLine("Form submitted successfully!");
+		Console.WriteLine($"Form submitted successfully with {filesToUpload.Count} images!");
 	}
 
 	private async Task OpenFileExplorer(int index)
@@ -29,32 +33,13 @@ public partial class CreateAuction(IJSRuntime JSRuntime) : ComponentBase
 		var file = e.GetMultipleFiles().FirstOrDefault();
 		if (file == null) return;
 
-		// Basic validation before reading the file
-		var allowedExtensions = new[] { ".jpg", ".jpeg", ".png" };
-		var extension = Path.GetExtension(file.Name).ToLowerInvariant();
-		if (!allowedExtensions.Contains(extension))
-		{
-			// Handle error - maybe a notification service
-			return;
-		}
-		if (file.Size > 2 * 1024 * 1024)
-		{
-			// Handle error
-			return;
-		}
-
+		// You can add more robust validation here if needed
 		var buffer = new byte[file.Size];
 		await file.OpenReadStream(file.Size).ReadAsync(buffer);
 		var imageDataUrl = $"data:{file.ContentType};base64,{Convert.ToBase64String(buffer)}";
 
-		// Replace image if one already exists at this index
-		var existingFile = _model.Images.ElementAtOrDefault(_currentImageIndex);
-		if (existingFile != null)
-		{
-			_model.Images.RemoveAt(_currentImageIndex);
-		}
-
-		_model.Images.Insert(_currentImageIndex, file);
+		// Add or replace the file and its preview at the current index
+		_model.Images[_currentImageIndex] = file;
 		_imagePreviews[_currentImageIndex] = imageDataUrl;
 
 		StateHasChanged();
@@ -62,14 +47,47 @@ public partial class CreateAuction(IJSRuntime JSRuntime) : ComponentBase
 
 	private void DeleteImage(int index)
 	{
-		if (_imagePreviews.ContainsKey(index))
+		_model.Images.Remove(index);
+		_imagePreviews.Remove(index);
+	}
+
+	public class CreateAuctionViewModel
+	{
+		[Required(ErrorMessage = "Title is required")]
+		[StringLength(200, MinimumLength = 5, ErrorMessage = "Title must be between 5 and 200 characters")]
+		public string Title { get; set; } = string.Empty;
+
+		[Required(ErrorMessage = "Description is required")]
+		[StringLength(2000, MinimumLength = 10, ErrorMessage = "Description must be between 10 and 2000 characters")]
+		public string Description { get; set; } = string.Empty;
+
+		// Changed to a Dictionary to avoid index exceptions.
+		[EnsureOneImage(ErrorMessage = "You must upload at least one image.")]
+		public Dictionary<int, IBrowserFile> Images { get; set; } = new();
+
+		[Range(1, double.MaxValue, ErrorMessage = "StartingPrice must be at least 1")]
+		public decimal StartingPrice { get; set; } = 1.00m;
+
+		[Range(1, double.MaxValue, ErrorMessage = "MinBidIncrement must be at least 1")]
+		public decimal MinBidIncrement { get; set; } = 1.00m;
+
+		public DateTime EndTime { get; set; }
+
+		[Range(1, int.MaxValue, ErrorMessage = "CategoryId must be a positive integer")]
+		public int CategoryId { get; set; }
+	}
+
+	// Custom validation attribute to check if the dictionary has at least one image
+	public class EnsureOneImageAttribute : ValidationAttribute
+	{
+		protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
 		{
-			_imagePreviews.Remove(index);
-			var fileToRemove = _model.Images.ElementAtOrDefault(index);
-			if (fileToRemove != null)
+			var images = value as Dictionary<int, IBrowserFile>;
+			if (images == null || images.Count == 0)
 			{
-				_model.Images.Remove(fileToRemove);
+				return new ValidationResult(ErrorMessage);
 			}
+			return ValidationResult.Success;
 		}
 	}
 }

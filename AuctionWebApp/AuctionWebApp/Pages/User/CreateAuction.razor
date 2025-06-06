@@ -6,34 +6,35 @@
 @page "/user/my-listings/create"
 @attribute [Authorize(Roles = "User")]
 
-<div class="create-auction-container">
-    <div class="images-section-container">
-        <div class="images-container">
-            @for (var i = 0; i < 4; i++)
-            {
-                var index = i;
-                <div class="image-placeholder @(_imagePreviews.ContainsKey(index) ? "filled" : "")"
-                     @onclick="() => OpenFileExplorer(index)">
-                    @if (_imagePreviews.ContainsKey(index))
-                    {
-                        <img src="@_imagePreviews[index]" alt="Auction Image" />
-                        <span class="delete-icon" @onclick:stopPropagation="true" @onclick="() => DeleteImage(index)">X</span>
-                    }
-                    else
-                    {
-                        <span class="plus-icon">+</span>
-                    }
-                </div>
-            }
-        </div>
-        <InputFile OnChange="OnFileChanged" multiple style="display: none;" id="fileInput"
-                   accept=".jpg, .jpeg, .png" />
-        <ValidationMessage For="@(() => _model.Images)" />
-    </div>
+<EditForm Model="@_model" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
 
-    <div class="form-container">
-        <EditForm Model="@_model" OnValidSubmit="HandleValidSubmit">
-            <DataAnnotationsValidator />
+    <div class="create-auction-container">
+        <div class="images-section-container">
+            <div class="images-container">
+                @for (var i = 0; i < 4; i++)
+                {
+                    var index = i;
+                    <div class="image-placeholder @(_model.Images.ContainsKey(index) ? "filled" : "")"
+                         @onclick="() => OpenFileExplorer(index)">
+                        @if (_model.Images.ContainsKey(index))
+                        {
+                            <img src="@_imagePreviews[index]" alt="Auction Image" />
+                            <span class="delete-icon" @onclick:stopPropagation="true" @onclick="() => DeleteImage(index)">X</span>
+                        }
+                        else
+                        {
+                            <span class="plus-icon">+</span>
+                        }
+                    </div>
+                }
+            </div>
+            <InputFile OnChange="OnFileChanged" multiple style="display: none;" id="fileInput"
+                       accept=".jpg, .jpeg, .png" />
+            <ValidationMessage For="@(() => _model.Images)" />
+        </div>
+
+        <div class="form-container">
             <div class="form-column">
                 <label>Title</label>
                 <InputText @bind-Value="_model.Title" />
@@ -61,6 +62,6 @@
 
                 <button type="submit">Create Auction</button>
             </div>
-        </EditForm>
+        </div>
     </div>
-</div>
+</EditForm>
