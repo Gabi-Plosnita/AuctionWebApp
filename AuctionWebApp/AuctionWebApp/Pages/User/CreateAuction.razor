@@ -1,5 +1,6 @@
 ﻿@using AuctionWebApp.Components
 @using Microsoft.AspNetCore.Authorization
+@using MudBlazor
 
 @namespace AuctionWebApp.Pages
 
@@ -57,40 +58,62 @@ else
 
                     <div class="form-container">
                         <div class="form-column">
-                            <label>Title</label>
-                            <InputText @bind-Value="_model.Title" />
-                            <ValidationMessage For="@(() => _model.Title)" />
+                            <MudTextField T="string" 
+                                          @bind-Value="_model.Title"
+                                          Label="Title"
+                                          For="@(() => _model.Title)"
+                                          Variant="Variant.Outlined" 
+                                          Class="mb-3" />
 
-                            <label>Description</label>
-                            <InputTextArea @bind-Value="_model.Description" rows="5" />
-                            <ValidationMessage For="@(() => _model.Description)" />
+                            <MudTextField T="string" 
+                                          @bind-Value="_model.Description"
+                                          Label="Description"
+                                          For="@(() => _model.Description)"
+                                          Variant="Variant.Outlined" 
+                                          Lines="5" 
+                                          Class="mb-3" />
 
-                            <label>Starting Price</label>
-                            <InputNumber @bind-Value="_model.StartingPrice" />
-                            <ValidationMessage For="@(() => _model.StartingPrice)" />
+                            <MudNumericField T="decimal" 
+                                             @bind-Value="_model.StartingPrice"
+                                             Label="Starting Price"
+                                             For="@(() => _model.StartingPrice)"
+                                             Variant="Variant.Outlined" 
+                                             Min="0" 
+                                             Class="mb-3" />
 
-                            <label>Min Bid Increment</label>
-                            <InputNumber @bind-Value="_model.MinBidIncrement" />
-                            <ValidationMessage For="@(() => _model.MinBidIncrement)" />
+                            <MudNumericField T="decimal" 
+                                             @bind-Value="_model.MinBidIncrement"
+                                             Label="Min Bid Increment"
+                                             For="@(() => _model.MinBidIncrement)"
+                                             Variant="Variant.Outlined" 
+                                             Min="0" 
+                                             Class="mb-3" />
 
-                            <label>End Time</label>
-                            <InputDate @bind-Value="_model.EndTime" />
-                            <ValidationMessage For="@(() => _model.EndTime)" />
+                            <MudDatePicker Label="End Time"
+                                                 @bind-Value="_model.EndTime"
+                                                 Variant="Variant.Outlined" 
+                                                 MinDate="DateTime.Now" 
+                                                 Class="mb-3" />
 
-                            <MudSelect T="int"
+                            <MudSelect T="int" 
                                        @bind-Value="_model.CategoryId"
                                        For="@(() => _model.CategoryId)"
                                        Label="Category"
-                                       Variant="Variant.Outlined">
+                                       Variant="Variant.Outlined"
+                                       Class="mb-3">
                                 @foreach (var category in _categories)
                                 {
                                     <MudSelectItem Value="@category.Id">@category.Name</MudSelectItem>
                                 }
                             </MudSelect>
 
-                            <button type="submit">Create Auction</button>
+                            <MudButton ButtonType="ButtonType.Submit" 
+                                       Variant="Variant.Filled" 
+                                       Color="Color.Primary" 
+                                       Size="Size.Large"
+                                       Class="mt-4">Create Auction</MudButton>
                         </div>
-                    </div>
+                        </div>
                 </div>
             </EditForm>
         </div>
