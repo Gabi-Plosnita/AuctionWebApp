@@ -6,70 +6,86 @@
 @page "/user/my-listings/create"
 @attribute [Authorize(Roles = "User")]
 
-<UserNavigationBarComponent></UserNavigationBarComponent>
-<h1 class="text-center mt-15 ">Create Auction</h1>
+@if (isLoading)
+{
+    <MudProgressCircular Color="Color.Primary"
+                         Indeterminate="true"
+                         Class="d-flex mx-auto mt-12" />
+}
+else
+{
+    @if(showErrorComponent)
+    {
+        <ErrorComponent></ErrorComponent>
+    }
+    else
+    {
+        <UserNavigationBarComponent></UserNavigationBarComponent>
+        <h1 class="text-center mt-15 ">Create Auction</h1>
 
-<div class="mt-10 mb-10">
-    <EditForm Model="@_model" OnValidSubmit="HandleValidSubmitAsync">
-        <DataAnnotationsValidator />
+        <div class="mt-10 mb-10">
+            <EditForm Model="@_model" OnValidSubmit="HandleValidSubmitAsync">
+                <DataAnnotationsValidator />
 
-        <div class="create-auction-container">
-            <div class="images-section-container">
-                <div class="images-container">
-                    @for (var i = 0; i < 4; i++)
-                    {
-                        var index = i;
-                        <div class="image-placeholder @(_imageSlots.ContainsKey(index) ? "filled" : "")"
-                             @onclick="() => OpenFileExplorer(index)">
-                            @if (_imageSlots.ContainsKey(index))
+                <div class="create-auction-container">
+                    <div class="images-section-container">
+                        <div class="images-container">
+                            @for (var i = 0; i < 4; i++)
                             {
-                                <img src="@_imagePreviews[index]" alt="Auction Image" />
-                                <span class="delete-icon" @onclick:stopPropagation="true" @onclick="() => DeleteImage(index)">X</span>
-                            }
-                            else
-                            {
-                                <span class="plus-icon">+</span>
+                                var index = i;
+                                <div class="image-placeholder @(_imageSlots.ContainsKey(index) ? "filled" : "")"
+                                     @onclick="() => OpenFileExplorer(index)">
+                                    @if (_imageSlots.ContainsKey(index))
+                                    {
+                                        <img src="@_imagePreviews[index]" alt="Auction Image" />
+                                        <span class="delete-icon" @onclick:stopPropagation="true" @onclick="() => DeleteImage(index)">X</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="plus-icon">+</span>
+                                    }
+                                </div>
+
+                                <InputFile OnChange="@((e) => OnFileChanged(e, index))"
+                                           style="display: none;"
+                                           id="@($"fileInput-{index}")"
+                                           accept=".jpg, .jpeg, .png" />
                             }
                         </div>
+                        <ValidationMessage For="@(() => _model.Images)" />
+                    </div>
 
-                        <InputFile OnChange="@((e) => OnFileChanged(e, index))"
-                                   style="display: none;"
-                                   id="@($"fileInput-{index}")"
-                                   accept=".jpg, .jpeg, .png" />
-                    }
+                    <div class="form-container">
+                        <div class="form-column">
+                            <label>Title</label>
+                            <InputText @bind-Value="_model.Title" />
+                            <ValidationMessage For="@(() => _model.Title)" />
+
+                            <label>Description</label>
+                            <InputTextArea @bind-Value="_model.Description" rows="5" />
+                            <ValidationMessage For="@(() => _model.Description)" />
+
+                            <label>Starting Price</label>
+                            <InputNumber @bind-Value="_model.StartingPrice" />
+                            <ValidationMessage For="@(() => _model.StartingPrice)" />
+
+                            <label>Min Bid Increment</label>
+                            <InputNumber @bind-Value="_model.MinBidIncrement" />
+                            <ValidationMessage For="@(() => _model.MinBidIncrement)" />
+
+                            <label>End Time</label>
+                            <InputDate @bind-Value="_model.EndTime" />
+                            <ValidationMessage For="@(() => _model.EndTime)" />
+
+                            <label>Category</label>
+                            <InputNumber @bind-Value="_model.CategoryId" />
+                            <ValidationMessage For="@(() => _model.CategoryId)" />
+
+                            <button type="submit">Create Auction</button>
+                        </div>
+                    </div>
                 </div>
-                <ValidationMessage For="@(() => _model.Images)" />
-            </div>
-
-            <div class="form-container">
-                <div class="form-column">
-                    <label>Title</label>
-                    <InputText @bind-Value="_model.Title" />
-                    <ValidationMessage For="@(() => _model.Title)" />
-
-                    <label>Description</label>
-                    <InputTextArea @bind-Value="_model.Description" rows="5" />
-                    <ValidationMessage For="@(() => _model.Description)" />
-
-                    <label>Starting Price</label>
-                    <InputNumber @bind-Value="_model.StartingPrice" />
-                    <ValidationMessage For="@(() => _model.StartingPrice)" />
-
-                    <label>Min Bid Increment</label>
-                    <InputNumber @bind-Value="_model.MinBidIncrement" />
-                    <ValidationMessage For="@(() => _model.MinBidIncrement)" />
-
-                    <label>End Time</label>
-                    <InputDate @bind-Value="_model.EndTime" />
-                    <ValidationMessage For="@(() => _model.EndTime)" />
-
-                    <label>Category</label>
-                    <InputNumber @bind-Value="_model.CategoryId" />
-                    <ValidationMessage For="@(() => _model.CategoryId)" />
-
-                    <button type="submit">Create Auction</button>
-                </div>
-            </div>
+            </EditForm>
         </div>
-    </EditForm>
-</div>
+    }
+}

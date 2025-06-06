@@ -22,14 +22,35 @@ public partial class CreateAuction(IAuctionService AuctionService,
 	};
 
 	private readonly Dictionary<int, IBrowserFile> _imageSlots = new();
+
 	private readonly Dictionary<int, string> _imagePreviews = new();
- 
 
-	private EditContext _editContext;
+	private List<CategoryViewModel> _categories = new();
 
-	protected override void OnInitialized()
+	private bool isLoading = true;
+
+	private bool showErrorComponent = false;
+
+
+	protected override async Task OnInitializedAsync()
 	{
-		_editContext = new EditContext(_model);
+		await InitializeCategoriesAsync();
+		if (showErrorComponent || !isLoading)
+			return;
+
+		isLoading = false;
+	}
+
+	private async Task InitializeCategoriesAsync()
+	{
+		var categoriesResult = await CategoryService.GetAllAsync();
+		if (categoriesResult.HasErrors || categoriesResult.Data == null)
+		{
+			showErrorComponent = true;
+			isLoading = false;
+			return;
+		}
+		_categories = categoriesResult.Data.ToList();
 	}
 
 	private async Task HandleValidSubmitAsync()
@@ -69,7 +90,6 @@ public partial class CreateAuction(IAuctionService AuctionService,
 
 		_imageSlots.Clear();
 		_imagePreviews.Clear();
-		_editContext = new EditContext(_model);
 	}
 
 	private async Task OpenFileExplorer(int index)
