@@ -81,7 +81,7 @@ public partial class SellerSettings(IUserService UserService,
 
 		if(string.IsNullOrEmpty(createOnboardingLinkResult.Data))
 		{
-			Snackbar.ShowError("Failed to create Stripe account link.");
+			Snackbar.ShowError("Failed to create edit Stripe account link.");
 			isLoading = false;
 			return;
 		}
