@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace AuctionWebApp.Pages;
 
-public partial class UserListings(IAuthService AuthService) : ComponentBase
+public partial class UserListings(IAuthService AuthService, NavigationManager NavigationManager) : ComponentBase
 {
 	private string viewAuctionUrl = "user/auctions/{id}/view";
 
@@ -45,5 +45,10 @@ public partial class UserListings(IAuthService AuthService) : ComponentBase
 		myListingsAuctionFilter.SellerId = result.Data.Id;
 
 		isLoading = false;
+	}
+
+	private void NavigateToCreateAuctionPage()
+	{
+		NavigationManager.NavigateTo("/user/my-listings/create");
 	}
 }
