@@ -77,9 +77,16 @@ else
                             <InputDate @bind-Value="_model.EndTime" />
                             <ValidationMessage For="@(() => _model.EndTime)" />
 
-                            <label>Category</label>
-                            <InputNumber @bind-Value="_model.CategoryId" />
-                            <ValidationMessage For="@(() => _model.CategoryId)" />
+                            <MudSelect T="int"
+                                       @bind-Value="_model.CategoryId"
+                                       For="@(() => _model.CategoryId)"
+                                       Label="Category"
+                                       Variant="Variant.Outlined">
+                                @foreach (var category in _categories)
+                                {
+                                    <MudSelectItem Value="@category.Id">@category.Name</MudSelectItem>
+                                }
+                            </MudSelect>
 
                             <button type="submit">Create Auction</button>
                         </div>
