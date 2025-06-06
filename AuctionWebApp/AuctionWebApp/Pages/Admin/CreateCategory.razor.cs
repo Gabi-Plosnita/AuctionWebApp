@@ -14,45 +14,48 @@ public partial class CreateCategory(ICategoryService CategoryService,
 									ISnackbar Snackbar) : ComponentBase
 {
 	private MudForm? _form;
-
 	private CreateCategoryViewModel _model = new();
-
 	private string? _imagePreviewUrl;
-
 	private bool isSuperAdmin;
-
 	private bool isLoading = true;
 
 	protected override async Task OnInitializedAsync()
 	{
 		var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
 		var user = authState.User;
-
 		isSuperAdmin = user.IsInRole("SuperAdmin");
 		isLoading = false;
 	}
 
-	private async Task HandleImageChange(InputFileChangeEventArgs e)
+	private async Task HandleFileUpload(IBrowserFile file)
 	{
-		var result = FileValidator.ValidateFile(e.File, allowedExtensions: new[] { ".jpg", ".jpeg", ".png" }, maxSizeInMB: 2);
-		if(result.HasErrors)
+		var validationResult = FileValidator.ValidateFile(
+			file,
+			allowedExtensions: new[] { ".jpg", ".jpeg", ".png" },
+			maxSizeInMB: 2
+		);
+
+		if (validationResult.HasErrors)
 		{
-			Snackbar.ShowErrors(result.Errors);
+			Snackbar.ShowErrors(validationResult.Errors);
 			ResetImage();
 			return;
 		}
-		var readImageResult = await FileValidator.GetBase64ImagePreviewAsync(e.File, maxSizeInMB: 2);
-		if(readImageResult.HasErrors)
+
+		var readPreviewResult = await FileValidator.GetBase64ImagePreviewAsync(
+			file,
+			maxSizeInMB: 2
+		);
+
+		if (readPreviewResult.HasErrors)
 		{
-			Snackbar.ShowErrors(result.Errors);
+			Snackbar.ShowErrors(validationResult.Errors);
 			ResetImage();
 			return;
 		}
-		else
-		{
-			_imagePreviewUrl = readImageResult.Data;
-			_model.Image = e.File;
-		}
+
+		_imagePreviewUrl = readPreviewResult.Data;
+		_model.Image = file;
 	}
 
 	private async Task SubmitAsync()
