@@ -1,11 +1,18 @@
-﻿using AuctionWebApp.ViewModels;
+﻿using AuctionWebApp.Helpers;
+using AuctionWebApp.Services;
+using AuctionWebApp.ViewModels;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
+using MudBlazor;
 
 namespace AuctionWebApp.Pages;
 
-public partial class CreateAuction(IJSRuntime JSRuntime) : ComponentBase
+public partial class CreateAuction(IAuctionService AuctionService, 
+								   ICategoryService CategoryService,
+								   FileHandlerService FileValidator,
+								   ISnackbar Snackbar,
+								   IJSRuntime JSRuntime) : ComponentBase
 {
 	private readonly CreateAuctionViewModel _model = new() 
 	{ 
@@ -31,14 +38,45 @@ public partial class CreateAuction(IJSRuntime JSRuntime) : ComponentBase
 	private async Task OnFileChanged(InputFileChangeEventArgs e)
 	{
 		var file = e.GetMultipleFiles().FirstOrDefault();
-		if (file == null) return;
+		if (file == null)
+			return;
 
-		var buffer = new byte[file.Size];
-		await file.OpenReadStream(file.Size).ReadAsync(buffer);
-		var imageDataUrl = $"data:{file.ContentType};base64,{Convert.ToBase64String(buffer)}";
+		var result = FileValidator.ValidateFile(
+			file,
+			allowedExtensions: new[] { ".jpg", ".jpeg", ".png" },
+			maxSizeInMB: 2
+		);
+		if (result.HasErrors)
+		{
+			Snackbar.ShowErrors(result.Errors);
+			ResetImageAt(_currentImageIndex);
+			return;
+		}
+
+		var readImageResult = await FileValidator.GetBase64ImagePreviewAsync(
+			file,
+			maxSizeInMB: 2
+		);
+		if (readImageResult.HasErrors)
+		{
+			Snackbar.ShowErrors(readImageResult.Errors);
+			ResetImageAt(_currentImageIndex);
+			return;
+		}
 
 		_model.Images[_currentImageIndex] = file;
-		_imagePreviews[_currentImageIndex] = imageDataUrl;
+		_imagePreviews[_currentImageIndex] = readImageResult.Data;
+
+		StateHasChanged();
+	}
+
+	private void ResetImageAt(int index)
+	{
+		if (_model.Images.ContainsKey(index))
+			_model.Images.Remove(index);
+
+		if (_imagePreviews.ContainsKey(index))
+			_imagePreviews.Remove(index);
 
 		StateHasChanged();
 	}
