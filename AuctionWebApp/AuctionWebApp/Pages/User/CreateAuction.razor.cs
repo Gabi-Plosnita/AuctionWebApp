@@ -8,11 +8,11 @@ using MudBlazor;
 
 namespace AuctionWebApp.Pages;
 
-public partial class CreateAuction(IAuctionService AuctionService, 
-								   ICategoryService CategoryService,
-								   FileHandlerService FileValidator,
-								   ISnackbar Snackbar,
-								   IJSRuntime JSRuntime) : ComponentBase
+public partial class CreateAuction(IAuctionService AuctionService,
+								 ICategoryService CategoryService,
+								 FileHandlerService FileValidator,
+								 ISnackbar Snackbar,
+								 IJSRuntime JSRuntime) : ComponentBase
 {
 	private CreateAuctionViewModel _model = new()
 	{
@@ -23,7 +23,7 @@ public partial class CreateAuction(IAuctionService AuctionService,
 
 	private readonly Dictionary<int, IBrowserFile> _imageSlots = new();
 	private readonly Dictionary<int, string> _imagePreviews = new();
-	private int _currentImageIndex;
+ 
 
 	private EditContext _editContext;
 
@@ -74,11 +74,10 @@ public partial class CreateAuction(IAuctionService AuctionService,
 
 	private async Task OpenFileExplorer(int index)
 	{
-		_currentImageIndex = index;
-		await JSRuntime.InvokeVoidAsync("triggerFileClick", "fileInput");
+		var fileInputId = $"fileInput-{index}";
+		await JSRuntime.InvokeVoidAsync("triggerFileClick", fileInputId);
 	}
-
-	private async Task OnFileChanged(InputFileChangeEventArgs e)
+	private async Task OnFileChanged(InputFileChangeEventArgs e, int index)
 	{
 		var file = e.GetMultipleFiles().FirstOrDefault();
 		if (file == null)
@@ -92,7 +91,7 @@ public partial class CreateAuction(IAuctionService AuctionService,
 		if (result.HasErrors)
 		{
 			Snackbar.ShowErrors(result.Errors);
-			ResetImageAt(_currentImageIndex);
+			ResetImageAt(index); 
 			return;
 		}
 
@@ -103,12 +102,12 @@ public partial class CreateAuction(IAuctionService AuctionService,
 		if (readImageResult.HasErrors)
 		{
 			Snackbar.ShowErrors(readImageResult.Errors);
-			ResetImageAt(_currentImageIndex);
+			ResetImageAt(index); 
 			return;
 		}
 
-		_imageSlots[_currentImageIndex] = file;
-		_imagePreviews[_currentImageIndex] = readImageResult.Data;
+		_imageSlots[index] = file;
+		_imagePreviews[index] = readImageResult.Data;
 
 		StateHasChanged();
 	}

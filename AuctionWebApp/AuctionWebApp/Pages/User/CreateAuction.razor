@@ -31,10 +31,13 @@
                                 <span class="plus-icon">+</span>
                             }
                         </div>
+
+                        <InputFile OnChange="@((e) => OnFileChanged(e, index))"
+                                   style="display: none;"
+                                   id="@($"fileInput-{index}")"
+                                   accept=".jpg, .jpeg, .png" />
                     }
                 </div>
-                <InputFile OnChange="OnFileChanged" multiple style="display: none;" id="fileInput"
-                           accept=".jpg, .jpeg, .png" />
                 <ValidationMessage For="@(() => _model.Images)" />
             </div>
 
