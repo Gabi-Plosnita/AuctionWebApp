@@ -1,4 +1,5 @@
 ﻿@using AuctionWebApp.Enums
+@using AuctionWebApp.Helpers
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.Authorization
 @using AuctionWebApp.Components
@@ -55,23 +56,31 @@ else
 									  Margin="Margin.Dense"
 									  Class="mb-4" />
 
-						<MudTextField T="string"
-									  Label="Country (e.g., US)"
-									  For="@(() => createConnectedStripeAccountViewModel.Country)"
-									  @bind-Value="createConnectedStripeAccountViewModel.Country"
-									  Required="true"
-									  Variant="Variant.Filled"
-									  Margin="Margin.Dense"
-									  Class="mb-4" />
+						<MudSelect T="string"
+								   Label="Country"
+								   @bind-Value="createConnectedStripeAccountViewModel.Country"
+								   Required="true"
+								   Variant="Variant.Filled"
+								   Margin="Margin.Dense"
+								   Class="mb-4">
+							@foreach (var country in StripeAccountOptions.Countries)
+							{
+								<MudSelectItem Value="@country">@country</MudSelectItem>
+							}
+						</MudSelect>
 
-						<MudTextField T="string"
-									  Label="Currency (e.g., USD)"
-									  For="@(() => createConnectedStripeAccountViewModel.Currency)"
-									  @bind-Value="createConnectedStripeAccountViewModel.Currency"
-									  Required="true"
-									  Variant="Variant.Filled"
-									  Margin="Margin.Dense"
-									  Class="mb-4" />
+						<MudSelect T="string"
+								   Label="Currency"
+								   @bind-Value="createConnectedStripeAccountViewModel.Currency"
+								   Required="true"
+								   Variant="Variant.Filled"
+								   Margin="Margin.Dense"
+								   Class="mb-4">
+							@foreach (var currency in StripeAccountOptions.Currencies)
+							{
+								<MudSelectItem Value="@currency">@currency</MudSelectItem>
+							}
+						</MudSelect>
 
 						<MudButton Color="Color.Primary"
 								   Variant="Variant.Filled"
