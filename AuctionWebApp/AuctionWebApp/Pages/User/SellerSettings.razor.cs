@@ -3,11 +3,14 @@ using AuctionWebApp.Helpers;
 using AuctionWebApp.Services;
 using AuctionWebApp.ViewModels;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using MudBlazor;
 
 namespace AuctionWebApp.Pages;
 
 public partial class SellerSettings(IUserService UserService,
+									IJSRuntime JSRuntime,
+									NavigationManager NavigationManager,
 									ISnackbar Snackbar) : ComponentBase
 {
 	private StripeConnectedAccountViewModel? stripeConnectedAccountDetails;
@@ -52,5 +55,63 @@ public partial class SellerSettings(IUserService UserService,
 
 		Snackbar.ShowSuccess("Stripe account created successfully.");
 		await LoadConnectedAccountDetailsAsync();
+	}
+
+	private async Task EditAccountAsync()
+	{
+		if (stripeConnectedAccountDetails == null)
+			return;
+
+		var linkViewModel = CreateLink();
+		if (linkViewModel == null)
+		{
+			Snackbar.ShowError("Stripe account details are not available.");
+			return;
+		}
+
+		isLoading = true;
+		var createOnboardingLinkResult = await UserService.GetAccountLinkAsync(linkViewModel);
+
+		if (createOnboardingLinkResult.HasErrors)
+		{
+			Snackbar.ShowErrors(createOnboardingLinkResult.Errors);
+			isLoading = false;
+			return;
+		}
+
+		if(string.IsNullOrEmpty(createOnboardingLinkResult.Data))
+		{
+			Snackbar.ShowError("Failed to create Stripe account link.");
+			isLoading = false;
+			return;
+		}
+
+		var editUrl = createOnboardingLinkResult.Data;
+
+		try
+		{
+			await JSRuntime.InvokeVoidAsync("openInNewTab", editUrl);
+		}
+		catch (JSException ex)
+		{
+			Snackbar.ShowError($"Failed to open Stripe onboarding link: {ex.Message}");
+			isLoading = false;
+			return;
+		}
+		isLoading = false;
+	}
+
+	private CreateAccountLinkViewModel? CreateLink()
+	{
+		if (stripeConnectedAccountDetails == null || string.IsNullOrEmpty(stripeConnectedAccountDetails.AccountId))
+			return null;
+
+		return new CreateAccountLinkViewModel
+		{
+			ConnectedAccountId = stripeConnectedAccountDetails.AccountId,
+			ReturnUrl = NavigationManager.Uri,
+			RefreshUrl = NavigationManager.Uri,
+			LinkType = StripeLinkType.AccountOnboarding
+		};
 	}
 }
