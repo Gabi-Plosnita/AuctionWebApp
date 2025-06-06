@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Components.Forms;
 
 namespace AuctionWebApp.Components;
 
-public partial class LoginComponent : ComponentBase
+public partial class LoginComponent(NavigationManager NavigationManager) : ComponentBase
 {
 	[Parameter]
 	public string Title { get; set; } = "Login";
@@ -15,6 +15,9 @@ public partial class LoginComponent : ComponentBase
 
 	[Parameter]
 	public Func<LoginViewModel, Task<Result>> OnValidSubmit { get; set; }
+
+	[Parameter]
+	public string RegisterUrl { get; set; }
 
 	private List<string> LoginErrorMessages { get; set; } = new List<string>();
 
@@ -47,5 +50,10 @@ public partial class LoginComponent : ComponentBase
 	{
 		LoginErrorMessages.Clear();
 		showSummary = true;
+	}
+
+	private void OnRegisterClicked()
+	{
+		NavigationManager.NavigateTo(RegisterUrl ?? "/");
 	}
 }
