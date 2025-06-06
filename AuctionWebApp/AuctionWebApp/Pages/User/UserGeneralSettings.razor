@@ -28,9 +28,11 @@ else
 			<UserSettingsMenuComponent />
 
 			<div class="content-column">
+				<h1 class="text-center mt-15">General Settings</h1>
+
 				<MudPaper Class="pa-4 mt-15 mud-paper-custom"
 						  Style="max-width: 500px; width: 100%; background-color: #f9fafc; border-radius: 12px; border: 1px solid #e0e0e0; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);">
-					<MudText Typo="Typo.h6" Class="mb-10 text-center">General Settings</MudText>
+					<MudText Typo="Typo.h6" Class="mb-10 text-center">Edit settings</MudText>
 					<MudForm @ref="_editForm" Model="updateUserViewModel">
 						<MudTextField T="string"
 									  Label="First Name"

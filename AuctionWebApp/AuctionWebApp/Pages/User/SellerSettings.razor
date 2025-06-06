@@ -23,11 +23,12 @@ else
 		<UserSettingsMenuComponent />
 
 		<div class="content-column">
+			<h1 class="text-center mt-15">Seller Account Settings</h1>
+
 			@if (stripeConnectedAccountDetails != null)
 			{
 				<MudPaper Class="pa-6 mt-15 mud-paper-custom"
 						  Style="max-width: 500px; width: 100%; background-color: #f9fafc; border-radius: 12px; border: 1px solid #e0e0e0; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);">
-					<MudText Typo="Typo.h6" Class="mb-10 text-center">Seller Account Settings</MudText>
 
 					<MudText Class="mb-5"><b>Account ID:</b> @stripeConnectedAccountDetails.AccountId</MudText>
 					<MudText Class="mb-5"><b>Business Name:</b> @(string.IsNullOrWhiteSpace(stripeConnectedAccountDetails.BusinessName) ? "Not provided" : stripeConnectedAccountDetails.BusinessName)</MudText>
