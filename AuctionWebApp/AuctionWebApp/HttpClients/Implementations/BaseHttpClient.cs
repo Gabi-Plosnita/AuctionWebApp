@@ -47,9 +47,17 @@ public abstract class BaseHttpClient
 
 			try
 			{
-				var data = await response.Content.ReadFromJsonAsync<T>(_jsonOptions);
+				var rawContent = await response.Content.ReadAsStringAsync();
+
+				if (typeof(T) == typeof(string))
+				{
+					return new Result<T> { Data = (T)(object)rawContent };
+				}
+
+				var data = JsonSerializer.Deserialize<T>(rawContent, _jsonOptions);
 				if (data is null)
 					return new Result<T> { Errors = new List<string> { "Empty or invalid response body." } };
+
 				return new Result<T> { Data = data };
 			}
 			catch (Exception ex)
@@ -58,6 +66,7 @@ public abstract class BaseHttpClient
 			}
 		}
 	}
+
 
 
 	protected async Task<Result> SendRequestAsync(string url, HttpMethod method, object? body = null)
