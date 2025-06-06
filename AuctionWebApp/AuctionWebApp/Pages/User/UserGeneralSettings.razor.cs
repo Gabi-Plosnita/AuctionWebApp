@@ -6,7 +6,7 @@ using MudBlazor;
 
 namespace AuctionWebApp.Pages;
 
-public partial class UserSettings(IUserService UserService,
+public partial class UserGeneralSettings(IUserService UserService,
 							      IAuthService AuthService,
 							      ISnackbar Snackbar) : ComponentBase
 {
@@ -56,6 +56,13 @@ public partial class UserSettings(IUserService UserService,
 		updateUserViewModel.Address = userViewModel.Address;
 	}
 
+	private void SetUserViewModel()
+	{
+		userViewModel.FirstName = updateUserViewModel.FirstName;
+		userViewModel.LastName = updateUserViewModel.LastName;
+		userViewModel.Address = updateUserViewModel.Address;
+	}
+
 	private async Task UpdateAsync()
 	{
 		if (_editForm is null)
@@ -64,10 +71,16 @@ public partial class UserSettings(IUserService UserService,
 		await _editForm.Validate();
 		if (_editForm.IsValid)
 		{
-			userViewModel.FirstName = updateUserViewModel.FirstName;
-			userViewModel.LastName = updateUserViewModel.LastName;
-			userViewModel.Address = updateUserViewModel.Address;
+			var updateResult = await UserService.UpdateAsync(userViewModel.Id, updateUserViewModel);
+			if (updateResult.HasErrors)
+			{
+				Snackbar.ShowErrors(updateResult.Errors);
+				SetUpdateUserViewModel();
+				return;
+			}
+			
 			Snackbar.ShowSuccess("Profile updated successfully!");
+			SetUserViewModel();
 		}
 	}
 }
