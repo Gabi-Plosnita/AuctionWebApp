@@ -14,11 +14,7 @@ public partial class CreateAuction(IJSRuntime JSRuntime) : ComponentBase
 
 	private async Task HandleValidSubmit()
 	{
-		// Now you can get the files from the dictionary's values
 		var filesToUpload = _model.Images.Values.ToList();
-
-		// This is where you would call your API to save the auction
-		// For example: await Http.PostAsJsonAsync("api/auctions", _model);
 		Console.WriteLine($"Form submitted successfully with {filesToUpload.Count} images!");
 	}
 
@@ -33,12 +29,10 @@ public partial class CreateAuction(IJSRuntime JSRuntime) : ComponentBase
 		var file = e.GetMultipleFiles().FirstOrDefault();
 		if (file == null) return;
 
-		// You can add more robust validation here if needed
 		var buffer = new byte[file.Size];
 		await file.OpenReadStream(file.Size).ReadAsync(buffer);
 		var imageDataUrl = $"data:{file.ContentType};base64,{Convert.ToBase64String(buffer)}";
 
-		// Add or replace the file and its preview at the current index
 		_model.Images[_currentImageIndex] = file;
 		_imagePreviews[_currentImageIndex] = imageDataUrl;
 
@@ -61,7 +55,6 @@ public partial class CreateAuction(IJSRuntime JSRuntime) : ComponentBase
 		[StringLength(2000, MinimumLength = 10, ErrorMessage = "Description must be between 10 and 2000 characters")]
 		public string Description { get; set; } = string.Empty;
 
-		// Changed to a Dictionary to avoid index exceptions.
 		[EnsureOneImage(ErrorMessage = "You must upload at least one image.")]
 		public Dictionary<int, IBrowserFile> Images { get; set; } = new();
 
@@ -77,7 +70,6 @@ public partial class CreateAuction(IJSRuntime JSRuntime) : ComponentBase
 		public int CategoryId { get; set; }
 	}
 
-	// Custom validation attribute to check if the dictionary has at least one image
 	public class EnsureOneImageAttribute : ValidationAttribute
 	{
 		protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)

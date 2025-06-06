@@ -26,24 +26,33 @@
         font-weight: bold;
         color: #333;
         margin-bottom: -10px;
+        font-size: 1.1rem;
     }
 
     .form-column input,
-    .form-column textarea,
-    .form-column .input-group {
-        padding: 10px;
+    .form-column textarea {
         border: 1px solid #ccc;
         border-radius: 4px;
-        font-size: 1rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
         width: 100%;
         box-sizing: border-box;
         transition: border-color 0.3s, box-shadow 0.3s;
     }
 
+    .form-column input {
+        padding: 12px;
+        font-size: 1.1rem;
+    }
+
+    .form-column textarea {
+        padding: 10px;
+        font-size: 1rem;
+    }
+
         .form-column input:focus,
         .form-column textarea:focus {
             border-color: #007bff;
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
             outline: none;
         }
 
