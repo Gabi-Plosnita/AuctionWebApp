@@ -8,7 +8,7 @@ namespace AuctionWebApp.Pages;
 
 public partial class UserListings(IAuthService AuthService) : ComponentBase
 {
-	private string editAuctionUrl = "user/my-listings/{id}/edit";
+	private string viewAuctionUrl = "user/auctions/{id}/view";
 
 	private AuctionFilterViewModel myListingsAuctionFilter = new AuctionFilterViewModel
 	{
