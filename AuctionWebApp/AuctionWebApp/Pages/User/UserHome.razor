@@ -8,29 +8,13 @@
 @page "/user/home"
 @attribute [Authorize(Roles = "User")]
 
-@if(isLoading)
-{
-	<MudProgressCircular Color="Color.Primary"
-						 Indeterminate="true"
-						 Class="d-flex mx-auto mt-12" />
-}
-else
-{
-	@if(showErrorComponent)
-	{
-		<ErrorComponent></ErrorComponent>
-	}
-	else
-	{
-		<UserNavigationBarComponent></UserNavigationBarComponent>
-		<h1 class="text-center mt-15 mb-20">Welcome to user dashboard</h1>
+<UserNavigationBarComponent></UserNavigationBarComponent>
+<h1 class="text-center mt-15 mb-20">Welcome to user dashboard</h1>
 
-		<div class="d-flex justify-content-center">
-			<UserSettingsMenuComponent></UserSettingsMenuComponent>
-		</div>
+<div class="d-flex justify-content-center">
+	<UserSettingsMenuComponent></UserSettingsMenuComponent>
+</div>
 
-		<div class="d-flex justify-content-center mt-20">
-			<LogoutComponent />
-		</div>
-	}
-}
+<div class="d-flex justify-content-center mt-20">
+	<LogoutComponent />
+</div>

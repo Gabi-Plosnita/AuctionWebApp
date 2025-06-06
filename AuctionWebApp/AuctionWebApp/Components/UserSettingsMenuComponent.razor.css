@@ -1,6 +1,7 @@
 ﻿.vertical-menu {
     width: 240px;
-    background-color: #ffffff;
+    height: 100vh;
+    background-color: #f0f2f5;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -11,6 +12,7 @@
         list-style: none;
         margin: 0;
         padding: 0;
+        height: 100%;
     }
 
     .vertical-menu li {

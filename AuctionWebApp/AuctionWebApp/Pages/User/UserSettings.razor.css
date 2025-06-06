@@ -1,0 +1,22 @@
+﻿.settings-flex {
+    display: flex;
+    height: calc(100vh - 200px);
+}
+
+.menu-column {
+    width: 10%;
+}
+
+.content-column {
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.mud-paper-custom {
+    background-color: #f9fafc;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
