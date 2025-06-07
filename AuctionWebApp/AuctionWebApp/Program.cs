@@ -17,6 +17,7 @@ builder.Services.AddTransient<CookieHandler>();
 var apiBase = builder.Configuration["ApiBaseUrl"]!;
 var baseAddress = new Uri(apiBase);
 AppSettings.ApiUrl = apiBase;
+AppSettings.StripePublishableKey = builder.Configuration["Stripe:PublishableKey"] ?? string.Empty;
 
 builder.Services.AddScoped(sp =>
   new HttpClient { BaseAddress = new Uri(apiBase) }
