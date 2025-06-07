@@ -1,5 +1,4 @@
-﻿using AuctionWebApp.HttpClients;
-using AuctionWebApp.Services;
+﻿using AuctionWebApp.Services;
 using AuctionWebApp.ViewModels;
 using Microsoft.AspNetCore.Components;
 
@@ -11,35 +10,51 @@ public partial class CustomerSettings(IUserService UserService) : ComponentBase
 	private bool isCreateMode => paymentMethod == null;
 	private string paymentMethodTabName => isCreateMode ? "Add Payment Method" : "Update Payment Method";
 
-	private int activeTabIndex = 0;
-
 	private bool isLoading = true;
 
+	private bool isCardDetailsLoading = false;
+
+	private int _activePanelIndex;
+	private int ActivePanelIndex
+	{
+		get => _activePanelIndex;
+		set
+		{
+			if (_activePanelIndex != value)
+			{
+				_activePanelIndex = value;
+
+				if (_activePanelIndex == 0)
+				{
+					_ = InitializePaymentMethodAsync();
+				}
+			}
+		}
+	}
 
 	protected override async Task OnInitializedAsync()
 	{
-		await InitializePaymentMethodAsync();
+		isLoading = true;
+		await InitializePaymentMethodAsync(); 
+		isLoading = false;
 	}
 
 	private async Task InitializePaymentMethodAsync()
 	{
-		isLoading = true;
+		isCardDetailsLoading = true;
+		StateHasChanged(); 
+
 		var result = await UserService.GetStripePaymentMethodAsync();
 		if (result.HasErrors || result.Data == null)
 		{
-			isLoading = false;
-			return;
+			paymentMethod = null; 
 		}
-
-		paymentMethod = result.Data;
-		isLoading = false;
-	}
-
-	private async Task HandleTabChange(int index)
-	{
-		if (index == 0) 
+		else
 		{
-			await InitializePaymentMethodAsync();
+			paymentMethod = result.Data;
 		}
+
+		isCardDetailsLoading = false;
+		StateHasChanged(); 
 	}
 }

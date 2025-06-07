@@ -11,42 +11,44 @@
 
 @if (isLoading)
 {
-	<MudProgressCircular Color="Color.Primary"
-						 Indeterminate="true"
-						 Class="d-flex mx-auto mt-12" />
+    <MudProgressCircular Color="Color.Primary"
+                         Indeterminate="true"
+                         Class="d-flex mx-auto mt-12" />
 }
 else
 {
+    <UserNavigationBarComponent />
 
-	<UserNavigationBarComponent />
+    <div class="settings-flex">
+        <UserSettingsMenuComponent />
 
-	<div class="settings-flex">
-		<UserSettingsMenuComponent />
+        <div class="content-column">
+            <h1 class="text-center mt-15 mb-20">Customer Account Settings</h1>
 
-		<div class="content-column">
-			<h1 class="text-center mt-15 mb-20">Customer Account Settings</h1>
+            <MudTabs Style="max-width: 600px;" @bind-ActivePanelIndex="ActivePanelIndex">
+                <MudTabPanel Text="Card Details">
+                    @if (paymentMethod == null && !isCardDetailsLoading)
+                    {
+                        <p class="mt-10">You don't have any payment method</p>
+                    }
+                    else if (isCardDetailsLoading)
+                    {
+                        <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+                    }
+                    else
+                    {
+                        <div class="mt-10">
+                            <CardInformationComponent PaymentMethod="@paymentMethod" />
+                        </div>
+                    }
+                </MudTabPanel>
 
-			<MudTabs OnActivePanelIndexChanged="HandleTabChange" Style="max-width: 600px;">
-				<MudTabPanel Text="Card Details">
-					@if (paymentMethod == null)
-					{
-						<p class="mt-10">You don't have any payment method</p>
-					}
-					else
-					{
-						<div class="mt-10">
-							<CardInformationComponent PaymentMethod="@paymentMethod" />
-						</div>
-					}
-				</MudTabPanel>
-
-				<MudTabPanel Text="@paymentMethodTabName">
-					<div class="mt-10">
-						<PaymentMethodComponent IsCreateMode="@isCreateMode" />
-					</div>
-				</MudTabPanel>
-			</MudTabs>
-
-		</div>
-	</div>
+                <MudTabPanel Text="@paymentMethodTabName">
+                    <div class="mt-10">
+                        <PaymentMethodComponent IsCreateMode="@isCreateMode" />
+                    </div>
+                </MudTabPanel>
+            </MudTabs>
+        </div>
+    </div>
 }
