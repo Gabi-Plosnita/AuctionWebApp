@@ -1,0 +1,30 @@
+﻿<MudPaper Elevation="4"
+          Class="mx-auto mt-8 d-flex flex-column gap-4"
+          Style="max-width: 500px; padding: 50px">
+
+    <MudText Typo="Typo.h5"
+             Align="Align.Center"
+             Class="mb-2">
+        Enter Card Details
+    </MudText>
+
+    <MudTextField @bind-Value="cardholderName"
+                  Label="Cardholder Name"
+                  Variant="Variant.Outlined"
+                  Adornment="Adornment.Start"
+                  AdornmentIcon="@Icons.Material.Filled.Person"
+                  Class="w-100" />
+
+    <div id="card-element"
+         class="mud-input-control mud-input-control-outlined p-3"
+         style="border: 1px solid rgba(0,0,0,0.23); border-radius: 4px;">
+    </div>
+
+    <MudButton Variant="Variant.Filled"
+               Color="Color.Primary"
+               OnClick="Submit"
+               FullWidth="true"
+               Disabled="isLoading">
+        Submit
+    </MudButton>
+</MudPaper>
