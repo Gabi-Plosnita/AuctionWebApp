@@ -44,7 +44,7 @@ public partial class PaymentMethodComponent(IUserService UserService,
 			Snackbar.ShowError("Failed to create payment method");
 		}
 
-		ResetFields();
+		await ResetFieldsAsync();
 	}
 
 	private async Task CreatePaymentMethodAsync(string paymentMethodId)
@@ -85,9 +85,11 @@ public partial class PaymentMethodComponent(IUserService UserService,
 		Snackbar.ShowSuccess("Payment method updated successfully");
 	}
 
-	private void ResetFields()
+	private async Task ResetFieldsAsync()
 	{
 		cardholderName = string.Empty;
+		await JSRuntime.InvokeVoidAsync("stripePayment.clearCardElement");
+
 		isLoading = false;
 		StateHasChanged();
 	}
