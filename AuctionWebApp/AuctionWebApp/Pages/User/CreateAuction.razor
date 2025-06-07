@@ -9,113 +9,116 @@
 
 @if (isLoading)
 {
-    <MudProgressCircular Color="Color.Primary"
-                         Indeterminate="true"
-                         Class="d-flex mx-auto mt-12" />
+	<MudProgressCircular Color="Color.Primary"
+						 Indeterminate="true"
+						 Class="d-flex mx-auto mt-12" />
 }
 else
 {
-    @if(showErrorComponent)
-    {
-        <ErrorComponent></ErrorComponent>
-    }
-    else
-    {
-        <UserNavigationBarComponent></UserNavigationBarComponent>
-        <h1 class="text-center mt-15 ">Create Auction</h1>
+	@if (showErrorComponent)
+	{
+		<ErrorComponent></ErrorComponent>
+	}
+	else
+	{
+		<UserNavigationBarComponent></UserNavigationBarComponent>
+		<h1 class="text-center mt-15 ">Create Auction</h1>
 
-        <div class="mt-10 mb-10">
-            <EditForm Model="@_model" OnValidSubmit="HandleValidSubmitAsync">
-                <DataAnnotationsValidator />
+		<div class="mt-10 mb-10">
+			<EditForm Model="@_model" OnValidSubmit="HandleValidSubmitAsync">
+				<DataAnnotationsValidator />
 
-                <div class="create-auction-container">
-                    <div class="images-section-container">
-                        <div class="images-container">
-                            @for (var i = 0; i < 4; i++)
-                            {
-                                var index = i;
-                                <div class="image-placeholder @(_imageSlots.ContainsKey(index) ? "filled" : "")"
-                                     @onclick="() => OpenFileExplorer(index)">
-                                    @if (_imageSlots.ContainsKey(index))
-                                    {
-                                        <img src="@_imagePreviews[index]" alt="Auction Image" />
-                                        <span class="delete-icon" @onclick:stopPropagation="true" @onclick="() => DeleteImage(index)">X</span>
-                                    }
-                                    else
-                                    {
-                                        <span class="plus-icon">+</span>
-                                    }
-                                </div>
+				<div class="create-auction-container">
+					<div class="images-section-container">
+						<div class="images-container">
+							@for (var i = 0; i < 4; i++)
+							{
+								var index = i;
+								<div class="image-placeholder @(_imageSlots.ContainsKey(index) ? "filled" : "")"
+									 @onclick="() => OpenFileExplorer(index)">
+									@if (_imageSlots.ContainsKey(index))
+									{
+										<img src="@_imagePreviews[index]" alt="Auction Image" />
+										<span class="delete-icon" @onclick:stopPropagation="true" @onclick="() => DeleteImage(index)">X</span>
+									}
+									else
+									{
+										<span class="plus-icon">+</span>
+									}
+								</div>
 
-                                <InputFile OnChange="@((e) => OnFileChanged(e, index))"
-                                           style="display: none;"
-                                           id="@($"fileInput-{index}")"
-                                           accept=".jpg, .jpeg, .png" />
-                            }
-                        </div>
-                        <ValidationMessage For="@(() => _model.Images)" />
-                    </div>
+								<InputFile OnChange="@((e) => OnFileChanged(e, index))"
+										   style="display: none;"
+										   id="@($"fileInput-{index}")"
+										   accept=".jpg, .jpeg, .png" />
+							}
+						</div>
+						<ValidationMessage For="@(() => _model.Images)" />
+					</div>
 
-                    <div class="form-container">
-                        <div class="form-column">
-                            <MudTextField T="string" 
-                                          @bind-Value="_model.Title"
-                                          Label="Title"
-                                          For="@(() => _model.Title)"
-                                          Variant="Variant.Outlined" 
-                                          Class="mb-3" />
+					<div class="form-container">
+						<div class="form-column">
+							<MudTextField T="string"
+										  @bind-Value="_model.Title"
+										  Label="Title"
+										  For="@(() => _model.Title)"
+										  Variant="Variant.Outlined"
+										  Class="mb-3" />
 
-                            <MudTextField T="string" 
-                                          @bind-Value="_model.Description"
-                                          Label="Description"
-                                          For="@(() => _model.Description)"
-                                          Variant="Variant.Outlined" 
-                                          Lines="5" 
-                                          Class="mb-3" />
+							<MudTextField T="string"
+										  @bind-Value="_model.Description"
+										  Label="Description"
+										  For="@(() => _model.Description)"
+										  Variant="Variant.Outlined"
+										  Lines="5"
+										  Class="mb-3" />
 
-                            <MudNumericField T="decimal" 
-                                             @bind-Value="_model.StartingPrice"
-                                             Label="Starting Price"
-                                             For="@(() => _model.StartingPrice)"
-                                             Variant="Variant.Outlined" 
-                                             Min="0" 
-                                             Class="mb-3" />
+							<MudNumericField T="decimal"
+											 @bind-Value="_model.StartingPrice"
+											 Label="Starting Price"
+											 For="@(() => _model.StartingPrice)"
+											 Variant="Variant.Outlined"
+											 Min="0"
+											 Class="mb-3" />
 
-                            <MudNumericField T="decimal" 
-                                             @bind-Value="_model.MinBidIncrement"
-                                             Label="Min Bid Increment"
-                                             For="@(() => _model.MinBidIncrement)"
-                                             Variant="Variant.Outlined" 
-                                             Min="0" 
-                                             Class="mb-3" />
+							<MudNumericField T="decimal"
+											 @bind-Value="_model.MinBidIncrement"
+											 Label="Min Bid Increment"
+											 For="@(() => _model.MinBidIncrement)"
+											 Variant="Variant.Outlined"
+											 Min="0"
+											 Class="mb-3" />
 
-                            <MudDatePicker Label="End Time"
-                                                 @bind-Value="_model.EndTime"
-                                                 Variant="Variant.Outlined" 
-                                                 MinDate="DateTime.Now" 
-                                                 Class="mb-3" />
+							<MudDatePicker T="DateTime?"
+										   Label="End Time"
+										   @bind-Date="_model.EndTime"
+										   DateExpression="@(() => _model.EndTime)"
+										   Required="true"
+										   Variant="Variant.Outlined"
+										   MinDate="DateTime.Now"
+										   Class="mb-3" />
 
-                            <MudSelect T="int" 
-                                       @bind-Value="_model.CategoryId"
-                                       For="@(() => _model.CategoryId)"
-                                       Label="Category"
-                                       Variant="Variant.Outlined"
-                                       Class="mb-3">
-                                @foreach (var category in _categories)
-                                {
-                                    <MudSelectItem Value="@category.Id">@category.Name</MudSelectItem>
-                                }
-                            </MudSelect>
+							<MudSelect T="int"
+									   @bind-Value="_model.CategoryId"
+									   For="@(() => _model.CategoryId)"
+									   Label="Category"
+									   Variant="Variant.Outlined"
+									   Class="mb-3">
+								@foreach (var category in _categories)
+								{
+									<MudSelectItem Value="@category.Id">@category.Name</MudSelectItem>
+								}
+							</MudSelect>
 
-                            <MudButton ButtonType="ButtonType.Submit" 
-                                       Variant="Variant.Filled" 
-                                       Color="Color.Primary" 
-                                       Size="Size.Large"
-                                       Class="mt-4">Create Auction</MudButton>
-                        </div>
-                        </div>
-                </div>
-            </EditForm>
-        </div>
-    }
+							<MudButton ButtonType="ButtonType.Submit"
+									   Variant="Variant.Filled"
+									   Color="Color.Primary"
+									   Size="Size.Large"
+									   Class="mt-4">Create Auction</MudButton>
+						</div>
+					</div>
+				</div>
+			</EditForm>
+		</div>
+	}
 }

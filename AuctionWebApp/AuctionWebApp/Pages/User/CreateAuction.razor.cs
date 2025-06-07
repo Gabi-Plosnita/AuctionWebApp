@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
 using MudBlazor;
+using System.Reflection;
 
 namespace AuctionWebApp.Pages;
 
@@ -59,6 +60,16 @@ public partial class CreateAuction(IAuctionService AuctionService,
 		{
 			Snackbar.ShowError("Please upload at least one image.");
 			return;
+		}
+
+		if (_model.EndTime is DateTime dt)
+		{
+			var dateOnly = dt.Date;
+			_model.EndTime = new DateTime(
+				dateOnly.Year, dateOnly.Month, dateOnly.Day,
+				23, 59, 0,
+				DateTimeKind.Utc
+			);
 		}
 
 		_model.Images = _imageSlots

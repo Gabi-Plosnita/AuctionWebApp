@@ -31,8 +31,9 @@ public class CreateAuctionViewModel
 	[DataType(DataType.Currency)]
 	public decimal MinBidIncrement { get; set; }
 
+	[Required(ErrorMessage = "EndTime is required")]
 	[FutureDateAttribute(ErrorMessage = "EndTime must be in the future")]
-	public DateTime EndTime { get; set; }
+	public DateTime? EndTime { get; set; }
 
 	[Range(1, int.MaxValue, ErrorMessage = "CategoryId must be a positive integer")]
 	public int CategoryId { get; set; }
