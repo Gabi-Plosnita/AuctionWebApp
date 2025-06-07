@@ -25,7 +25,7 @@ else
         <div class="content-column">
             <h1 class="text-center mt-15 mb-20">Customer Account Settings</h1>
 
-            <MudTabs Style="max-width: 600px;" @bind-ActivePanelIndex="ActivePanelIndex">
+            <MudTabs HideSlider="true" Centered="true" Style="width: 600px;" @bind-ActivePanelIndex="ActivePanelIndex">
                 <MudTabPanel Text="Card Details">
                     @if (paymentMethod == null && !isCardDetailsLoading)
                     {
@@ -33,11 +33,13 @@ else
                     }
                     else if (isCardDetailsLoading)
                     {
-                        <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+                        <MudProgressCircular Color="Color.Primary"
+                                             Indeterminate="true"
+                                             Class="d-flex mx-auto mt-12" />
                     }
                     else
                     {
-                        <div class="mt-10">
+                        <div class="mt-10 d-flex justify-content-center align-items-center">
                             <CardInformationComponent PaymentMethod="@paymentMethod" />
                         </div>
                     }
