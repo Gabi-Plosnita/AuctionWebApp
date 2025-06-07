@@ -1,0 +1,32 @@
+﻿@using AuctionWebApp.Enums
+@using AuctionWebApp.Helpers
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
+@using AuctionWebApp.Components
+
+@namespace AuctionWebApp.Pages
+
+@page "/user/customer-settings"
+@attribute [Authorize(Roles = "User")]
+
+@if (isLoading)
+{
+	<MudProgressCircular Color="Color.Primary"
+						 Indeterminate="true"
+						 Class="d-flex mx-auto mt-12" />
+}
+else
+{
+
+	<UserNavigationBarComponent />
+
+	<div class="settings-flex">
+		<UserSettingsMenuComponent />
+
+		<div class="content-column">
+			<h1 class="text-center mt-15">Customer Account Settings</h1>
+
+			<CardInformationComponent PaymentMethod="@paymentMethod" />
+		</div>
+	</div>
+}
