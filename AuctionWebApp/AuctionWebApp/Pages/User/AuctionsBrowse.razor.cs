@@ -16,7 +16,7 @@ public partial class AuctionsBrowse(IAuctionService AuctionService,
 
 	private AuctionFilterViewModel filterViewModel = new AuctionFilterViewModel
 	{
-		PageSize = 2,
+		PageSize = 12,
 		Status = AuctionStatus.InProgress,
 	};
 
