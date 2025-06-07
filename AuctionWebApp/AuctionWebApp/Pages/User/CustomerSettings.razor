@@ -26,20 +26,24 @@ else
 		<div class="content-column">
 			<h1 class="text-center mt-15 mb-20">Customer Account Settings</h1>
 
-			<MudTabs OnActivePanelIndexChanged="HandleTabChange">
+			<MudTabs OnActivePanelIndexChanged="HandleTabChange" Style="max-width: 600px;">
 				<MudTabPanel Text="Card Details">
 					@if (paymentMethod == null)
 					{
-						<p>You don't have any payment method</p>
+						<p class="mt-10">You don't have any payment method</p>
 					}
 					else
 					{
-						<CardInformationComponent PaymentMethod="@paymentMethod" />
+						<div class="mt-10">
+							<CardInformationComponent PaymentMethod="@paymentMethod" />
+						</div>
 					}
 				</MudTabPanel>
 
 				<MudTabPanel Text="@paymentMethodTabName">
-					<PaymentMethodComponent IsCreateMode="@isCreateMode" />
+					<div class="mt-10">
+						<PaymentMethodComponent IsCreateMode="@isCreateMode" />
+					</div>
 				</MudTabPanel>
 			</MudTabs>
 
