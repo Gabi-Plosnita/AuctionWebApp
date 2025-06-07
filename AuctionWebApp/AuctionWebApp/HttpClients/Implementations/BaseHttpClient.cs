@@ -210,12 +210,20 @@ public abstract class BaseHttpClient
 				continue;
 			}
 
-			var str = value.ToString()!;
-			multipart.Add(new StringContent(str, Encoding.UTF8), prop.Name);
+			string strValue;
+			if (value is DateTime dt)
+				strValue = dt.ToString("o"); 
+			else if (value is DateTimeOffset dto)
+				strValue = dto.ToString("o");
+			else
+				strValue = value.ToString()!;
+
+			multipart.Add(new StringContent(strValue, Encoding.UTF8), prop.Name);
 		}
 
 		return multipart;
 	}
+
 
 	private void AddFilePart(MultipartFormDataContent multipart, string fieldName, IBrowserFile file)
 	{
