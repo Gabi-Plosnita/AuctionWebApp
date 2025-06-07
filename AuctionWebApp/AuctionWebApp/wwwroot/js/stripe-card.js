@@ -20,9 +20,7 @@
         const result = await stripe.createPaymentMethod({
             type: "card",
             card: card,
-            billing_details: {
-                name: cardholderName
-            }
+            billing_details: { name: cardholderName }
         });
 
         if (result.error) {
@@ -31,6 +29,13 @@
         }
 
         return { paymentMethodId: result.paymentMethod.id };
+    },
+
+    clearCardElement: function () {
+        const { card } = window.stripeInstance || {};
+        if (card && typeof card.clear === "function") {
+            card.clear();
+        }
     }
 };
 
