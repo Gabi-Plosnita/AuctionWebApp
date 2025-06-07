@@ -58,4 +58,16 @@ public class UserService(IUserHttpClient _userClient, IMapper _mapper) : IUserSe
 		};
 		return serviceResult;
 	}
+
+	public async Task<Result<StripePaymentMethodViewModel>> GetStripePaymentMethodAsync()
+	{
+		var clientResult = await _userClient.GetStripePaymentMethodAsync();
+		var stripePaymentMethodViewModel = _mapper.Map<StripePaymentMethodViewModel>(clientResult.Data);
+		var serviceResult = new Result<StripePaymentMethodViewModel>
+		{
+			Data = stripePaymentMethodViewModel,
+			Errors = clientResult.Errors
+		};
+		return serviceResult;
+	}
 }

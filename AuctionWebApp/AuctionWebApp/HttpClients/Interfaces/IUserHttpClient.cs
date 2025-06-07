@@ -16,4 +16,6 @@ public interface IUserHttpClient
 	Task<Result<string>> CreateCustomerAccountAsync(CreateStripeCustomerAccountRequest createCustomerAccountRequest);
 
 	Task<Result<StripeConnectedAccountResponse>> GetStripeConnectedAccountDetails();
+
+	Task<Result<StripePaymentMethodResponse>> GetStripePaymentMethodAsync();
 }

@@ -24,4 +24,7 @@ public class UserHttpClient : BaseHttpClient, IUserHttpClient
 
 	public async Task<Result<StripeConnectedAccountResponse>> GetStripeConnectedAccountDetails()
 		=> await SendRequestAsync<StripeConnectedAccountResponse>("api/users/connected-account-details", HttpMethod.Get);
+
+	public async Task<Result<StripePaymentMethodResponse>> GetStripePaymentMethodAsync()
+		=> await SendRequestAsync<StripePaymentMethodResponse>("api/users/customer-account/payment-method", HttpMethod.Get);
 }
