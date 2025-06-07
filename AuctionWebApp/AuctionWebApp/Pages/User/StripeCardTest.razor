@@ -1,0 +1,102 @@
+﻿@page "/user/stripe-card-test"
+@using AuctionWebApp.Services
+@using AuctionWebApp.ViewModels
+@inject IJSRuntime JS
+@inject IUserService UserService
+
+<MudPaper Elevation="4"
+          Class="mx-auto mt-8 d-flex flex-column gap-4"
+          Style="max-width: 500px; padding: 50px">
+
+    <MudText Typo="Typo.h5"
+             Align="Align.Center"
+             Class="mb-2">
+        Enter Card Details
+    </MudText>
+
+    <MudTextField @bind-Value="_cardholderName"
+                  Label="Cardholder Name"
+                  Variant="Variant.Outlined"
+                  Adornment="Adornment.Start"
+                  AdornmentIcon="@Icons.Material.Filled.Person"
+                  Class="w-100" />
+
+    <div id="card-element"
+         class="mud-input-control mud-input-control-outlined p-3"
+         style="border: 1px solid rgba(0,0,0,0.23); border-radius: 4px;">
+    </div>
+
+    <MudButton Variant="Variant.Filled"
+               Color="Color.Primary"
+               OnClick="Submit"
+               FullWidth="true"
+               Disabled="_isProcessing">
+        @_buttonText
+    </MudButton>
+
+    @if (!string.IsNullOrWhiteSpace(_errorMessage))
+    {
+        <MudText Color="Color.Error"
+                 Class="mt-2"
+                 Align="Align.Center">
+            @_errorMessage
+        </MudText>
+    }
+
+</MudPaper>
+
+@code {
+    private string _cardholderName = string.Empty;
+    private string _errorMessage = string.Empty;
+    private bool _isProcessing = false;
+    private string _buttonText = "Submit";
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("stripePayment.initialize", "pk_test_51R5GgoIKYxrH8ONeRVdmBuzeZ1ImsCFmNezJIcxBIVFExLDnLvwUUg2NVwXbfmHRFMQ7XG35lxGbraAWZRUamOy600uORdwdw8");
+        }
+    }
+
+    private async Task Submit()
+    {
+        _isProcessing = true;
+        _errorMessage = string.Empty;
+        _buttonText = "Processing...";
+
+        var result = await JS.InvokeAsync<StripeResult>("stripePayment.createPaymentMethod", _cardholderName);
+
+        if (!string.IsNullOrEmpty(result.PaymentMethodId))
+        {
+			var paymentMethod = new CreateStripeCustomerAccountViewModel
+				{
+					PaymentMethodId = result.PaymentMethodId,
+				};
+			var createCustomerAccountResult = await UserService.CreateCustomerAccountAsync(paymentMethod);
+            if(createCustomerAccountResult.HasErrors)
+            {
+                _errorMessage = "Failed to create customer account.";
+			}
+			if(createCustomerAccountResult.Data == null)
+            {
+				_errorMessage = "Failed to create customer account.";
+            }
+
+            _buttonText = "Submitted";
+        }
+        else
+        {
+            _errorMessage = result.Error;
+            _buttonText = "Submit";
+        }
+
+        _isProcessing = false;
+    }
+
+    private class StripeResult
+    {
+        public string PaymentMethodId { get; set; }
+        public string Error { get; set; }
+    }
+}
