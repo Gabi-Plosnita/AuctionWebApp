@@ -15,6 +15,8 @@ public interface IUserService
 
 	Task<Result<string>> CreateCustomerAccountAsync(CreateStripeCustomerAccountViewModel createCustomerAccountViewModel);
 
+	Task<Result> UpdatePaymentMethodAsync(UpdateStripePaymentMethodViewModel updatePaymentMethodViewModel);
+
 	Task<Result<StripeConnectedAccountViewModel>> GetStripeConnectedAccountDetailsAsync();
 
 	Task<Result<StripePaymentMethodViewModel>> GetStripePaymentMethodAsync();
