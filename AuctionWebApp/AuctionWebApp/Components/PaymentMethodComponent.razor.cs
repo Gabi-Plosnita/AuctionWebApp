@@ -89,6 +89,7 @@ public partial class PaymentMethodComponent(IUserService UserService,
 	{
 		cardholderName = string.Empty;
 		isLoading = false;
+		StateHasChanged();
 	}
 }
 
