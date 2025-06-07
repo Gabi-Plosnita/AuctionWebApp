@@ -94,7 +94,13 @@ public partial class SellerSettings(IUserService UserService,
 		}
 		catch (JSException ex)
 		{
-			Snackbar.ShowError($"Failed to open Stripe onboarding link: {ex.Message}");
+			Snackbar.ShowError($"Failed to open Stripe onboarding link");
+			isLoading = false;
+			return;
+		}
+		catch (Exception ex)
+		{
+			Snackbar.ShowError($"An unexpected error occurred");
 			isLoading = false;
 			return;
 		}
