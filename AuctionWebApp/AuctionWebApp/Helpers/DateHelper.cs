@@ -4,7 +4,7 @@ public static class DateHelper
 {
 	public static string GetRelativeTime(DateTime dateTime)
 	{
-		var span = DateTime.UtcNow - dateTime.ToUniversalTime();
+		var span = DateTime.UtcNow - dateTime;
 		if (span.TotalMinutes < 60)
 			return $"{(int)span.TotalMinutes} min ago";
 		if (span.TotalHours < 24)
