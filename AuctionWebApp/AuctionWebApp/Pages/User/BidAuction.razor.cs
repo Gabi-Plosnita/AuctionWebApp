@@ -1,14 +1,19 @@
 ﻿using AuctionWebApp.Helpers;
+using AuctionWebApp.Models;
 using AuctionWebApp.Services;
 using AuctionWebApp.ViewModels;
+using AutoMapper;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.SignalR.Client;
 using MudBlazor;
 
 namespace AuctionWebApp.Pages;
 
 public partial class BidAuction(IAuctionService AuctionService,
 								IAuthService AuthService,
-								ISnackbar Snackbar) : ComponentBase
+								ISnackbar Snackbar,
+								IMapper Mapper,
+								HubConnection Hub) : ComponentBase
 {
 	[Parameter]
 	public int AuctionId { get; set; }
@@ -31,11 +36,29 @@ public partial class BidAuction(IAuctionService AuctionService,
 		if (showErrorComponent || !isLoading)
 			return;
 
-		bid.AuctionId = auction.Id;
-		bid = new CreateBidViewModel
+		bid = new CreateBidViewModel { AuctionId = auction.Id };
+
+		Hub.On<BidResponse>("ReceiveBid", bidResp =>
 		{
-			AuctionId = auction.Id,
-		};
+			if (bidResp.AuctionId != AuctionId)
+				return;
+
+			var createdBid = Mapper.Map<BidViewModel>(bidResp);
+			UpdateAuctionAfterSuccessfulBid(createdBid);
+
+			StateHasChanged();
+
+			/*_ = InvokeAsync(() =>
+			{
+				var createdBid = Mapper.Map<BidViewModel>(bidResp);
+				UpdateAuctionAfterSuccessfulBid(createdBid);
+
+				StateHasChanged(); // delete this and see if still works
+			});*/
+		});
+
+		await Hub.StartAsync();
+		await Hub.SendAsync("JoinAuctionGroup", AuctionId);
 
 		isLoading = false;
 	}
@@ -58,7 +81,7 @@ public partial class BidAuction(IAuctionService AuctionService,
 
 		Snackbar.ShowSuccess("Bid placed successfully!");
 
-		await OnInitializedAsync();
+		UpdateAuctionAfterSuccessfulBid(result.Data);
 	}
 
 	private async Task AuthenticateUserAsync()
@@ -84,5 +107,24 @@ public partial class BidAuction(IAuctionService AuctionService,
 			return;
 		}
 		auction = auctionResult.Data;
+	}
+
+	public async ValueTask DisposeAsync()
+	{
+		if (Hub is not null)
+		{
+			await Hub.SendAsync("LeaveAuctionGroup", AuctionId);
+			await Hub.StopAsync();
+			await Hub.DisposeAsync();
+		}
+	}
+
+	private void UpdateAuctionAfterSuccessfulBid(BidViewModel createdBid)
+	{
+		bid = new CreateBidViewModel { AuctionId = auction.Id };
+		DetailedAuctionViewModel newAuction = new DetailedAuctionViewModel(auction);
+		newAuction.Bids.Add(createdBid);
+		newAuction.CurrentPrice = createdBid.Amount;
+		auction = newAuction;	
 	}
 }

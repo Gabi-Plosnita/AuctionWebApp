@@ -1,9 +1,12 @@
 using AuctionWebApp;
 using AuctionWebApp.HttpClients;
 using AuctionWebApp.Services;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Microsoft.AspNetCore.SignalR.Client;
+using Microsoft.JSInterop;
 using MudBlazor.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
@@ -83,5 +86,20 @@ builder.Services.AddMudServices();
 // Register authorization service //
 builder.Services.AddScoped<AuthenticationStateProvider, JwtAuthStateProvider>();
 builder.Services.AddAuthorizationCore();
+
+// Register HubConnection //
+builder.Services.AddTransient(sp =>
+{
+	var js = sp.GetRequiredService<IJSRuntime>();
+	var hubUrl = new Uri(new Uri(apiBase), "hubs/auction");
+
+	return new HubConnectionBuilder()
+		.WithUrl(hubUrl, options =>
+			options.AccessTokenProvider = () =>
+				js.InvokeAsync<string>("blazorExtensions.GetCookie", "access_token").AsTask()
+		)
+		.WithAutomaticReconnect()
+		.Build();
+});
 
 await builder.Build().RunAsync();

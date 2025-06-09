@@ -9,4 +9,13 @@ public class DriverViewModel
 	public Role Role { get; set; }
 
 	public string Email { get; set; } = string.Empty;
+
+	public DriverViewModel() { }
+
+	public DriverViewModel(DriverViewModel source)
+	{
+		Id = source.Id;
+		Role = source.Role;
+		Email = source.Email;
+	}
 }
