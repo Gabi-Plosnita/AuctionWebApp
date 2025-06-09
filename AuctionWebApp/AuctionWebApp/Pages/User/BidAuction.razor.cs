@@ -38,6 +38,11 @@ public partial class BidAuction(IAuctionService AuctionService,
 
 		bid = new CreateBidViewModel { AuctionId = auction.Id };
 
+		Hub.Reconnected += async _ =>
+		{
+			await Hub.SendAsync("JoinAuctionGroup", AuctionId);
+		};
+
 		Hub.On<BidResponse>("ReceiveBid", bidResp =>
 		{
 			if (bidResp.AuctionId != AuctionId)
@@ -45,16 +50,7 @@ public partial class BidAuction(IAuctionService AuctionService,
 
 			var createdBid = Mapper.Map<BidViewModel>(bidResp);
 			UpdateAuctionAfterSuccessfulBid(createdBid);
-
 			StateHasChanged();
-
-			/*_ = InvokeAsync(() =>
-			{
-				var createdBid = Mapper.Map<BidViewModel>(bidResp);
-				UpdateAuctionAfterSuccessfulBid(createdBid);
-
-				StateHasChanged(); // delete this and see if still works
-			});*/
 		});
 
 		await Hub.StartAsync();
