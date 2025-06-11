@@ -76,8 +76,6 @@ public partial class BidAuction(IAuctionService AuctionService,
 		}
 
 		Snackbar.ShowSuccess("Bid placed successfully!");
-
-		UpdateAuctionAfterSuccessfulBid(result.Data);
 	}
 
 	private async Task AuthenticateUserAsync()
