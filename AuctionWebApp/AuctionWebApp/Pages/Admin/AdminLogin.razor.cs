@@ -9,8 +9,6 @@ public partial class AdminLogin(IAuthService AuthService, NavigationManager Navi
 {
 	private string ReturnUrl { get; set; } = "/";
 
-	private string RegisterUrl { get; set; } = "/admin/register";
-
 	protected LoginViewModel LoginModel { get; set; } = new LoginViewModel();
 
 	protected async Task<Result> HandleAdminLogin(LoginViewModel model)
