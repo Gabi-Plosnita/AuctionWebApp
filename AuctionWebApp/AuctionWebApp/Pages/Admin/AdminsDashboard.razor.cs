@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Components.Authorization;
 
 namespace AuctionWebApp.Pages;
 
-public partial class AdminsDashboard(AuthenticationStateProvider AuthenticationStateProvider) : ComponentBase
+public partial class AdminsDashboard(AuthenticationStateProvider AuthenticationStateProvider,
+									 NavigationManager NavigationManager) : ComponentBase
 {
 	private bool isSuperAdmin;
 
@@ -16,5 +17,10 @@ public partial class AdminsDashboard(AuthenticationStateProvider AuthenticationS
 
 		isSuperAdmin = user.IsInRole("SuperAdmin");
 		isLoading = false;
+	}
+
+	private void NavigateToRegisterAdminPage()
+	{
+		NavigationManager.NavigateTo("admin/admins-dashboard/create");
 	}
 }

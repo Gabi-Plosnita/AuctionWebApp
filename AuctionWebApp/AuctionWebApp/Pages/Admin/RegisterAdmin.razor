@@ -1,0 +1,63 @@
+﻿@using AuctionWebApp.Components
+
+@namespace AuctionWebApp.Pages
+
+@page "/admin/admins-dashboard/create"
+
+@if (isLoading)
+{
+	<MudProgressCircular Color="Color.Primary"
+						 Indeterminate="true"
+						 Class="d-flex mx-auto mt-12" />
+}
+else
+{
+	@if(showErrorComponent)
+	{
+		<ErrorComponent></ErrorComponent>
+	}
+	else
+	{
+		<AdminNavigationBarComponent IsSuperAdmin="isSuperAdmin"></AdminNavigationBarComponent>
+
+		<MudPaper Class="pa-6 mx-auto mt-12"
+				  Style="max-width: 500px; width: 100%; background-color: #f9fafc; border-radius: 12px; border: 1px solid #e0e0e0; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);">
+			<MudText Typo="Typo.h5" Class="mb-10 text-center">
+				Create new Admin
+			</MudText>
+
+			<MudForm @ref="_form" Model="_model">
+				<MudTextField T="string"
+							  Label="Email"
+							  For="@(() => _model.Email)"
+							  @bind-Value="_model.Email"
+							  Variant="Variant.Filled"
+							  Required="true"
+							  Immediate="true"
+							  Margin="Margin.Dense"
+							  Class="mb-3" />
+
+				<MudTextField T="string"
+							  Label="Password"
+							  For="@(() => _model.Password)"
+							  @bind-Value="_model.Password"
+							  Variant="Variant.Filled"
+							  InputType="InputType.Password"
+							  Required="true"
+							  Immediate="true"
+							  Margin="Margin.Dense"
+							  Class="mb-3" />
+
+				<div class="d-flex justify-center">
+					<MudButton Color="Color.Primary"
+							   Variant="Variant.Filled"
+							   OnClick="SubmitAsync"
+							   FullWidth="true"
+							   Class="px-6 py-2">
+						Create
+					</MudButton>
+				</div>
+			</MudForm>
+		</MudPaper>
+	}
+}

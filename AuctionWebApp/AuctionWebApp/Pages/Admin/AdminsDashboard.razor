@@ -18,6 +18,17 @@ else
 {
 	<AdminNavigationBarComponent IsSuperAdmin="isSuperAdmin"></AdminNavigationBarComponent>
 	<h1 class="text-center mt-15 mb-20">Admins</h1>
+
+	<div style="width: 80%; margin: 0 auto; margin-top: 40px;">
+		<MudButton Color="Color.Primary"
+				   Variant="Variant.Filled"
+				   StartIcon="@Icons.Material.Filled.Add"
+				   Class="mb-4"
+				   OnClick="NavigateToRegisterAdminPage">
+			Create New Admin
+		</MudButton>
+	</div>
+
 	<div class="mb-10">
 		<AdminsTableComponent></AdminsTableComponent>
 	</div>
