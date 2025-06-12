@@ -2,7 +2,7 @@
 
 namespace AuctionWebApp.ViewModels;
 
-public class PasswordResetRequest
+public class PasswordResetViewModel
 {
 	[Required(ErrorMessage = "Email is required")]
 	[EmailAddress(ErrorMessage = "Invalid email address format")]
