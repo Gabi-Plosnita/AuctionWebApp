@@ -12,6 +12,7 @@ public partial class ResetPassword(IAuthService AuthService,
 						           ISnackbar Snackbar) : ComponentBase
 {
 	protected ResetPasswordViewModel resetModel = new();
+	private string ReturnUrl { get; set; } = "user/login";
 
 	protected bool isSubmitting = false;
 
