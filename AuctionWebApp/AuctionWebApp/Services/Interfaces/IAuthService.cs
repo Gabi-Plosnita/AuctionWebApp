@@ -17,6 +17,10 @@ public interface IAuthService
 	
 	Task<Result> LoginUserAsync(LoginViewModel loginViewModel);
 
+	Task<Result> RequestPasswordResetAsync(PasswordResetViewModel passwordResetViewModel);
+
+	Task<Result> ResetPasswordAsync(ResetPasswordViewModel resetPasswordViewModel);
+
 	Task<Result<AuthenticatedUserViewModel>> GetAuthenticatedUserAsync();
 
 	Task<Result> LogoutAsync();

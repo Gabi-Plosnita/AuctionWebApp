@@ -30,4 +30,10 @@ public class AuthHttpClient : BaseHttpClient, IAuthHttpClient
 
 	public async Task<Result<AuthenticatedUserResponse>> GetAuthenticatedUserResponseAsync()
 		=> await SendRequestAsync<AuthenticatedUserResponse>("api/auth/me", HttpMethod.Get, null);
+
+	public async Task<Result> RequestPasswordResetAsync(PasswordResetRequest passwordResetRequest)
+		=> await SendRequestAsync("api/auth/request-password-reset", HttpMethod.Post, passwordResetRequest);
+
+	public async Task<Result> ResetPassworAsync(ResetPasswordRequest resetPasswordRequest)
+		=> await SendRequestAsync("api/auth/reset-password", HttpMethod.Post, resetPasswordRequest);
 }

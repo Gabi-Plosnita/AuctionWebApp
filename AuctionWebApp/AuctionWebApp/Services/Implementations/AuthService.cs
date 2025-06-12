@@ -67,6 +67,20 @@ public class AuthService(IAuthHttpClient _authClient, IMapper _mapper) : IAuthSe
 		return clientResult;
 	}
 
+	public async Task<Result> RequestPasswordResetAsync(PasswordResetViewModel passwordResetViewModel)
+	{
+		var passwordResetRequest = _mapper.Map<PasswordResetRequest>(passwordResetViewModel);
+		var clientResult = await _authClient.RequestPasswordResetAsync(passwordResetRequest);
+		return clientResult;
+	}
+
+	public async Task<Result> ResetPasswordAsync(ResetPasswordViewModel resetPasswordViewModel)
+	{
+		var resetPasswordRequest = _mapper.Map<ResetPasswordRequest>(resetPasswordViewModel);
+		var clientResult = await _authClient.ResetPassworAsync(resetPasswordRequest);
+		return clientResult;
+	}
+
 	public async Task<Result<AuthenticatedUserViewModel>> GetAuthenticatedUserAsync()
 	{
 		var clientResult = await _authClient.GetAuthenticatedUserResponseAsync();
