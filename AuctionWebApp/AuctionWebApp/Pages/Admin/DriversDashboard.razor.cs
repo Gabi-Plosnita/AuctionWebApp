@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Components.Authorization;
 
 namespace AuctionWebApp.Pages;
 
-public partial class DriversDashboard(AuthenticationStateProvider AuthenticationStateProvider) : ComponentBase
+public partial class DriversDashboard(AuthenticationStateProvider AuthenticationStateProvider,
+									  NavigationManager NavigationManager) : ComponentBase
 {
 	private bool isSuperAdmin;
 
@@ -16,5 +17,10 @@ public partial class DriversDashboard(AuthenticationStateProvider Authentication
 
 		isSuperAdmin = user.IsInRole("SuperAdmin");
 		isLoading = false;
+	}
+
+	private void NavigateToRegisterDriverPage()
+	{
+		NavigationManager.NavigateTo("admin/drivers-dashboard/create");
 	}
 }
