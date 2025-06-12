@@ -8,6 +8,7 @@ namespace AuctionWebApp.Pages;
 public partial class UserLogin(IAuthService AuthService, NavigationManager NavigationManager) : ComponentBase
 {
 	private string ReturnUrl { get; set; } = "/";
+	private string ForgotPasswordUrl { get; set; } = "/user/request-password-reset";
 	private string RegisterUrl { get; set; } = "/user/register";
 
 	protected LoginViewModel LoginModel { get; set; } = new LoginViewModel();

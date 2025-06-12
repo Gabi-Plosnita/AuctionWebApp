@@ -9,8 +9,9 @@
 <NavigationComponent Url="@ReturnUrl"></NavigationComponent>
 
 <div class="login-wrapper">
-    <LoginComponent Title="Login User"
-                    Model="LoginModel"
-                    OnValidSubmit="HandleUserLogin" 
-                    RegisterUrl="@RegisterUrl" />
+	<LoginComponent Title="Login User"
+					Model="LoginModel"
+					OnValidSubmit="HandleUserLogin"
+					RegisterUrl="@RegisterUrl"
+					ForgotPasswordUrl="@ForgotPasswordUrl" />
 </div>

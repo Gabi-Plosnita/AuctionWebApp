@@ -17,6 +17,9 @@ public partial class LoginComponent(NavigationManager NavigationManager) : Compo
 	public Func<LoginViewModel, Task<Result>> OnValidSubmit { get; set; }
 
 	[Parameter]
+	public string ForgotPasswordUrl { get; set; }
+
+	[Parameter]
 	public string RegisterUrl { get; set; }
 
 	private List<string> LoginErrorMessages { get; set; } = new List<string>();
@@ -50,6 +53,11 @@ public partial class LoginComponent(NavigationManager NavigationManager) : Compo
 	{
 		LoginErrorMessages.Clear();
 		showSummary = true;
+	}
+
+	private void OnPasswordForgotClicked()
+	{
+		NavigationManager.NavigateTo(ForgotPasswordUrl ?? "/");
 	}
 
 	private void OnRegisterClicked()
