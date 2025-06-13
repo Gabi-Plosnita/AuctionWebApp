@@ -27,7 +27,7 @@ else
 			<DetailedAuctionComponent Auction="@auction"></DetailedAuctionComponent>
 		</div>
 
-		@if (auction.EndTime > DateTime.Now && auction.Status == AuctionStatus.InProgress)
+		@if (auction.EndTime > DateTime.UtcNow && auction.Status == AuctionStatus.InProgress)
 		{
 			<div class="mt-5 mb-10 p-4 mx-auto card shadow p-4 mb-5 bg-white rounded" style="max-width: 1000px;">
 				<div class="d-flex justify-content-center align-items-center mb-3 fs-4 fw-semibold text-dark">
