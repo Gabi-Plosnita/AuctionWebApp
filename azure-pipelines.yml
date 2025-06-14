@@ -1,10 +1,10 @@
-trigger: none  # Manual trigger only
+trigger: none
 
 pool: my-agent
 
 variables:
   buildConfiguration: 'Release'
-  webAppName: 'auction-web-test'  # Azure Web App name
+  webAppName: 'auction-web-test'
   artifactName: 'blazorwebapp'
   dotnetVersion: '9.0.x'
 
@@ -24,6 +24,14 @@ steps:
   inputs:
     command: 'restore'
     projects: '**/*.csproj'
+
+# Replace tokens in appsettings.json
+- task: FileTransform@2
+  displayName: 'Substitute JSON variables in appsettings.json'
+  inputs:
+    folderPath: '$(Build.SourcesDirectory)'
+    jsonTargetFiles: '**/wwwroot/appsettings.json'
+    errorOnInvalidSubstitution: true
 
 # Build the Blazor WebAssembly project
 - task: DotNetCoreCLI@2
