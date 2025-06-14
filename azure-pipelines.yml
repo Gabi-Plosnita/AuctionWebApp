@@ -1,0 +1,60 @@
+trigger: none  # Manual trigger only
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  buildConfiguration: 'Release'
+  webAppName: 'auction-web-test'  # Azure Web App name
+  artifactName: 'blazorwebapp'
+  dotnetVersion: '9.0.x'
+
+steps:
+- checkout: self
+
+# Install .NET SDK
+- task: UseDotNet@2
+  displayName: 'Install .NET SDK'
+  inputs:
+    packageType: sdk
+    version: '$(dotnetVersion)'
+
+# Restore dependencies
+- task: DotNetCoreCLI@2
+  displayName: 'Restore packages'
+  inputs:
+    command: 'restore'
+    projects: '**/*.csproj'
+
+# Build the Blazor WebAssembly project
+- task: DotNetCoreCLI@2
+  displayName: 'Build project'
+  inputs:
+    command: 'build'
+    projects: '**/*.csproj'
+    arguments: '--configuration $(buildConfiguration)'
+
+# Publish output to folder
+- task: DotNetCoreCLI@2
+  displayName: 'Publish project'
+  inputs:
+    command: 'publish'
+    publishWebProjects: true
+    arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    zipAfterPublish: true
+
+# Upload artifact for deployment
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish artifact'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: '$(artifactName)'
+
+# Deploy to Azure Web App
+- task: AzureWebApp@1
+  displayName: 'Deploy to Azure Web App'
+  inputs:
+    azureSubscription: 'auction-web-test-connection'
+    appType: 'webApp'
+    appName: 'auction-web-test'
+    package: '$(Build.ArtifactStagingDirectory)/**/*.zip'
