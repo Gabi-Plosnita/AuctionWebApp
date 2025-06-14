@@ -37,7 +37,7 @@
 
 		<div class="login-card__group">
 			<input id="passwordInput"
-				   type="@(ShowPassword ? "text" : "password")"
+				   type="@(showPassword ? "text" : "password")"
 				   @bind="Model.Password"
 				   class="login-card__input"
 				   placeholder="Password" />
@@ -45,7 +45,7 @@
 
 		<div class="login-card__toggle">
 			<InputCheckbox id="showPasswordCheck"
-						   @bind-Value="ShowPassword"
+						   @bind-Value="showPassword"
 						   class="login-card__checkbox" />
 			<label for="showPasswordCheck"
 				   class="login-card__checkbox-label">

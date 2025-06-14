@@ -27,7 +27,7 @@ public partial class LoginComponent(NavigationManager NavigationManager) : Compo
 	private EditContext editContext;
 
 	private bool showSummary;
-	protected bool ShowPassword { get; set; }
+	protected bool showPassword { get; set; }
 
 	protected override void OnInitialized()
 	{

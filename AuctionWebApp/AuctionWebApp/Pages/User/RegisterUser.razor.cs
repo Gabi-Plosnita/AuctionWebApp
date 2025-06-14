@@ -6,14 +6,14 @@ using MudBlazor;
 
 namespace AuctionWebApp.Pages;
 
-public partial class RegisterUser(IAuthService AuthService, 
+public partial class RegisterUser(IAuthService AuthService,
 								  ISnackbar Snackbar,
 								  NavigationManager NavigationManager) : ComponentBase
 {
 	private MudForm? _form;
-
 	private RegisterUserViewModel _model = new();
 
+	private bool _showPassword;
 	private async Task SubmitAsync()
 	{
 		if (_form is null)

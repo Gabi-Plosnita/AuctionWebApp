@@ -1,84 +1,90 @@
 ﻿@using AuctionWebApp.Components
-
 @namespace AuctionWebApp.Pages
-
 @page "/user/register"
 
 <NavigationComponent Url="user/login"></NavigationComponent>
 
-<MudPaper Class="pa-6 mx-auto mt-12" 
-          Style="max-width: 500px; width: 100%; background-color: #f9fafc; border-radius: 12px; border: 1px solid #e0e0e0; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);">
-    <MudText Typo="Typo.h5" Class="mb-10 text-center">
-        Sign up as user
-    </MudText>
+<MudPaper Class="pa-6 mx-auto mt-12"
+		  Style="max-width: 500px; width: 100%; background-color: #f9fafc; border-radius: 12px; border: 1px solid #e0e0e0; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);">
+	<MudText Typo="Typo.h5" Class="mb-10 text-center">
+		Sign up as user
+	</MudText>
 
-    <MudForm @ref="_form" Model="_model">
-        <MudTextField T="string"
-                      Label="Email"
-                      For="@(() => _model.Email)"
-                      @bind-Value="_model.Email"
-                      Variant="Variant.Filled"
-                      Required="true"
-                      Immediate="true"
-                      Margin="Margin.Dense"
-                      Class="mb-3" />
+	<MudTextField T="string"
+				  Label="First Name"
+				  For="@(() => _model.FirstName)"
+				  @bind-Value="_model.FirstName"
+				  Variant="Variant.Filled"
+				  Required="true"
+				  Immediate="true"
+				  Margin="Margin.Dense"
+				  Class="mb-3" />
 
-        <MudTextField T="string"
-                      Label="Password"
-                      For="@(() => _model.Password)"
-                      @bind-Value="_model.Password"
-                      Variant="Variant.Filled"
-                      InputType="InputType.Password"
-                      Required="true"
-                      Immediate="true"
-                      Margin="Margin.Dense"
-                      Class="mb-3" />
+	<MudTextField T="string"
+				  Label="Last Name"
+				  For="@(() => _model.LastName)"
+				  @bind-Value="_model.LastName"
+				  Variant="Variant.Filled"
+				  Required="true"
+				  Immediate="true"
+				  Margin="Margin.Dense"
+				  Class="mb-3" />
 
-        <MudTextField T="string"
-                      Label="First Name"
-                      For="@(() => _model.FirstName)"
-                      @bind-Value="_model.FirstName"
-                      Variant="Variant.Filled"
-                      Required="true"
-                      Immediate="true"
-                      Margin="Margin.Dense"
-                      Class="mb-3" />
+	<MudTextField T="string"
+				  Label="Address"
+				  For="@(() => _model.Address)"
+				  @bind-Value="_model.Address"
+				  Variant="Variant.Filled"
+				  Required="true"
+				  Immediate="true"
+				  Margin="Margin.Dense"
+				  Class="mb-3" />
 
-        <MudTextField T="string"
-                      Label="Last Name"
-                      For="@(() => _model.LastName)"
-                      @bind-Value="_model.LastName"
-                      Variant="Variant.Filled"
-                      Required="true"
-                      Immediate="true"
-                      Margin="Margin.Dense"
-                      Class="mb-3" />
+	<MudForm @ref="_form" Model="_model">
+		<MudTextField T="string"
+					  Label="Email"
+					  For="@(() => _model.Email)"
+					  @bind-Value="_model.Email"
+					  Variant="Variant.Filled"
+					  Required="true"
+					  Immediate="true"
+					  Margin="Margin.Dense"
+					  Class="mb-3" />
 
-        <MudTextField T="string"
-                      Label="Address"
-                      For="@(() => _model.Address)"
-                      @bind-Value="_model.Address"
-                      Variant="Variant.Filled"
-                      Required="true"
-                      Immediate="true"
-                      Margin="Margin.Dense"
-                      Class="mb-4" />
+		<MudTextField T="string"
+					  Label="Password"
+					  For="@(() => _model.Password)"
+					  @bind-Value="_model.Password"
+					  Variant="Variant.Filled"
+					  InputType="@(_showPassword ? InputType.Text : InputType.Password)"
+					  Required="true"
+					  Immediate="true"
+					  Margin="Margin.Dense"
+					  Class="mb-3" />
 
-        <div class="d-flex justify-center">
-            <MudButton Color="Color.Primary"
-                       Variant="Variant.Filled"
-                       OnClick="SubmitAsync"
-                       FullWidth="true"
-                       Class="px-6 py-2">
-                Register
-            </MudButton>
-        </div>
+		<div class="mb-4">
+			<InputCheckbox id="showPasswordCheck"
+						   @bind-Value="_showPassword"/>
+			<label for="showPasswordCheck">
+				Show password
+			</label>
+		</div>
 
-        <MudText Class="mt-10 text-center">
-            <span style="color: #1976d2; cursor: pointer;"
-                  @onclick="OnLoginClicked">
-                Already have an account? Click here to login.
-            </span>
-        </MudText>
-    </MudForm>
+		<div class="d-flex justify-center">
+			<MudButton Color="Color.Primary"
+					   Variant="Variant.Filled"
+					   OnClick="SubmitAsync"
+					   FullWidth="true"
+					   Class="px-6 py-2">
+				Register
+			</MudButton>
+		</div>
+
+		<MudText Class="mt-10 text-center">
+			<span style="color: #1976d2; cursor: pointer;"
+				  @onclick="OnLoginClicked">
+				Already have an account? Click here to login.
+			</span>
+		</MudText>
+	</MudForm>
 </MudPaper>
