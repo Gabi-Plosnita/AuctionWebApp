@@ -15,6 +15,8 @@ public partial class RegisterDriver(IAuthService AuthService,
 
 	private RegisterDriverViewModel _model = new();
 
+	private bool showPassword;
+
 	private bool isSuperAdmin;
 
 	private bool isLoading = true;

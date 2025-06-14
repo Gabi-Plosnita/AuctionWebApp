@@ -15,6 +15,8 @@ public partial class RegisterAdmin(IAuthService AuthService,
 
 	private RegisterAdminViewModel _model = new();
 
+	private bool showPassword;
+
 	private bool isSuperAdmin;
 
 	private bool isLoading = true;

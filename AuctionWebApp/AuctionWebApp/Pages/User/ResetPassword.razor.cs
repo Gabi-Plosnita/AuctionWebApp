@@ -14,6 +14,8 @@ public partial class ResetPassword(IAuthService AuthService,
 	protected ResetPasswordViewModel resetModel = new();
 	private string ReturnUrl { get; set; } = "user/login";
 
+	private bool showPassword = false;
+
 	protected bool isSubmitting = false;
 
 	protected string? SuccessMessage;
