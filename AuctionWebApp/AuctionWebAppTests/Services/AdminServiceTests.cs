@@ -43,13 +43,8 @@ public class AdminServiceTests
 				new() { Id = 2, Email = "b@x.com", Role = Role.User }
 			};
 
-		_adminClientMock
-			.Setup(c => c.GetAllAsync())
-			.ReturnsAsync(clientResult);
-
-		_mapperMock
-			.Setup(m => m.Map<List<AdminViewModel>>(responses))
-			.Returns(viewModels);
+		_adminClientMock.Setup(c => c.GetAllAsync()).ReturnsAsync(clientResult);
+		_mapperMock.Setup(m => m.Map<List<AdminViewModel>>(responses)).Returns(viewModels);
 
 		var result = await _service.GetAllAsync();
 
@@ -68,13 +63,8 @@ public class AdminServiceTests
 		};
 		var vm = new AdminViewModel { Id = 42, Email = "z@x.com", Role = Role.SuperAdmin };
 
-		_adminClientMock
-			.Setup(c => c.GetByIdAsync(42))
-			.ReturnsAsync(clientResult);
-
-		_mapperMock
-			.Setup(m => m.Map<AdminViewModel>(response))
-			.Returns(vm);
+		_adminClientMock.Setup(c => c.GetByIdAsync(42)).ReturnsAsync(clientResult);
+		_mapperMock.Setup(m => m.Map<AdminViewModel>(response)).Returns(vm);
 
 		var result = await _service.GetByIdAsync(42);
 
@@ -86,12 +76,59 @@ public class AdminServiceTests
 	public async Task DeleteByIdAsync_ForwardsResultDirectly()
 	{
 		var expected = new Result();
-		_adminClientMock
-			.Setup(c => c.DeleteByIdAsync(99))
-			.ReturnsAsync(expected);
+		_adminClientMock.Setup(c => c.DeleteByIdAsync(99)).ReturnsAsync(expected);
 
 		var actual = await _service.DeleteByIdAsync(99);
 
 		Assert.AreSame(expected, actual);
+	}
+
+	[TestMethod]
+	public async Task GetAllAsync_ClientReturnsErrors_DataNull_ErrorsPropagated()
+	{
+		var clientResult = new Result<List<AdminResponse>>
+		{
+			Data = null,
+			Errors = new List<string> { "Server error" }
+		};
+
+		_adminClientMock.Setup(c => c.GetAllAsync()).ReturnsAsync(clientResult);
+
+		var result = await _service.GetAllAsync();
+
+		Assert.IsNull(result.Data);
+		CollectionAssert.AreEqual(clientResult.Errors, result.Errors);
+		_mapperMock.Verify(m => m.Map<List<AdminViewModel>>(null), Times.Once);
+	}
+
+	[TestMethod]
+	public async Task GetByIdAsync_ClientReturnsErrors_DataNull_ErrorsPropagated()
+	{
+		var clientResult = new Result<AdminResponse>
+		{
+			Data = null,
+			Errors = new List<string> { "NotFound" }
+		};
+
+		_adminClientMock.Setup(c => c.GetByIdAsync(5)).ReturnsAsync(clientResult);
+
+		var result = await _service.GetByIdAsync(5);
+
+		Assert.IsNull(result.Data);
+		CollectionAssert.AreEqual(clientResult.Errors, result.Errors);
+		_mapperMock.Verify(m => m.Map<AdminViewModel>(null), Times.Once);
+	}
+
+	[TestMethod]
+	public async Task DeleteByIdAsync_ClientReturnsErrors_ErrorsPropagated()
+	{
+		var clientResult = new Result { Errors = new List<string> { "Unauthorized" } };
+
+		_adminClientMock.Setup(c => c.DeleteByIdAsync(10)).ReturnsAsync(clientResult);
+
+		var result = await _service.DeleteByIdAsync(10);
+
+		Assert.IsTrue(result.HasErrors);
+		CollectionAssert.AreEqual(clientResult.Errors, result.Errors);
 	}
 }
