@@ -28,17 +28,11 @@ public class AuctionServiceTests
 	public async Task GetPreviewByIdAsync_MapsAndPropagates()
 	{
 		var response = new PreviewAuctionResponse { Id = 42, Title = "Z" };
-		var clientResult = new Result<PreviewAuctionResponse>
-		{
-			Data = response,
-			Errors = new List<string> { "nf" }
-		};
+		var clientResult = new Result<PreviewAuctionResponse> { Data = response, Errors = new List<string> { "nf" } };
 		var vm = new PreviewAuctionViewModel { Id = 42, Title = "Z" };
 
-		_clientMock.Setup(c => c.GetPreviewByIdAsync(42))
-				   .ReturnsAsync(clientResult);
-		_mapperMock.Setup(m => m.Map<PreviewAuctionViewModel>(response))
-				   .Returns(vm);
+		_clientMock.Setup(c => c.GetPreviewByIdAsync(42)).ReturnsAsync(clientResult);
+		_mapperMock.Setup(m => m.Map<PreviewAuctionViewModel>(response)).Returns(vm);
 
 		var result = await _svc.GetPreviewByIdAsync(42);
 
@@ -50,17 +44,11 @@ public class AuctionServiceTests
 	public async Task GetDetailedByIdAsync_MapsAndPropagates()
 	{
 		var response = new DetailedAuctionResponse { Id = 99, Title = "Details", Description = "D" };
-		var clientResult = new Result<DetailedAuctionResponse>
-		{
-			Data = response,
-			Errors = new List<string>()
-		};
+		var clientResult = new Result<DetailedAuctionResponse> { Data = response, Errors = new List<string>() };
 		var vm = new DetailedAuctionViewModel { Id = 99, Title = "Details", Description = "D" };
 
-		_clientMock.Setup(c => c.GetDetailedByIdAsync(99))
-				   .ReturnsAsync(clientResult);
-		_mapperMock.Setup(m => m.Map<DetailedAuctionViewModel>(response))
-				   .Returns(vm);
+		_clientMock.Setup(c => c.GetDetailedByIdAsync(99)).ReturnsAsync(clientResult);
+		_mapperMock.Setup(m => m.Map<DetailedAuctionViewModel>(response)).Returns(vm);
 
 		var result = await _svc.GetDetailedByIdAsync(99);
 
@@ -89,8 +77,8 @@ public class AuctionServiceTests
 	[TestMethod]
 	public async Task CreateAsync_MapsRequest_MapsResult()
 	{
-		var vmReq = new CreateAuctionViewModel { Title = "New" /*…*/ };
-		var req = new CreateAuctionRequest { Title = "New" /*…*/ };
+		var vmReq = new CreateAuctionViewModel { Title = "New" };
+		var req = new CreateAuctionRequest { Title = "New" };
 		var resp = new PreviewAuctionResponse { Id = 7, Title = "New" };
 		var clientResult = new Result<PreviewAuctionResponse> { Data = resp };
 		var vm = new PreviewAuctionViewModel { Id = 7, Title = "New" };
@@ -132,10 +120,66 @@ public class AuctionServiceTests
 	public async Task CompleteAuctionAsync_ForwardsClientResult()
 	{
 		var clientRes = new Result();
-		_clientMock.Setup(c => c.CompleteAuctionAsync(55))
-				   .ReturnsAsync(clientRes);
+		_clientMock.Setup(c => c.CompleteAuctionAsync(55)).ReturnsAsync(clientRes);
 
 		var actual = await _svc.CompleteAuctionAsync(55);
 		Assert.AreSame(clientRes, actual);
+	}
+
+	[TestMethod]
+	public async Task GetByFilterAsync_ClientReturnsErrors_NoMappingOccurs_DataIsNull()
+	{
+		var vmFilter = new AuctionFilterViewModel { Page = 1 };
+		var reqFilter = new AuctionFilterRequest { Page = 1 };
+		var clientResult = new Result<PagedResult<PreviewAuctionResponse>> { Data = null, Errors = new List<string> { "Server error" } };
+
+		_mapperMock.Setup(m => m.Map<AuctionFilterRequest>(vmFilter)).Returns(reqFilter);
+		_clientMock.Setup(c => c.GetByFilterAsync(reqFilter)).ReturnsAsync(clientResult);
+
+		var result = await _svc.GetByFilterAsync(vmFilter);
+
+		Assert.IsNull(result.Data);
+		CollectionAssert.AreEqual(clientResult.Errors, result.Errors);
+	}
+
+	[TestMethod]
+	public async Task GetPreviewByIdAsync_ClientReturnsErrors_DataIsNull()
+	{
+		var clientResult = new Result<PreviewAuctionResponse> { Data = null, Errors = new List<string> { "Not found" } };
+		_clientMock.Setup(c => c.GetPreviewByIdAsync(123)).ReturnsAsync(clientResult);
+
+		var result = await _svc.GetPreviewByIdAsync(123);
+
+		Assert.IsNull(result.Data);
+		CollectionAssert.AreEqual(clientResult.Errors, result.Errors);
+	}
+
+	[TestMethod]
+	public async Task CreateBidAsync_ClientReturnsErrors_DataIsNull()
+	{
+		var vmReq = new CreateBidViewModel { AuctionId = 9, Amount = 50m };
+		var req = new CreateBidRequest { AuctionId = 9, Amount = 50m };
+		var clientResult = new Result<BidResponse> { Data = null, Errors = new List<string> { "Bid too low" } };
+
+		_mapperMock.Setup(m => m.Map<CreateBidRequest>(vmReq)).Returns(req);
+		_clientMock.Setup(c => c.CreateBidAsync(req)).ReturnsAsync(clientResult);
+
+		var result = await _svc.CreateBidAsync(vmReq);
+
+		Assert.IsNull(result.Data);
+		CollectionAssert.AreEqual(clientResult.Errors, result.Errors);
+	}
+
+	[TestMethod]
+	public async Task UpdateAsync_ClientReturnsErrors_ErrorsPropagated()
+	{
+		var clientResult = new Result { Errors = new List<string> { "Unauthorized" } };
+		_mapperMock.Setup(m => m.Map<UpdateAuctionRequest>(It.IsAny<UpdateAuctionViewModel>())).Returns(new UpdateAuctionRequest());
+		_clientMock.Setup(c => c.UpdateAsync(5, It.IsAny<UpdateAuctionRequest>())).ReturnsAsync(clientResult);
+
+		var result = await _svc.UpdateAsync(5, new UpdateAuctionViewModel());
+
+		Assert.IsTrue(result.HasErrors);
+		CollectionAssert.AreEqual(clientResult.Errors, result.Errors);
 	}
 }
