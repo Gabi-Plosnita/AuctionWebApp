@@ -1,0 +1,19 @@
+﻿@page "/diagnostic"
+
+@inject IConfiguration Configuration
+
+<h3>Diagnostic Page</h3>
+
+<p><strong>ApiBaseUrl:</strong> @ApiBaseUrl</p>
+<p><strong>Stripe Publishable Key:</strong> @StripeKey</p>
+
+@code {
+    private string? ApiBaseUrl;
+    private string? StripeKey;
+
+    protected override void OnInitialized()
+    {
+        ApiBaseUrl = Configuration["ApiBaseUrl"];
+        StripeKey = Configuration["Stripe:PublishableKey"];
+    }
+}
