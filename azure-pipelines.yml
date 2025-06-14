@@ -1,7 +1,6 @@
 trigger: none  # Manual trigger only
 
-pool:
-  vmImage: 'windows-latest'
+pool: my-agent
 
 variables:
   buildConfiguration: 'Release'
