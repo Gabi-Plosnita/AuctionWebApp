@@ -40,6 +40,16 @@ steps:
     command: 'build'
     projects: '**/*.csproj'
     arguments: '--configuration $(buildConfiguration)'
+    
+# Run tests
+- task: DotNetCoreCLI@2
+  displayName: 'Run WebApp unit tests'
+  inputs:
+    command: 'test'
+    projects: '**/AuctionWebAppTests/AuctionWebAppTests.csproj'
+    arguments: >
+      --configuration $(buildConfiguration)
+      --no-build
 
 # Publish output to folder
 - task: DotNetCoreCLI@2
