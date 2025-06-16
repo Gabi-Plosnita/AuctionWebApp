@@ -90,12 +90,20 @@ else
 											 Class="mb-3" />
 
 							<MudDatePicker T="DateTime?"
-										   Label="End Time"
-										   @bind-Date="_model.EndTime"
-										   DateExpression="@(() => _model.EndTime)"
+										   Label="End Date"
+										   @bind-Date="_selectedEndDate"
+										   DateExpression="@(() => _selectedEndDate)"
 										   Required="true"
 										   Variant="Variant.Outlined"
-										   MinDate="DateTime.Now"
+										   MinDate="DateTime.Now.Date"
+										   Class="mb-3" />
+
+							<MudTimePicker T="TimeSpan?"
+										   Label="End Time"
+										   @bind-Time="_selectedEndTime"
+										   TimeExpression="@(() => _selectedEndTime)"
+										   Required="true"
+										   Variant="Variant.Outlined"
 										   Class="mb-3" />
 
 							<MudSelect T="int"

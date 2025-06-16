@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
 using MudBlazor;
-using System.Reflection;
 
 namespace AuctionWebApp.Pages;
 
@@ -26,6 +25,10 @@ public partial class CreateAuction(IAuctionService AuctionService,
 
 	private readonly Dictionary<int, string> _imagePreviews = new();
 
+	private DateTime? _selectedEndDate;
+
+	private TimeSpan? _selectedEndTime;
+
 	private List<CategoryViewModel> _categories = new();
 
 	private bool isLoading = true;
@@ -39,6 +42,8 @@ public partial class CreateAuction(IAuctionService AuctionService,
 		if (showErrorComponent || !isLoading)
 			return;
 
+		_selectedEndDate = _model.EndTime;
+		_selectedEndTime = new TimeSpan(23, 59, 0);
 		isLoading = false;
 	}
 
@@ -62,20 +67,22 @@ public partial class CreateAuction(IAuctionService AuctionService,
 			return;
 		}
 
-		if (_model.EndTime is DateTime dt)
+		if (!_selectedEndDate.HasValue || !_selectedEndTime.HasValue)
 		{
-			var dateOnly = dt.Date;
-			_model.EndTime = new DateTime(
-				dateOnly.Year, dateOnly.Month, dateOnly.Day,
-				23, 59, 0,
-				DateTimeKind.Utc
-			);
+			Snackbar.ShowError("Please select both date and time for the end.");
+			return;
 		}
+
+		var d = _selectedEndDate.Value;
+		var t = _selectedEndTime.Value;
+		_model.EndTime = new DateTime(
+			d.Year, d.Month, d.Day,
+			t.Hours, t.Minutes, t.Seconds
+		);
 
 		_model.Images = _imageSlots
 			.OrderBy(kvp => kvp.Key)
-			.Where(kvp => kvp.Value is not null)
-			.Select(kvp => kvp.Value)
+			.Select(kvp => kvp.Value!)
 			.ToList();
 
 		var result = await AuctionService.CreateAsync(_model);
@@ -98,7 +105,8 @@ public partial class CreateAuction(IAuctionService AuctionService,
 			StartingPrice = 1,
 			MinBidIncrement = 1,
 		};
-
+		_selectedEndDate = _model.EndTime;
+		_selectedEndTime = new TimeSpan(23, 59, 0);
 		_imageSlots.Clear();
 		_imagePreviews.Clear();
 	}
