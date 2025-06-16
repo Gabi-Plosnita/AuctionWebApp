@@ -40,8 +40,8 @@
 			<div class="col-md-6 text-center mx-auto">
 				<p><strong>Starting Price:</strong> @Auction.StartingPrice</p>
 				<p><strong>Current Price:</strong> @Auction.CurrentPrice</p>
-				<p><strong>Start Time:</strong> @Auction.StartTime.ToString("f")</p>
-				<p><strong>End Time:</strong> @Auction.EndTime.ToString("f")</p>
+				<p><strong>Start Time:</strong> @Auction.StartTime.ToLocalTime().ToString("f")</p>
+				<p><strong>End Time:</strong> @Auction.EndTime.ToLocalTime().ToString("f")</p>
 				<p><strong>Status:</strong> <span class="badge bg-info text-dark">@Auction.Status</span></p>
 			</div>
 		</div>

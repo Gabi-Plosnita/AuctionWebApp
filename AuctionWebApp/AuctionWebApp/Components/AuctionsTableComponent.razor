@@ -31,7 +31,7 @@
 				}
 			</MudTd>
 			<MudTd DataLabel="Current Price" Style="border: 1px solid grey; text-align: center; vertical-align: middle;">@context.CurrentPrice</MudTd>
-			<MudTd DataLabel="End Time" Style="border: 1px solid grey; text-align: center; vertical-align: middle;">@context.EndTime.ToString("g")</MudTd>
+			<MudTd DataLabel="End Time" Style="border: 1px solid grey; text-align: center; vertical-align: middle;">@context.EndTime.ToLocalTime().ToString("g")</MudTd>
 			<MudTd DataLabel="Status" Style="border: 1px solid grey; text-align: center; vertical-align: middle;">@context.Status.ToString()</MudTd>
 			<MudTd DataLabel="" Style="border: 1px solid grey; text-align: center; vertical-align: middle;">
 				@if (!string.IsNullOrEmpty(NavigateUrl))
