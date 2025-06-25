@@ -1,5 +1,5 @@
 ﻿<div class="auction-card" @onclick="HandleClick">
     <img src="@($"{AppSettings.ApiUrl}{FirstImageUrl}")" alt="Auction image" class="auction-image" />
     <div class="auction-title">@Auction.Title</div>
-    <div class="price">Current Price: @Auction.CurrentPrice.ToString("C")</div>
+    <div class="price">Current Price: @Auction.CurrentPrice.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("en-US"))</div>
 </div>

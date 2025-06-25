@@ -32,12 +32,12 @@ else
 			<div class="mt-5 mb-10 p-4 mx-auto card shadow p-4 mb-5 bg-white rounded" style="max-width: 1000px;">
 				<div class="d-flex justify-content-center align-items-center mb-3 fs-4 fw-semibold text-dark">
 					<span class="me-2">Current Price:</span>
-					<span>@auction.CurrentPrice.ToString("C")</span>
+					<span>@auction.CurrentPrice.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("en-US"))</span>
 				</div>
 
 				<div class="d-flex justify-content-center align-items-center mb-4 fs-4 fw-semibold text-dark">
 					<span class="me-2">Minimum Bid Increment:</span>
-					<span>@auction.MinBidIncrement.ToString("C")</span>
+					<span>@auction.MinBidIncrement.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("en-US"))</span>
 				</div>
 
 				<div class="d-flex justify-content-center mb-4">
