@@ -72,7 +72,7 @@ else
 								@DateHelper.GetRelativeTime(bid.Date)
 							</span>
 							<span class="bid-amount flex-fill @(bid == Auction.Bids.OrderByDescending(b => b.Amount).First() ? "fw-bold" : "")">
-								@bid.Amount.ToString("C")
+								@bid.Amount.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("en-US"))
 							</span>
 						</div>
 					}
