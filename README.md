@@ -36,5 +36,5 @@ FamousAuctions is a full-stack web application for managing online auctions, des
 
 ## 📄 Documentation
 
-For detailed technical information, architecture diagrams, and implementation details, please see the [full documentation here](./Plosnita_Valentin_Gabriel_LF322_Documentatie_Licenta.pdf).
+For detailed technical information, architecture diagrams, and implementation details, please see the [full documentation here](./Documentatie.pdf).
 
